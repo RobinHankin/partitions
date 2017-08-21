@@ -104,7 +104,7 @@ unsigned int numbrestrictedparts(int *x, const int m){
 
 To implement a potentially more efficient method, we can use
 generating functions.  Here we follow Wilf and, using his terminology,
-define an infinie polynomial~$P(x,y)$ as follows:
+define an infinite polynomial~$P(x,y)$ as follows:
 
 \begin{equation}\label{GF}
 P(x,y) = \prod_{r=0}^\infty\frac{1}{1-x^ry}
