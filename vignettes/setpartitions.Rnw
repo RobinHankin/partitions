@@ -1,0 +1,736 @@
+% -*- mode: noweb; noweb-default-code-mode: R-mode; -*-
+\documentclass[nojss]{jss}
+\usepackage{dsfont}
+\usepackage{bbm}
+\usepackage{amsfonts}
+\usepackage{wasysym}
+\usepackage{xypic}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% declarations for jss.cls %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\cd}{\cdot}
+
+%% just as usual
+\author{Robin K. S. Hankin\\Auckland University of Technology\And
+Luke J. West\\National Oceanography Centre, Southampton}
+\title{Set Partitions in \proglang{R}}
+%\VignetteIndexEntry{Set partitions in R}
+
+%% for pretty printing and a nice hypersummary also set:
+\Plainauthor{Robin K. S. Hankin, Luke G. West}
+\Plaintitle{Set partitions in R}
+\Shorttitle{Set partitions in \proglang{R}}
+
+%% an abstract and keywords
+\Abstract{This vignette is based on~\cite{hankin2007a}.
+
+This short paper introduces a code snippet in the form of an
+  \proglang{R} function that enumerates all possible partitions of a
+  finite set given the sizes of the equivalence classes.  Three
+  combinatorial problems are solved using the software: one from
+  bioinformatics, one from scheduling theory, and one from forensic
+  science.}
+
+\Keywords{Set Partitions, Forensic Science,
+Enumerative Combinatorics, \proglang{R}}
+\Plainkeywords{Set Partitions, Forensic Science,
+Enumerative Combinatorics, R}
+
+
+%% publication information
+%% NOTE: This needs to filled out ONLY IF THE PAPER WAS ACCEPTED.
+%% If it was not (yet) accepted, leave them commented.
+%% \Volume{13}
+%% \Issue{9}
+%% \Month{September}
+%% \Year{2004}
+%% \Submitdate{2004-09-29}
+%% \Acceptdate{2004-09-29}
+
+%% The address of (at least) one author should be given
+%% in the following format:
+\Address{
+  Robin K. S. Hankin\\
+  Auckland University of Technology\\
+  AUT Tower\\
+  Wakefield Street\\
+  Auckland, New Zealand\\
+  E-mail: \email{hankin.robin@gmail.com}\\
+  {}\\
+  Luke J. West\\
+  National Oceanography Centre, Southampton\\
+  European Way\\
+  Southampton SO14 3ZH\\
+  United Kingdom\\
+  }
+%% It is also possible to add a telephone and fax number
+%% before the e-mail in the following format:
+%% Telephone: +43/1/31336-5053
+%% Fax: +43/1/31336-734
+
+%% for those who use Sweave please include the following line (with % symbols):
+%% need no \usepackage{Sweave.sty}
+
+%% end of declarations %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newsymbol\leqslant 1336
+\SweaveOpts{echo=FALSE}
+\begin{document}
+<<load.library,echo=FALSE,print=FALSE>>=
+<<results=hide>>=
+require(partitions)
+@ 
+
+\section{Introduction}
+
+A {\em partition} of a set~$S=\{1,2,\ldots,n\}$ is a family of
+sets~$T_1,T_2,\ldots T_k$ satisfying
+\begin{enumerate}
+\item $T_i\cup T_j=\emptyset$ if $i\neq j$
+\item $\bigcup_{i=1}^k T_k=S$
+\item $T_i\neq\emptyset$ for $i=1,\ldots,k$.
+\end{enumerate}
+
+
+
+There are exactly fifteen ways to partition a set of four elements,
+shown in Table~\ref{partitions.4elements} using standard notation.
+Here~$(13)(2)(4)$ represents the same partition as~$(2)(4)(31)$: the
+induced equivalence relation is identical.  Either one may be
+represented as \code{1213}, indicating that elements one and three are
+in the first equivalence class (``\code{1}''), element two in the
+second, and element four in the third.  In
+Table~\ref{partitions.4elements}, two partitions appear in the same
+column if their `shape' (that is, the size distribution of the
+equivalence classes, formally defined in Section~\ref{algorithms}
+below) is the same.  The shapes correspond to integer partitions in
+standard form~\citep{hankin2006}, and appear in standard
+order~\citep{andrews1998}.  This suggests a natural method for
+enumerating the equivalence relations on a set of cardinality~$n$:
+enumerate the integer partitions of~$n$, and for each of these,
+enumerate the distinct equivalence relations of that shape.
+
+\begin{table}[h]
+  \centering
+  \begin{tabular}{ccccc}
+    (1234) & (123)(4) & (12)(34) & (12)(3)(4) & (1)(2)(3)(4)\\
+           & (124)(3) & (13)(24) & (13)(2)(4) &             \\
+           & (134)(2) & (14)(23) & (14)(2)(3) &             \\
+           & (234)(1) &          & (23)(1)(4) &             \\
+           &          &          & (24)(1)(3) &             \\
+           &          &          & (34)(1)(2) &             \\
+  \end{tabular}
+  \caption{The fifteen partitions of a set of
+    four \label{partitions.4elements} elements}
+\end{table}
+
+
+This paper introduces software that enumerates\footnote{The transitive
+  verb ``to enumerate'' can be used in two senses: firstly, ``to
+  calculate the number of''; and secondly, ``to list each occurrence
+  of, as if for the purpose of counting''.  This paper adopts the
+  second usage.} all set partitions of a set of a specified (finite)
+size.  The new functionality presented here is given by
+\code{setparts()}, an \proglang{R} \citep{rcore2007} wrapper for
+\proglang{C++} code, currently part of the \pkg{partitions}
+package~\citep{hankin2006,hankin2007}, version 1.7-3, available under
+the GPL from CRAN, \url{http://www.r-project.org/}.
+
+Function \code{setparts()} takes a single argument \code{a}, coerced
+to integer mode.  The default case is that of \code{a} being a vector
+of length greater than one, in which case it returns all partitions of
+a set of \code{sum(a)} elements into equivalence classes of the sizes
+of the elements of \code{a}; in the case of \code{a} being of length
+one, it returns all partitions of a set of \code{a} elements.  If
+\code{a} is a matrix, it returns all equivalence classes with sizes of
+the columns of \code{a}.
+
+\section{Algorithms}
+\label{algorithms}
+
+In this paper, we present an algorithm that lists all partitions of a
+given ``shape''.  Formally, the {\bf shape}
+$\lambda=(\lambda_1,\ldots\lambda_k)$ of a partition is given by the
+sizes of the~$T_i$; these are conventionally given in standard (i.e. 
+non-increasing) order.  Thus~$\lambda$ is an integer partition of~$n$
+\citep{hankin2006}, written~$\lambda\vdash n$.
+
+The distinct equivalence relations may be enumerated, for a given
+integer partition, using a recursive algorithm that operates on
+partially filled partitions.
+
+ Consider an integer partition~$\lambda=
+ \left(\lambda_1,\ldots\lambda_k\right)$, also
+ written~$\left(1^{f_1},\ldots,n^{f_n}\right)$; the latter notation
+ indicates that~$f_i$ elements of~$\lambda$ are equal to~$i$.  The
+ algorithm used here fills the equivalence classes sequentially from
+ left to right using a technique originally due
+ to~\citet{killworth2007}.
+
+The partitions are ordered from largest to smallest; non-empty ties
+are broken lexicographically.  This prevents the reporting of
+identical equivalence classes (to see this, consider the two identical
+equivalence relations~$(123)(45)(67)(8)$ and~$(123)(67)(45)(8)$: the
+second descriptor does not occur in the algorithm because the third
+equivalence class precedes the second).
+
+\begin{figure}[htbp]
+  \begin{center}
+\includegraphics{algorithm}
+\caption{The\label{algorithm} algorithm used to enumerate set
+  partitions of a given shape.  Unfilled positions are indicated by a
+  dot.  Of the partitions at a given level, the children of one
+  are shown.
+  The initial empty configuration is filled from left to right from a
+  `pool' of unused elements; equivalence classes are ordered by size
+  (largest first) and ties are broken lexicographically at runtime to
+  suppress reporting of identical equivalence relations in which two
+  classes are transposed.
+  Within a class, the elements of partially- and completely- filled
+  equivalence classes are ordered in increasing order.  
+  A cross indicates an illegal configuration in which the partially
+  filled class cannot be completed as insufficient elements remain in
+  the pool; the algorithm prunes such configurations as soon as they
+  are detected.
+  Successful termination of the algorithm, viz. a filled partition, is
+  indicated by a tick (``check mark'') at which point the filled
+  equivalence class is reported, and the recursion bottoms out}
+  \end{center}
+\end{figure}
+
+Thus, starting with an empty partition of a given size, one may apply
+the algorithm detailed in Figure~\ref{algorithm} recursively until
+each full partition is recorded.
+
+\subsection{Performance and complexity}
+
+The total number of set partitions corresponding to a particular
+integer partition~$\lambda$ is given by elementary combinatorial
+arguments as
+
+\begin{equation}\label{combinatoric_setpartition}
+\frac{n!}{\prod_{i=1}^{k}\lambda_i!\cdot\prod_{j=1}^n{f_j}!}.
+\end{equation}
+
+However, the number of integer partitions increases rapidly with~$n$;
+the exact value is given by the partition function~\code{P(n)} of the
+package~\citep{hankin2006}, but the asymptotic form given
+by~\citet{hardy1918}, viz.
+\begin{equation}\label{asymptotic_setpartition}
+P(n)=\frac{e^{\pi\sqrt{2n/3}}}{4n\sqrt{3}}\cdot\left(1+O(n^{-1})\right)
+\end{equation} shows that the rate
+of growth is rapid. 
+The number of {\em set} partitions of a set of size~$n$ is given by
+the Bell numbers~$B(n)$~\citep{rota1964}, which grow much more rapidly
+than the partition function; an asymptotic form was given
+by~\cite{bender1974}:
+\begin{equation}\label{asymptoticbell}
+B(n) = t^{n-t}e^{t-1}\left(\log t\right)^{-1/2}\cdot\left(1+o(n)\right)
+  \end{equation}
+where~$t=e^{W_0(n-1/2)}$.  Here~$W_0(\cdot)$ denotes the principal
+branch of the Lambert W function~\citep{corless1996}, provided with
+the \pkg{gsl} package~\citep{hankin2006b}.
+Equation~\ref{asymptoticbell} is easily evaluated and can be used to
+give a feel for the magnitude of the Bell numbers.  Note that
+convergence is quite slow; for example, $B(10)=115975$ (compare
+about~$1.48\times 10^3$ from Equation~\ref{asymptoticbell}),
+and~$B(100)\simeq 4.76\times 10^{115}$ (compare~$5.43\times
+10^{115}$).
+
+
+\section{Applications}
+
+Many problems in science and industry involve the optimization of some
+desideratum over a finite number of options.  Such optimization is
+frequently soluble within the discipline of computational
+combinatorics: simply enumerate the possible solutions and choose the
+best.  One advantage of this method over heuristic optimization
+techniques such as tabu search \citep{glover1997} is that by
+enumerating all possible solutions, one is \emph{certain} to find the
+global optimum.  In this section we present three examples of
+\code{setparts()} in use: one from bioinformatics, one from
+multiprocessor scheduling, and one from forensic science.
+
+\subsection{Bioinformatics}
+
+In studies of allelic segregation under disomic inheritance, one
+situation encountered is that of enumerating the possible arrangements
+of alleles on genetic loci\footnote{A \emph{chromosome} is a double
+  helix of DNA, typically occurring in matched pairs in cell nuclei.  A
+  \emph{locus} is an identifiable position on a chromosome pair; a
+  \emph{gene} is a distinct sequence of DNA base pairs occurring at a
+  locus; an \emph{allele} is one of a number of distinguishable forms
+  for a particular gene; the \emph{genome} is the complete set of
+  genes present in the chromosomes; a \emph{monosomic locus} contains
+  two copies of one, and a \emph{disomic locus} two different,
+  alleles.  Two alleles at the same locus are said to be
+  \emph{colocated}.  A monosomic (disomic) allele is one that occurs
+  at a monosomic (disomic) locus in a given genome.  A \emph{gamete}
+  is a sequence of alleles chosen from the genome: monosomic and
+  disomic alleles are chosen with probability~1 and~0.5
+  respectively.}.  \cite{rodzen2002} consider the white sturgeon;
+there is much uncertainty surrounding the organization of this
+species's genome.
+
+Many alleles of interest may be identified in the genome of the white
+sturgeon.  Sometimes these are known to be either monosomic or
+disomic, but it is not known which alleles are colocated, nor which
+alleles are monosomic and which are disomic.  If researchers have
+identified, say, five alleles (conventionally labelled 1-5), and
+further that two pairs of these are colocated at two disomic loci and
+one is monosomic, then there are a number of possible arrangements for
+these alleles on the chromosome.  In the language of the package, we
+wish to enumerate the partitions of a set of five elements (the
+alleles) into equivalence classes of size~2,2,1 (the loci).  The five
+alleles are arranged into two from one disomic locus, two from another
+disomic locus, and one from a monosomic locus.
+
+Enumerating the possible arrangements is accomplished using the
+\code{setparts()} function:
+
+<<alleles,echo=TRUE>>=
+setparts(c(2,2,1))
+@ 
+
+Each column comprises two~\code{1}s, two~\code{2}s, and one~\code{3}.
+Thus the first column, \code{x=12321}, say, indicates that alleles~1
+and~5 [\code{which(x==1)}] occur at the first locus (which is
+disomic); alleles~2 and~4 [\code{which(x==2)}] at the second (also
+disomic); and allele~3 [\code{which(x==3)}] at the third locus, which
+is monosomic.  This could be written~$(15)(24)(3)$; the \proglang{R}
+idiom would be
+
+<<use_achims_idea,echo=TRUE>>=
+a <- c(1,2,3,2,1)
+split(seq_along(a),a)
+@ 
+
+[use \code{listParts(c(2,2,1))} to see all possible equivalence classes].
+Two examples of electrophoresis gels, corresponding to the partitions
+of the first and last columns respectively, are shown in
+figure~\ref{electrophoresis_gels}, which is analogous to Figure~1
+of~\citet{rodzen2002}.
+
+\begin{figure}[htbp]
+  \begin{center}
+    \includegraphics{strand}
+    \caption{Two electrophoresis gels \label{electrophoresis_gels}
+      showing the possible bands that can occur with two different
+      arrangements of alleles.  In both gels, two loci are disomic,
+      and one is monosomic.  Left, gel corresponding to $(15)(24)(3)$,
+      or \code{12321}; this would mean that alleles~1 and~5 are at one
+      disomic locus, alleles~2 and~4 at another, and allele~3 at a
+      monosomic locus.  Thus band combinations~1-5 and~2-4 are absent.
+      The gel on the right corresponds to~$(1)(24)(35)$, or
+      \code{31212}}
+  \end{center}
+\end{figure}
+
+\subsection{Scheduling theory}
+
+The ``augmented multiprocessing model'' is an abstract description of
+a certain class of problems that occurs frequently in the field of
+scheduling theory~\citep{garey1975}.  We consider a simple variant of
+the augmented multiprocessing model (specifically, the ``three
+partition problem'', which is known to be NP-complete) and solve it
+using the software presented here.
+
+Consider a set of tasks~${\mathcal T}=\{T_1,\ldots,T_m\}$; task~$i$
+requires time~$\tau_i$ for its completion in the sense that if it
+begins executing at time~$t$ it will complete at time~$t+\tau_i$.
+Each of these tasks is to be executed by one of~$n$ processors.  It is
+desired to allocate the tasks among the processors so that all tasks
+are completed in the minimum possible time.
+
+Thus if there are~$m=4$ tasks with~$T_i$ requiring~$\tau_i=i$ time
+units (``seconds'') for completion, and~$n=2$ processors, it is clear
+that allocating tasks~1 and~4 to one processor, and tasks~2 and~3 to
+the second is optimal.  This would correspond to the set
+partition~$(14)(23)$; the time required is~$1+4=2+3=5$ seconds.  Other
+allocations such as~$(24)(13)$ would take longer ($2+4=6$ seconds).
+
+More complex examples are not so straightforward.  Consider the case
+where~$m=9$ and again~$\tau_i=i$; now there are~$n=3$ processors.  The
+possible task schedules may be enumerated using the
+\code{restrictedparts()} function\footnote{Recall that
+  \code{restrictedparts(a,b)} enumerates the possible partitions of
+  \code{a} into at most \code{b} parts.}  of the \pkg{partitions}
+package:
+
+<<echo=FALSE,print=FALSE>>=
+options(width=63)
+m <- 9
+n <- 3
+@ 
+
+<<setpartsrestrictedparts,echo=TRUE>>=
+jj <- setparts(restrictedparts(m,n,include.zero=FALSE))
+summary(jj)
+@ 
+
+Each column corresponds to a task allocation schedule.  The first
+column, for example, indicates that tasks 1,2,3,4,7,8,9 are allocated
+to processor~1, task~5 to processor~2, and task~6 to processor~3 and
+the set partition might be written~$(1234789)(5)(6)$.  In the matrix,
+the maximum entry of each column is~3, showing that all three
+processors are always used (setting \code{include.zero} to \code{TRUE}
+would relax this requirement and allow some columns to correspond to
+allocations in which only one or two processors are allocated a
+nonzero number of tasks).
+
+The objective function to be minimized is just the time for the
+processor which finished last:
+
+<<definepenaltyfunctionF,echo=TRUE>>=
+tau <- 1:9
+slowest <-  function(x) max(tapply(tau, x, sum))
+@ 
+
+The minimal objective function is clearly 45/3=15.  Identifying
+allocations that attain this bound is straightforward:
+
+<<show_the_best,echo=TRUE>>=
+time.taken <- apply(jj,2,slowest)
+minimal.time <- sum(tau)/n
+jj[,time.taken == minimal.time]
+@ 
+
+Thus~\Sexpr{sum(time.taken==minimal.time)} allocations attain the maximal
+possible efficiency: a conclusion difficult to achieve without
+enumeration.  These optima may be differentiated using some secondary
+characteristic, such as even distribution of the {\em number} of tasks
+among the processors.  This would prescribe either the eighth or ninth
+columns, which both allocate three tasks to each processor.
+
+\subsection{Forensic science}
+
+In the field of forensic science, one situation sometimes encountered
+is the following.  Crimes~$C_j$, where~$i=1,\ldots,n$ have been
+committed; it is desired to infer how many perpetrators are responsible
+and which crimes each perpetrator is responsible for.  One prominent
+example would be multiple unsolved homicides~\citep{roberts2003}.
+
+Evidence at each of the~$n$ crime scenes is available in the form
+of~$m$ Bernoulli random variables that indicate various forensic
+characteristics at the crime scene (examples might include presence or
+absence of a weapon, forced entry, etc).  The evidence may be
+organized in a~$m$-by-$n$ matrix~$E$ of zeroes and ones indicating
+whether forensic characteristic~$i$ was true at crime scene~$j$,
+where~$1\leqslant i\leqslant m$ and~$1\leqslant j\leqslant n$.
+
+A given row of~$E$ thus corresponds to a particular type of evidence;
+if perpetrator~$k$ committed crime~$j$, we would have~$E_{ij}=1$ with
+probability~$p_{ik}$, specific to perpetrator~$k$.  For each
+evidence~$i$, it is assumed that each perpetrator has a~$p_{ik}$
+chosen at random from a beta distribution with
+parameters~$\alpha_i,\beta_i$ for~$1\leqslant i\leqslant m$, and that
+all perpetrators have the same~$\alpha_i,\beta_i$; these will be known
+(or at least estimated) from previous studies of similar crimes.  An
+example is shown below.
+
+<<define.E.matrix, echo=FALSE,print=FALSE>>=
+E <- matrix(c(0,0,0,1,1,0,0,0,1,1,1,1,1,0,0), 5,3)
+dimnames(E) <-  list(
+                     evidence=paste("E",1:5,sep=""),
+                     crime=paste("C",1:3,sep="")
+                     )
+@ 
+
+
+<<print.E,echo=FALSE, print=TRUE>>=
+E
+@ 
+
+Thus in this example there are~$n=3$ crimes and~$m=5$ forensic
+characteristics.  Observe that~\code{C1} and~\code{C2} have identical
+evidence, and that~\code{C3} has contrary evidence.  This would
+suggest that there are exactly two perpetrators: one responsible for
+\code{C1} and \code{C2}, and one for \code{C3}, corresponding to
+partition~$(12)(3)$; the hypothesis that this is the case is
+written~$H_{[1,1,2]}$.
+
+Considering a single type of evidence, and a single perpetrator, the
+probability of observing~$a$ successes and~$b$ failures is
+
+\[
+\frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)}
+\int_{p=0}^1
+\left[
+\frac{(a+b)!}{a!b!}
+p^{a}(1-p)^{b}
+\right]
+p^{\alpha-1}(1-p)^{\beta-1}\,dp=
+\frac{(a+b)!}{a!b!}\cdot
+\frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)}\cdot
+\frac{\Gamma(a+\alpha)\Gamma(b+\beta)}{\Gamma(a+b+\alpha+\beta)}.
+\]
+
+Here the probability~$p$ is integrated over its range, weighted by its
+prior (the posterior would also be a beta distribution, with
+parameters~$\alpha+a$ and~$\beta+b$).
+
+Now consider a set partition~$\wp=T_1,\ldots,T_{r}$ of crimes;
+identify a perpetrator with each equivalence class of crimes and
+observe that a single perpetrator has~$m$ specific values of~$p_i$,
+$1\leqslant i\leqslant m$ and acts independently of other
+perpetrators.  The likelihood of~$\wp$ is then
+\[
+{\mathcal L}(\wp)=
+C\left(\frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)}\right)^r
+\cdot\prod_{k=1}^{r}\prod_{i=1}^{m}
+\frac{\Gamma(a_{ik}+\alpha_i)\Gamma(b_{ik}+\beta_i)}{\Gamma(a_{ik}+b_{ik}+\alpha_i+\beta_i)}
+\]
+where~$a_{ik}=\sum_{j\in T_k}E_{ij}$ and~$b_{ik}=\sum_{j\in
+  T_k}1-E_{ij}$ are the total successes and failures for evidence~$i$
+due to perpetrator~$k$ (under~$H_\wp$).  Here~$C$ denotes an
+arbitrary multiplicative constant.
+
+It is interesting to note that the case $\alpha=\beta=1$ is not
+uninformative in this context, even though this induces a uniform
+prior distribution on~$p$.  To see this, consider the first line of
+the five by three matrix above [\code{0,0,1}].
+
+The likelihood function for this row is on five partitions:
+\begin{eqnarray*}
+{\mathcal L}(H_{[1,1,1]}) &=&
+\frac{\Gamma(\alpha+1)\Gamma(\beta+2)}{\Gamma(\alpha+\beta+3)}\cdot
+\left(\frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)}\right)^1\\
+{\mathcal L}(H_{[1,2,1]}) &=&
+\frac{\Gamma(\alpha+1)\Gamma(\beta+1)}{\Gamma(\alpha+\beta+2)}\cdot
+\frac{\Gamma(\alpha)\Gamma(\beta+1)}{\Gamma(\alpha+\beta+1)}\cdot
+\left(\frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)}\right)^2\\
+{\mathcal L}(H_{[1,1,2]}) &=&
+\frac{\Gamma(\alpha)\Gamma(\beta+2)}{\Gamma(\alpha+\beta+2)}\cdot
+\frac{\Gamma(\alpha+1)\Gamma(\beta)}{\Gamma(\alpha+\beta+1)}\cdot
+\left(\frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)}\right)^2\\
+{\mathcal L}(H_{[2,1,1]}) &=&
+\frac{\Gamma(\alpha+1)\Gamma(\beta+1)}{\Gamma(\alpha+\beta+2)}\cdot
+\frac{\Gamma(\alpha)\Gamma(\beta+1)}{\Gamma(\alpha+\beta+1)}\cdot
+\left(\frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)}\right)^2\\
+{\mathcal L}(H_{[1,2,3]}) &=&
+\frac{\Gamma(\alpha)\Gamma(\beta+1)}{\Gamma(\alpha+\beta+1)}\cdot
+\frac{\Gamma(\alpha)\Gamma(\beta+1)}{\Gamma(\alpha+\beta+1)}\cdot
+\frac{\Gamma(\alpha+1)\Gamma(\beta)}{\Gamma(\alpha+\beta+1)}\cdot
+\left(\frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)}\right)^3.
+\end{eqnarray*}
+
+Thus if~$\alpha=\beta=1$ the likelihood function is
+\begin{eqnarray*}
+{\mathcal L}(H_{[1,1,1]}) &=&
+C/12\\
+{\mathcal L}(H_{[1,2,1]}) &=&
+C/12\\
+{\mathcal L}(H_{[1,1,2]}) &=&
+C/6\\
+{\mathcal L}(H_{[2,1,1]}) &=&
+C/12\\
+{\mathcal L}(H_{[1,2,3]}) &=&
+C/8
+\end{eqnarray*}
+
+so the highest likelihood is indeed that of~$H_{[1,1,2]}$.  It is also
+instructive to assume~$\alpha=\beta$ and consider the limit
+as~$\alpha\longrightarrow 0$.  This would correspond to perpetrators
+having either a very small~$p$, or~$p$ close to~1, intermediate values
+being rare.  To first order in~$\alpha$:
+\begin{eqnarray*}
+{\mathcal L}(H_{[1,1,1]}) &=&
+C\cdot\alpha/4\\
+{\mathcal L}(H_{[1,2,1]}) &=&
+C\cdot\alpha/4\\
+{\mathcal L}(H_{[1,1,2]}) &=&
+C\cdot(1-\alpha)/4\\
+{\mathcal L}(H_{[2,1,1]}) &=&
+C\cdot\alpha/4\\
+{\mathcal L}(H_{[1,2,3]}) &=&
+C\cdot 1/8
+\end{eqnarray*}
+
+so the maximum likelihood partition would again be~$H_{[1,1,2]}$; but
+one would not be able to reject the hypothesis that there are three
+distinct perpetrators (that is, $H_{[1,2,3]}$) at the two units of
+support level.
+
+As a final example, consider the case where~$\alpha=\beta$
+and~$\alpha\longrightarrow\infty$.  This corresponds to each
+perpetrator leaving positive evidence with probability~$\frac{1}{2}$.
+The five likelihoods all tend to the same limit.
+
+\subsubsection{Generalization to arbitrary factors}
+
+These ideas have a natural generalization to arbitrary factors.  The
+beta distribution becomes a Dirichlet distribution and the posterior
+probability becomes
+
+\[
+\frac{\left(\sum a_l\right)!}{\prod a_l!}
+\frac{\Gamma\left(\sum\alpha_l\right)}{\prod\Gamma\left(\alpha_l\right)}
+\frac{\prod\Gamma\left(a_l+\alpha_l\right)}{\Gamma\left(\sum a_l+\sum\alpha_l\right)}
+\]
+where outcome~$l$ is observed with frequency~$a_l$ and the
+corresponding prior distributions are Dirichlet with
+parameters~$\alpha_i=\left(\alpha_{i1},\ldots,
+  \alpha_{iu}\right)$.  The likelihood is then
+\begin{equation}\label{like.mult}
+{\mathcal L}(\wp)=
+C\prod_{i=1}^{n}
+\left[
+\left(
+\frac{\Gamma\left(\sum_l\alpha_{il}\right)}{\prod_l\Gamma\left(\alpha_{il}\right)}
+\right)^r
+\prod_{k=1}^{r}
+%\cdot\frac{\left(\sum_{l}a_{ikl}\right)!}{\prod_la_{ikl}!}
+\frac{\prod_l\Gamma\left(a_{ikl} + \alpha_{il}\right)}{\Gamma\left(
+\sum_l\left(a_{ikl}+\alpha_{il}\right)\right)}
+\right]
+\end{equation}
+where~$a_{ikl}$ is the frequency of outcome~$l$ for evidence~$i$ and
+perpetrator~$k$, under~$H_\wp$.
+
+\paragraph{Example}
+
+<<set.evidence.matrix,echo=FALSE,print=FALSE>>=
+a <- 
+structure(
+          c(2, 2, 4, 4, 3, 1, 2, 1, 1, 2, 2, 1, 4, 2, 1, 2, 1, 
+            4, 2, 4, 2, 1, 4, 4, 1, 2, 1, 4, 2, 1, 1, 2, 1, 1, 2),
+          .Dim = c(5L, 7L),
+          .Dimnames = list(
+            evidence=paste("E",1:5,sep=""),
+            crime=paste("C",1:7,sep="")
+            )
+)
+@ 
+
+Consider a case where seven crimes have been committed; there are five
+forensic characteristics.  The evidence matrix is as follows:
+
+<<show.a,echo=FALSE,print=TRUE>>=
+a
+@ 
+
+Each column corresponds to a crime and each row corresponds to a
+forensic characteristic.  Rows~1 and~2 are Bernoulli: each is either~1
+or~2.  Rows~3-5 are Dirichlet with four possible outcomes.  In this
+case, it is assumed that the prior is uniform,
+viz~$\alpha_1=\alpha_2=1$ for rows~1 and~2
+and~$\alpha_1=\alpha_2=\alpha_3=\alpha_4=1$ for rows~3-5.
+
+<<calc.likelihoods,cache=TRUE>>=
+genbeta <- function(x){gamma(sum(x))/prod(gamma(x))}
+
+lp <- function(evidence, alpha, partition){
+  r <- length(unique(partition))
+  evidence <- as.factor(evidence)
+  levels(evidence) <- seq_along(alpha)
+  out <- 1
+  for(k in unique(partition)){  #k is a perp
+    thisperp <- partition==k
+    evidence.thisperp <- evidence[thisperp]
+    no.of.crimes.thisperp <- sum(thisperp)
+    out <- out/genbeta(alpha+table(evidence.thisperp))
+  }
+  return(out*genbeta(alpha)^r)
+}
+
+sp <- setparts(7)
+l1 <- apply(sp,2, function(x){lp(evidence=a[1,],alpha=rep(1,2),partition=x)})
+l2 <- apply(sp,2, function(x){lp(evidence=a[2,],alpha=rep(1,2),partition=x)})
+l3 <- apply(sp,2, function(x){lp(evidence=a[3,],alpha=rep(1,4),partition=x)})
+l4 <- apply(sp,2, function(x){lp(evidence=a[4,],alpha=rep(1,4),partition=x)})
+l5 <- apply(sp,2, function(x){lp(evidence=a[5,],alpha=rep(1,4),partition=x)})
+
+likelihood <- l1*l2*l3*l4*l5
+likelihood <- likelihood/max(likelihood)
+support <- log(likelihood)
+@ 
+
+\begin{figure}[htbp]
+  \begin{center}
+<<plotlikelihoods,fig=TRUE>>=
+par(mfcol=c(1,2))
+plot(likelihood,ylab="likelihood",xlab="hypothesis")
+abline(h = exp(-2))
+plot(support,ylab="support",xlab="hypothesis")
+abline(h = -2)
+@
+\caption{The\label{support.function} likelihood (left) and support
+  (right) for each of the~877 partitions on a set of seven elements.
+  The horizontal line shows two units of support less than the
+  maximum}
+  \end{center}
+\end{figure}
+
+Figure~\ref{support.function} shows the likelihood and support for
+each of the distinct set partitions on a set of six elements: variable
+\code{support} is from Equation~\ref{like.mult}.  The maximum
+likelihood estimator is given by
+
+<<show.maximum.likelihood,echo=TRUE,print=FALSE>>=
+sp <- setparts(7)
+<<echo=TRUE,print=TRUE>>=
+sp[,which.max(support)]
+@ 
+
+which could be written~$(3456)(27)(1)$.  This suggests that crimes~3-6
+were committed by the same perpetrator, crimes~2 and~7 by another
+perpetrator, and crime~1 by a third perpetrator.  Note that the
+maximum likelihood hypothesis is unique.
+
+The likelihood function may be used to identify those hypotheses that
+cannot be rejected on the grounds of insufficient support.  There
+are~9 partitions that have fewer than two units of support less than
+the maximum.  These are:
+
+<<likelihood.gt.2>>=
+index <- order(support,decreasing=TRUE)
+sp <- sp[,index]
+support <- support[index]
+dimnames(sp) <- list(
+                     crime = paste("C",1:7, sep=""),
+                     partition =  paste("H",1:ncol(sp),sep="")
+                     )
+<<echo=TRUE,print=TRUE>>=
+ sp[, support > -2]
+@ 
+
+and the supports for these hypotheses are
+
+<<show.likelihoods,echo=TRUE,print=TRUE>>=
+support[support > -2]
+@ 
+
+respectively.
+
+Interpretation of this result is not straightforward.  One may assert
+that crimes~\code{C3} and~\code{C6} were committed by the same
+perpetrator, and that certain pairs of crimes (specifically
+\code{C2}-\code{C3}, \code{C2}-\code{C4}, \code{C2}-\code{C5},
+\code{C2}-\code{C6}, \code{C3}-\code{C7}, \code{C4}-\code{C7},
+\code{C5}-\code{C7}, and~\code{C6}-\code{C7}) were committed by
+different perpetrators: for any hypothesis that does not satisfy these
+criteria, one could gain at least two units of support by adopting
+instead the best supported hypothesis~$H_{[3,2,1,1,1,1,2]}$,
+corresponding to~$(3456)(27)(1)$.
+
+\section{Conclusions}
+
+Enumeration of set partitions is required in several branches of
+computational combinatorics.
+
+The software discussed in this code snippet enumerates set partitions
+for finite sets, under a variety of restrictions on the sizes of the
+induced equivalence classes and was used to solve three problems drawn
+from diverse applications in computational statistics.
+
+\subsection*{Acknowledgement}
+We would like to acknowledge the many stimulating and insightful
+comments made on the \proglang{R}-help list while preparing this
+software.
+
+\bibliography{partitions}
+\end{document}
+
+

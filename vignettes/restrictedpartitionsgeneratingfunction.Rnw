@@ -1,0 +1,235 @@
+\documentclass[nojss]{jss}
+
+\usepackage{dsfont}
+\usepackage{bbm}
+\usepackage{amsfonts}
+\usepackage{wasysym}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% declarations for jss.cls %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%% just as usual
+\author{Robin K. S. Hankin\\Auckland University of Technology}
+\title{A generating function for restricted partitions}
+%\VignetteIndexEntry{A generating function for restricted partitions}
+
+%% for pretty printing and a nice hypersummary also set:
+\Plainauthor{Robin K. S. Hankin}
+\Plaintitle{A generating function for restricted partitions}
+\Shorttitle{A generating function for restricted partitions}
+
+%% an abstract and keywords
+\Abstract{
+
+A generating function for restricted partitions (originally due, as
+far as I can tell, to \citet{wilf2000}) is presented and R idiom using
+the \pkg{spray} package given.  The generating function approach is
+shown to be not particularly efficient compared to the direct
+enumeration used in the \code{partitions} package.  }
+
+
+\Keywords{Restricted partitions, generating function, R}
+\Plainkeywords{Restricted partitions, generating function, R}
+
+%% publication information
+%% NOTE: This needs to filled out ONLY IF THE PAPER WAS ACCEPTED.
+%% If it was not (yet) accepted, leave them commented.
+%% \Volume{13}
+%% \Issue{9}
+%% \Month{September}
+%% \Year{2004}
+%% \Submitdate{2004-09-29}
+%% \Acceptdate{2004-09-29}
+
+%% The address of (at least) one author should be given
+%% in the following format:
+\Address{
+  Robin K. S. Hankin\\
+  Auckland University of Technology\\
+  AUT Tower\\
+  Wakefield Street\\
+  Auckland, New Zealand\\
+  E-mail: \email{hankin.robin@gmail.com}
+}
+%% It is also possible to add a telephone and fax number
+%% before the e-mail in the following format:
+%% Telephone: +43/1/31336-5053
+%% Fax: +43/1/31336-734
+
+%% for those who use Sweave please include the following line (with % symbols):
+%% need no \usepackage{Sweave.sty}
+
+%% end of declarations %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\SweaveOpts{echo=FALSE}
+\begin{document}
+
+\newsymbol\leqslant 1336
+
+\section{Introduction}
+
+The \pkg{partitions} package gives functionality for various integer partition enumeration problems including that of restricted partitions, function \code{restrictedparts()}:
+
+<<userestrictedpartsfunction,print=FALSE,echo=TRUE>>=
+library("partitions")
+<<print=TRUE,echo=TRUE>>=
+jj <- restrictedparts(7,3)
+ncol(jj)
+@
+
+Here I will consider function \code{R()}, which calculates the size of
+the matrix required:
+
+<<useRopenclose,print=TRUE,echo=TRUE>>=
+R(3,7,include.zero=TRUE)
+@
+
+Function \code{R()} is very basic; all it does is to go through all
+the restricted partitions, counting them one by one until the
+recursion bottoms out:
+
+\begin{verbatim}
+unsigned int numbrestrictedparts(int *x, const int m){
+        unsigned int count=1;
+
+        while(c_nextrestrictedpart(x, &m)==0){
+           count++;
+        }
+        return count;
+}
+\end{verbatim}
+
+To implement a potentially more efficient method, we can use
+generating functions.  Here we follow Wilf and, using his terminology,
+define an infinie polynomial~$P(x,y)$ as follows:
+
+\begin{equation}\label{GF}
+P(x,y) = \prod_{r=0}^\infty\frac{1}{1-x^ry}
+\end{equation}
+
+Or, expanding:
+
+\begin{equation}\label{GF2}
+P(x,y) =
+\left(1+y+y^2+y^3 + \cdots\right)
+\left(1 + xy + x^2y^2 + x^3y^3+\cdots\right)
+%\left(1 + x^2y + x^4y^2+x^6y^3+\cdots\right)
+\cdots
+\left(1+x^ry+x^{2r}y^{2}+x^{3r}y^{3}+\cdots\right)\cdots
+\end{equation}
+
+The power of~$x$ counts the total of the chosen integers (the size of the partition), and the power of~$y$ counts the number of integers chosen (the length of the partition).  Thus the number of partitions of~$k$ into at most~$n$ parts is the coefficient of~$x^ky^n$ in~$P(x,y)$.
+
+In numerical work it is convenient and efficient to ignore terms with a power of~$x$ higher than~$n$ (sum of integers chosen exceeds~$n$), or with power of~$y$ higher than~$k$ (number of integers chosen exceeds~$k$)
+ 
+Taking \code{R(3,7,include.zero=TRUE)} as an example we would truncate equation~\ref{GF2} as follows:
+
+\begin{eqnarray}\label{GF3}
+P(x,y) = &{}&
+\left(1+y+y^2+y^3\right)
+\left(1 + xy + x^2y^2 + x^3y^3\right)
+\left(1 + x^2y + x^4y^2+x^6y^3\right)\times\nonumber\\
+&{}&\left(1 + x^3y + x^6y^2\right)
+\left(1 + x^4y\right)
+\left(1 + x^5y\right)
+\left(1 + x^6y\right)
+\left(1 + x^7y\right)
+\end{eqnarray}
+
+and the coefficients of~$P(x,y)$ up to $x^7y^3$ would correctly count
+the restricted partitions.
+
+Note that we need consider only at most four terms in each bracket (powers
+of~$y$ above three being irrelevant) and we may stop the continued product
+at the~$x^7$ term as further brackets contain only one and powers of~$x$
+above the eighth.
+
+The R implementation uses the \code{spray} package, in particular
+function \code{ooom(x)} which returns~$\frac{1}{1-x}$.
+
+<<define_Rgf_version1,echo=TRUE>>=
+library("spray")
+R_gf <- function(k,n){   # version 1
+   x <- spray(cbind(1,0))
+   y <- spray(cbind(0,1))
+   P <- ooom(y,k)  # term x^0; number of zeros chosen
+   for(i in seq_len(k)){  # starts at 1
+     P <- P*ooom(x^i*y,n)
+   }
+   return(value(P[k,n]))
+}
+@ 
+
+
+Thus
+
+<<echo=TRUE, print=TRUE>>=
+R_gf(7,3)
+@ 
+
+We can do slightly better in terms of efficiency by ruthlessly cutting
+out powers higher than needed:                
+                         
+<<define_strip,echo=TRUE>>=
+strip <- function(P,k,n){  # strips out powers higher than needed
+  ind <- index(P)
+  val <- value(P)
+  wanted <- (ind[,1] <= k) & (ind[,2] <= n)
+  spray(ind[wanted,],val[wanted])
+}
+@ 
+
+which is used here:
+                
+<<define_Rgf_version2,echo=TRUE>>=
+R_gf2 <- function(k,n,give_poly=FALSE){
+   x <- spray(cbind(x=1,y=0))
+   y <- spray(cbind(x=0,y=1))
+   P <- ooom(y,k)  # term x^0
+   for(i in seq_len(k)){  # starts at 1
+     P <- strip(P*ooom(spray(cbind(i,0))*y, min(n,ceiling(k/i))),k,n)
+   }
+   if(give_poly){
+     return(P)
+   } else {
+     return(value(P[k,n]))
+   }
+}
+@ 
+
+then
+
+<<rgf2_use,echo=TRUE,print=TRUE>>=
+R_gf2(7,3)
+@
+
+\section{Computational efficiency}
+
+We can test the computational efficiency of the generating function approach using larger values of~$k$ and~$n$:
+
+
+<<test,echo=TRUE, print=FALSE>>= 
+k <- 140
+n <- 4
+<<echo=TRUE,print=TRUE>>=
+system.time(jj1 <- R(n,k,include.zero=TRUE))
+system.time(jj2 <- R_gf2(k,n))
+jj1==jj2
+@ 
+
+So the generating function approach is not particularly efficient, at
+least not in this sort of use-case with the \pkg{spray} package.  It
+might be better with the \pkg{skimpy} package; I don't know.
+
+Of course, \code{R_gf2()} calculates the generating polynomial
+which gives very much more information than is returned.  Perhaps this
+is why it is so slow compared to function \code{R()}, although it is
+surprising to see direct enumeration so heavily outperforming a
+generating function.
+
+
+\bibliography{partitions}
+\end{document}

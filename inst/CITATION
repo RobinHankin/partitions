@@ -1,0 +1,24 @@
+citHeader("To cite in publications use:")
+
+citEntry(entry = "Article",
+	 title = {
+             paste("Additive integer partitions in R")
+	     },
+	 author = "R. K. S. Hankin",
+	 journal = "Journal of Statistical Software, Code Snippets",
+         year = "2006",
+	 month = "May",
+	 volume = "16",
+	 issue = "1",
+	 textVersion = {
+             paste("R. K. S. Hankin",
+                   "2006.",
+                   "Additive integer partitions in R,",
+	     	   "Journal of Statistical Software, Code Snippets",
+		   "16(1)"
+		   )
+         }	   
+)
+
+
+

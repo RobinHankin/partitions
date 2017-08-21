@@ -1,0 +1,322 @@
+% -*- mode: noweb; noweb-default-code-mode: R-mode; -*-
+\documentclass[nojss]{jss}
+\usepackage{dsfont}
+\usepackage{bbm}
+\usepackage{amsfonts}
+\usepackage{wasysym}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% declarations for jss.cls %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%% just as usual
+\author{Robin K. S. Hankin\\Auckland University of Technology}
+\title{Urn Sampling Without Replacement: Enumerative Combinatorics In
+  \proglang{R}}
+%\VignetteIndexEntry{Urn sampling without replacement}
+
+%% for pretty printing and a nice hypersummary also set:
+\Plainauthor{Robin K. S. Hankin}
+\Plaintitle{Urn sampling without replacement: enumerative combinatorics in
+  R}
+\Shorttitle{Urn sampling without replacement}
+
+%% an abstract and keywords
+\Abstract{This vignette is based on~\cite{hankin2007}.
+
+  This short paper introduces a code snippet in the form of
+  two new \proglang{R} functions that enumerate possible draws from an urn
+  without replacement; these functions call  \proglang{C}
+  code, written by the author.  Some simple combinatorial problems are solved
+  using the software.
+
+  For reasons of performance, this vignette uses pre-calculated
+  answers.  To calculate everything from scratch, set variable {\tt
+    calculate\_from\_scratch} in the first chunk to {\tt TRUE}.
+}
+
+\Keywords{Urn problems, drawing without replacement, enumerative
+  combinatorics, Scrabble, \proglang{R}}
+\Plainkeywords{Urn problems, drawing without replacement, enumerative
+  combinatorics, Scrabble, R}
+
+%% publication information
+%% NOTE: This needs to filled out ONLY IF THE PAPER WAS ACCEPTED.
+%% If it was not (yet) accepted, leave them commented.
+%% \Volume{13}
+%% \Issue{9}
+%% \Month{September}
+%% \Year{2004}
+%% \Submitdate{2004-09-29}
+%% \Acceptdate{2004-09-29}
+
+%% The address of (at least) one author should be given
+%% in the following format:
+\Address{
+  Robin K. S. Hankin\\
+  Auckland University of Technology\\
+  AUT Tower\\
+  Wakefield Street\\
+  Auckland, New Zealand\\
+  E-mail: \email{hankin.robin@gmail.com}
+}
+%% It is also possible to add a telephone and fax number
+%% before the e-mail in the following format:
+%% Telephone: +43/1/31336-5053
+%% Fax: +43/1/31336-734
+
+%% for those who use Sweave please include the following line (with % symbols):
+%% need no \usepackage{Sweave.sty}
+
+%% end of declarations %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newsymbol\leqslant 1336
+\SweaveOpts{echo=FALSE}
+\begin{document}
+<<set_cutdownproblem,echo=FALSE,print=FALSE>>=
+<<results=hide>>=
+do_from_scratch <- FALSE
+@ 
+
+\section{Introduction}
+
+Drawing balls from an urn without replacement is a classical paradigm
+in probability~\citep{feller1968}.  It is useful in practice, and many
+elementary statistics textbooks use it to introduce the binomial and
+hypergeometric distributions.
+
+In this paper, I introduce software, written by the author, that
+enumerates\footnote{Enumerate: ``to mention [a number of things] one
+by one, as if for the purpose of counting''} all possible draws from
+an urn containing specified numbers of balls of each of a finite
+number of types.  Order is not important in the sense that drawing AAB
+is equivalent to drawing ABA or BAA.  Formally, drawing~$n$ balls
+without replacement from an urn containing $f_1,f_2,\ldots,f_S$ balls
+of types $1,2,\ldots, S$ is equivalent to choosing a solution
+$a_1,\ldots,a_S$ to the Diophantine equation
+\begin{equation}
+\label{basic_equation}
+\sum_{i=1}^Sa_i=n,\qquad 0\leqslant a_i\leqslant f_i,
+\end{equation}
+with
+probability~$\left.\left(\begin{array}{c}f_i\\a_i\end{array}\right)\right/
+\left(\begin{array}{c}\sum f_i\\n\end{array}\right)$.
+
+Combinatorial enumeration is often necessary in the context of integer
+optimization: the appropriate configurations are enumerated and the
+optimal one reported.  Sometimes explicit enumeration is needed to
+count solutions satisfying some condition: simply enumerate candidate
+solutions, then test them one by one.  
+
+The software discussed here comprises two new \proglang{R}
+\citep{rmanual} functions \code{S()} and \code{blockparts()}, which
+are currently part of the \pkg{partitions} package~\citep{hankin2006},
+version 1.3-3.  These functions call \proglang{C} code, also written
+by the author, which is available as part of the package.
+
+All software is available from CRAN, \url{http://CRAN.r-project.org/}.
+
+\section{Examples}
+
+The software associated with this snippet is now used to answer a
+variety of combinatorial questions, written in textbook example style,
+that require enumerative techniques to solve.
+
+{\bf\em Question\/} A chess player is considering endgames in which
+White has a king, no pawns, and exactly three other pieces.  What
+combinations of white pieces are possible?  No promotions have
+occurred.
+ 
+{\bf\em Answer\/} This is an urn problem with a pool of~7 objects, in
+this case non-king chess pieces.  An enumeration of the size-3 draws
+is required, which is given by new function {\tt blockparts()}.  This
+function enumerates the distinct solutions to
+equation~\ref{basic_equation} in columns which appear in
+lexicographical order:
+
+<<load_library,echo=FALSE,print=FALSE>>=
+library(partitions)
+library(polynom)
+options(width=85)
+<<chess_problem,echo=TRUE,print=TRUE>>=
+blockparts(c(Bishops=2,Knights=2,Rooks=2,Queens=1),3)
+@ 
+The first sample appears as the first column: this is the first
+lexicographically, as all draws are from as low an index of \code{f}
+as possible.  Subsequent draws are in lexicographical order.  Starting
+with a draw \code{d}---a vector of \code{length(y)} elements---the
+next draw is obtained by the following algorithm:
+
+\begin{enumerate}
+\item Starting at the beginning of the vector, find the first block
+that can be moved one square to the right, and move it.  If no such
+block exists, all draws have been enumerated: {\bf stop}.
+\item Take all blocks to the left of the one that has moved, and place
+them sequentially in the frame, starting from the left.
+\item Go to item 1.
+\end{enumerate}
+
+
+Figure~\ref{blocks} shows an example of this in action.  The left
+diagram shows a draw of a bishop and two knights, corresponding to the
+the second column of the matrix returned by \code{blockparts()} above.
+The first block that can be moved is one of the knights.  This moves
+one place to the right and becomes a rook.  The remaining pieces (that
+is, one bishop and one knight) are redistributed starting from the
+left; they become two bishops.
+
+There are thus~\Sexpr{S(c(1,2,2,2),3)} combinations: note that the
+majority of them have no Queen.  The solutions are in lexicographical
+order, which is useful in some contexts. 
+
+\begin{figure}[htbp]
+  \begin{center}
+\includegraphics[width=10cm]{blocks}
+\caption{A pictorial description of the algorithm used in \label{blocks}
+  function \code{blockparts()}.  Three blocks (grey squares) are
+  arranged in a tableau (B, N, R, Q, representing the chess pieces
+  under consideration) in two consecutive configurations, the left
+  one first.  The larger, line squares above each piece name show the
+  maximum number of chess pieces allowed; thus the two knights in the
+  left diagram completely fill the `N' column and this indicates that
+  a maximum of two knights may be drawn.  The left diagram thus
+  corresponds to one bishop and two knights: this is column two in the
+  matrix returned by \code{blockparts()} in the \proglang{R} chunk
+  above.  The right diagram shows the next lexicographical
+  arrangement, corresponding to column three; the algorithm for the
+  change is described in the text} \end{center} \end{figure}
+
+{\bf\em Question\/} ``Scrabble'' is a popular word board game that
+involves choosing, at random, a rack of~7 tiles from a pool of~100
+with the following frequencies:
+
+<<scrabble_tiles>>=
+scrabble <-
+c(a=9,b=2,c=2,d=4,e=12,f=2,g=3,h=2,i=9,j=1,k=1,l=4,m=2,n=6,o=8,p=2,q=1,r=6,s=4,t=6,u=4,v=2,w=2,x=1,y=2,z=1," "=2)
+<<echo=TRUE>>=
+scrabble
+@ 
+
+(note the last entry: two of the tiles are blank).
+\begin{itemize}
+\item[({\bf\em i\/})] how many distinct racks are possible?
+\item[({\bf\em ii\/})] what proportion of racks have no blanks?
+\item[({\bf\em iii\/})] what is the most probable rack and what is its frequency?
+\end{itemize}
+
+{\bf\em Answer}
+
+({\bf\em i\/}).  The number of draws is given by function {\tt S()}.
+This function returns the number of solutions to
+equation~\ref{basic_equation} by determining the coefficient of $x^n$
+in the generating function~$\prod_{i=1}^S\sum_{j=0}^{f_i} x^j$ using
+the \pkg{polynom} \citep{venables2006} package:
+
+<<call_S,echo=TRUE>>=
+S(scrabble,7)
+@ 
+
+({\bf\em ii\/}).  The number of racks with no blank is given by function {\tt
+  S()}, applied with a suitably shortened vector argument; the
+proportion of racks with no blank is then:
+<<call_S_noblanks,print=TRUE,echo=TRUE>>=
+S(scrabble[-27],7)/S(scrabble,7)
+@ 
+
+Note that this question is distinct from that of determining the {\em
+  probability} of drawing no blanks, which is given by elementary
+combinatorial arguments as~{\small $\left. 
+\left(\begin{array}{c}98 \\7\end{array}\right)\right/
+\left(\begin{array}{c}100\\7\end{array}\right)
+$}, or about~\Sexpr{100*round(choose(98,7)/choose(100,7),2)}\%.   This
+value is larger because racks with one or more blanks have relatively
+low probabilities of being drawn.
+
+({\bf\em iii\/}).  To determine the most probable rack, we note that the
+probability of a given draw is given by
+\[
+\frac{
+\prod\left(\begin{array}{c}f_i\\a_i\end{array}\right)}
+    {\left(\begin{array}{c}100\\7\end{array}\right)}.
+\]
+
+The appropriate \proglang{R} idiom would be to enumerate all possible
+racks using \code{blockparts()}, and apply a function that calculates
+the probability of each rack:
+
+<<probOfRacks,print=FALSE,echo=FALSE,cache=TRUE>>=
+f <- function(a){prod(choose(scrabble,a))/choose(sum(scrabble),7)}
+if(do_from_scratch){
+  racks <- blockparts(scrabble,7)
+  probs <- apply(racks,2,f)
+  otarine_ans <- rep(names(scrabble), racks[, which.max(probs)])
+  max_probs <- max(probs)
+  mp <- min(probs)
+  a <- floor(log10(mp))
+  how_many_racks <- sum(probs==min(probs))
+} else {
+  load("answers.Rdata")
+}
+@  
+
+\begin{Schunk}
+\begin{Sinput}
+> f <- function(a) { prod(choose(scrabble, a))/choose(sum(scrabble), 7) }
+> racks <- blockparts(scrabble, 7)
+> probs <- apply(racks, 2, f)
+\end{Sinput}
+\end{Schunk}
+
+
+The draw of maximal probability is given by the maximal element of
+\code{probs}.  The corresponding rack is then:
+
+\begin{Schunk}
+\begin{Sinput}
+> rep(names(scrabble), racks[, which.max(probs)])
+\end{Sinput}
+\end{Schunk}
+
+<<print_otarine_letters,echo=FALSE,print=TRUE,cache=FALSE>>=
+otarine_ans
+@ 
+
+In the context of the full Scrabble problem, there is only one
+acceptable anagram of the most probable rack: ``otarine''.  Its
+probability is
+
+\begin{Schunk}
+\begin{Sinput}
+> max(probs)
+\end{Sinput}
+\end{Schunk} 
+
+<<print_max_probs,echo=FALSE,print=TRUE,cache=FALSE>>=
+max_probs
+@ 
+
+or just over once per~\Sexpr{ceiling(1/max_probs)} draws.  It is
+interesting to note that the {\em least} probable rack is not unique:
+there are exactly~\Sexpr{how_many_racks} racks each with
+minimal probability (about~$\Sexpr{round(mp/10^a,3)}\times
+10^{\Sexpr{a}}$).
+
+\section{Conclusions}
+
+The software discussed in this code snippet enumerates the possible
+draws from an urn made without replacement; it is used to answer
+several combinatorial questions that require enumeration for their
+answer.  Further work might include enumeration of solutions of
+arbitrary linear Diophantine equations.
+
+\subsection*{Acknowledgement}
+I would like to acknowledge the many stimulating and helpful comments
+made by the R-help list while preparing this software.
+
+I would also like to thank an anonymous referee who suggested that the
+\code{polynom} package could be used to evaluate the generating
+function appearing in \code{S()}.
+
+\bibliography{partitions}
+\end{document}
