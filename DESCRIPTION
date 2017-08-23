@@ -1,7 +1,7 @@
 Package: partitions
 Type: Package
 Title: Additive Partitions of Integers
-Version: 1.9-20
+Version: 1.9-21
 Date: 2017-08-21
 Author: Robin K. S. Hankin
 Maintainer: Robin K. S. Hankin <hankin.robin@gmail.com>
@@ -12,4 +12,9 @@ Description: Additive partitions of integers.  Enumerates the
   given.  Set partitions are now included.
 Suggests: spray
 License: GPL
+URL: https://github.com/RobinHankin/partitions.git
+BugReports: https://github.com/RobinHankin/issues
+
+
+
 
