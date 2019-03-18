@@ -1,9 +1,8 @@
 Package: partitions
 Type: Package
 Title: Additive Partitions of Integers
-Version: 1.9-21
-Date: 2017-08-21
-Author: Robin K. S. Hankin
+Version: 1.9-22
+Authors@R: person(given=c("Robin", "K. S."), family="Hankin", role = c("aut","cre"), email="hankin.robin@gmail.com", comment = c(ORCID = "0000-0001-5982-0415"))
 Maintainer: Robin K. S. Hankin <hankin.robin@gmail.com>
 Imports: gmp, polynom
 Description: Additive partitions of integers.  Enumerates the
