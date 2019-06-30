@@ -101,7 +101,7 @@ compositions(n, m=NULL, include.zero=TRUE)
     \code{4+1+1} is distinct from \code{1+4+1} or \code{1+1+4}.
 
     With two arguments, \code{compositions(n,m)} returns all
-    nonnegative solutions to \eqn{x_1+\ldots+x_m=n}{x_1+...+x_m=n}.
+    nonnegative solutions to \eqn{x_1+\cdots+x_m=n}{x_1+...+x_m=n}.
 
     This function is different from all the others in the package in
     that it is written in \R; it is not clear that C would be any
