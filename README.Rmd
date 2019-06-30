@@ -34,9 +34,9 @@ $$
 5 = 4+1 = 3+2 = 3+1+1 = 2+2+1 = 2+1+1+1 = 1+1+1+1+1
 $$
 
-and we might want to list all seven in a consistent format.
-
-
+and we might want to list all seven in a consistent format (note here
+that each sum is written in nonincreasing order, so $3+1$ is
+considered to be the same as $1+3$).
 
 # Installation
 
@@ -71,3 +71,67 @@ without repeats):
 summary(diffparts(16))
 ```
 
+
+## Restricted partitions
+
+Sometimes we have restrictions on the partition.  For example, to
+enumerate the partitions of 9 into 5 parts we would use
+```restrictedparts()```:
+
+```{r}
+summary(restrictedparts(9,5))
+```
+
+and if we want the partitions of 9 into parts not exceeding 5 we would
+use the conjugate of this:
+
+```{r}
+summary(conjugate(restrictedparts(9,5)))
+```
+
+
+## Block parts
+
+Sometimes we have restrictions on each element of a partition and in
+this case we would use ```blockparts()```:
+
+```{r}
+summary(blockparts(1:6,10))
+```
+
+which would show all solutions to $\sum_{i=1}^6a_i=9$, $a_i\leq i$.
+
+
+## Compositions
+
+Above we considered $3+2$ and $2+3$ to be the same partition, but if
+these are considered to be distinct, we need the _compositions_, not
+partitions:
+
+
+```{r}
+compositions(4)
+```
+
+## Set partitions
+
+A set of 4 elements, WLOG $\{1,2,3,4\}$, may be partitioned into
+subsets in a number of ways and these are enumerated with the
+```setparts()``` function:
+
+```{r}
+setparts(4)
+```
+
+In the above, column ```2 3 1 1``` would correspond to the set
+partition $\{\{3,4\},\{1\},\{2\}\}$.
+
+
+# Further information
+For more detail, see the package vignettes
+
+```
+vignette("partitionspaper")
+vignette("setpartitions")
+vignette("scrabble")
+``` 
