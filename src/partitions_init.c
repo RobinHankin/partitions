@@ -15,6 +15,7 @@ extern void c_bintocomp(void *, void *, void *);
 extern void c_comptobin(void *, void *, void *);
 extern void c_conjugate(void *, void *, void *, void *, void *);
 extern void c_durfee(void *, void *, void *, void *);
+extern void c_multiset(void *, void *, void *, void *);
 extern void c_nextblockpart(void *, void *, void *);
 extern void c_nextdiffpart(void *, void *);
 extern void c_nextpart(void *);
@@ -36,6 +37,7 @@ static const R_CMethodDef CEntries[] = {
     {"c_comptobin",           (DL_FUNC) &c_comptobin,           3},
     {"c_conjugate",           (DL_FUNC) &c_conjugate,           5},
     {"c_durfee",              (DL_FUNC) &c_durfee,              4},
+    {"c_multiset",            (DL_FUNC) &c_multiset,            4},
     {"c_nextblockpart",       (DL_FUNC) &c_nextblockpart,       3},
     {"c_nextdiffpart",        (DL_FUNC) &c_nextdiffpart,        2},
     {"c_nextpart",            (DL_FUNC) &c_nextpart,            1},

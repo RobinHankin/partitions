@@ -628,3 +628,32 @@ if(FALSE){
   dim(out) <- c(n,fn)
   return(as.partition(out))
 }
+
+`multiset` <-  function(v){
+  stopifnot(is_ok_multiset_start(v))  # v should be something like 122345
+  n <- length(v)
+  nnold <- factorial(n)/prod(factorial(table(v)))
+  nn <- round(exp(lfactorial(n)-sum(lfactorial(table(v)))))
+  print(nn)
+  print(nnold)
+  
+  out <- .C("c_multiset",
+            as.integer(v),
+            as.integer(n),
+            as.integer(nn),
+            ans = integer(n*nn),
+            PACKAGE="partitions"
+            )$ans
+  dim(out) <- c(n,nn)
+  return(as.partition(out))
+}
+
+is_ok_multiset_start <- function(v){
+  stopifnot(v==round(v))
+  stopinot(any(diff(v)<0))
+  return(TRUE)
+}
+
+
+  
+
