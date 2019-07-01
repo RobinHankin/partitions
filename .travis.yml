@@ -1,4 +1,15 @@
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
 
+before_install:
+    - tlmgr init-usertree
+    - tlmgr install wasysym
+    - tlmgr install ec
+    - tlmgr install cm-super
+    - tlmgr install yfonts
+    - tlmgr install scheme-full
+    - sudo apt-get install texlive-fonts-recommended
+    - sudo apt-get install texlive texlive-latex3
+    - sudo apt install texlive-latex-extra
+    - sudo apt-get install texlive-fonts-recommended texlive-fonts-extra texlive-latex-recommended
 language: R
 cache: packages
