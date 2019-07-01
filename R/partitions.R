@@ -650,7 +650,7 @@ if(FALSE){
 
 is_ok_multiset_start <- function(v){
   stopifnot(v==round(v))
-  stopinot(any(diff(v)<0))
+  stopifnot(all(diff(v) >= 0))
   return(TRUE)
 }
 
