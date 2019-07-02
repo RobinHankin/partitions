@@ -649,5 +649,6 @@ if(FALSE){
 `multiset` <- function(v,n){
   v <- sort(v)
   if(missing(n)){return(mset(v))}
+  if(n==1){return(as.partition(rbind(sort(unique(v)))))}
   as.partition(do.call("cbind",apply(apply(blockparts(table(v),n),2,function(u){rep(unique(v),u)}),2,mset)))
 }
