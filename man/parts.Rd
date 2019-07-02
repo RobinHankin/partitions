@@ -145,14 +145,14 @@ mset(v)
     \item N. J. A. Sloane, 2008, The On-Line Encyclopedia of Integer
     Sequences, \url{www.research.att.com/~njas/sequences/}, Sequence
     A001700
-    \item D. Knuth, 2004.  The art of computer programming, pre fascicle
+    \item D. Knuth, 2004.  The art of computer programming, pre-fascicle
   2B \dQuote{Generating all permutations}
   }
 }
 \examples{
 parts(5)
 diffparts(10)
-matplot(t(diffparts(27)),type='l')
+matplot(t(diffparts(27)),type='l',lty=1)
 
 restrictedparts(9,4)
 restrictedparts(9,4,FALSE)
@@ -162,7 +162,7 @@ blockparts(1:4)
 blockparts(1:4,3)
 blockparts(1:4,3,include.fewer=TRUE)
 
-blockparts(c(4,3,3,2),5)  # Knuth's example, Fascicle 3a, p16
+blockparts(c(4,3,3,2),5)  # Knuth's example, pre-fascicle 3a, p16
 
 compositions(4)           # not the same as parts(4)
 compositions(4,4) 
