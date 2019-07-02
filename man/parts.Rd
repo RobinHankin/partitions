@@ -174,5 +174,6 @@ sweep(blockparts(1:5-a,10-sum(a)),1,a,"+")
 #Knuth's example:
 multiset(c(1,2,2,3))
 
+multiset(rep(4+1:3,1:3),3)
 }
 \keyword{math}
