@@ -152,6 +152,8 @@ mset(v)
 \examples{
 parts(5)
 diffparts(10)
+matplot(t(diffparts(27)),type='l')
+
 restrictedparts(9,4)
 restrictedparts(9,4,FALSE)
 restrictedparts(9,4,decreasing=TRUE)
