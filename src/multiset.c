@@ -31,18 +31,18 @@ int nextmultiset(int *a, const int n){
 
 void c_multiset(const int *v, const int *n, const int *nn, int *a){
 	
-        const int nc = (*n);  /* nr = number of rows */ 
+        const int nr = (*n);  /* nr = number of rows */ 
 	const int ne = (*nn); /* ne = number of (matrix) elements */	
 	int i;
 
-	for(i=0 ; i < nc ; i++){
+	for(i=0 ; i < nr ; i++){
 		a[i] = v[i];
 	}
 
 	for(i=1 ; i < ne ; i++){
-		for(int j=0 ; j < nc ; j++){
-			a[i*nc + j] = a[(i-1)*nc + j];
+		for(int j=0 ; j < nr ; j++){
+			a[i*nr + j] = a[(i-1)*nr + j];
 	  }
-		nextmultiset(a+i*nc, nc); 
+		nextmultiset(a+i*nr, nr); 
 	}
 }
