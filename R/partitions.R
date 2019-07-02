@@ -628,3 +628,23 @@ if(FALSE){
   dim(out) <- c(n,fn)
   return(as.partition(out))
 }
+
+`multiset` <-  function(v){
+  v <- sort(v)
+  stopifnot(all(v==round(v)))
+  n <- length(v)
+  nn <- round(exp(lfactorial(n)-sum(lfactorial(table(v)))))
+
+  out <- .C("c_multiset",
+            as.integer(v),
+            as.integer(n),
+            as.integer(nn),
+            ans = integer(n*nn),
+            PACKAGE="partitions"
+            )$ans
+  dim(out) <- c(n,nn)
+  return(as.partition(out))
+}
+
+
+# letters["pepper" %>% strsplit("") %>% `[[`(1) %>% match(letters) %>% multiset] %>% matrix(nrow=6) %>% apply(2,paste,collapse="")

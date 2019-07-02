@@ -4,6 +4,7 @@
 \alias{restrictedparts}
 \alias{blockparts}
 \alias{compositions}
+\alias{multiset}
 \alias{c_allblockparts}
 \alias{c_alldiffparts}
 \alias{c_allparts}
@@ -18,6 +19,7 @@
 \alias{c_nextpart}
 \alias{c_nextrestrictedpart}
 \alias{c_plainperms}
+\alias{c_multiset}
 \alias{c_tobin}
 \alias{c_wrap}
 \alias{c_numbdiffparts}
@@ -42,6 +44,7 @@ diffparts(n)
 restrictedparts(n, m, include.zero=TRUE, decreasing=TRUE)
 blockparts(f, n=NULL, include.fewer=FALSE)
 compositions(n, m=NULL, include.zero=TRUE)
+multiset(v)
 }
 \arguments{
   \item{n}{Integer to be partitioned.  In function \code{blockparts()},
@@ -65,7 +68,9 @@ compositions(n, m=NULL, include.zero=TRUE)
     has the effect of making \code{conjugate()} return garbage}
   \item{f}{In function \code{blockparts()}, a vector of strictly
     positive integers that gives the maximal number of blocks; see
-    details} 
+    details}
+  \item{v}{In function \code{multiset()}, an integer vector representing
+    a multiset}
 }
 \details{
   \itemize{
@@ -106,7 +111,9 @@ compositions(n, m=NULL, include.zero=TRUE)
     This function is different from all the others in the package in
     that it is written in \R; it is not clear that C would be any
     faster.
-    
+
+    \item Function \code{multiset()} returns all ways of ordering a
+    multiset
   }
 }
 \author{Robin K. S. Hankin}
@@ -136,6 +143,8 @@ compositions(n, m=NULL, include.zero=TRUE)
     \item N. J. A. Sloane, 2008, The On-Line Encyclopedia of Integer
     Sequences, \url{www.research.att.com/~njas/sequences/}, Sequence
     A001700
+    \item D. Knuth, 2004.  The art of computer programming, pre fascicle
+  2B \dQuote{Generating all permutations}
   }
 }
 \examples{
@@ -159,6 +168,9 @@ compositions(4,4)
 
 a <- c(0,1,1,2,1)
 sweep(blockparts(1:5-a,10-sum(a)),1,a,"+")
+
+#Knuth's example:
+multiset(c(1,2,2,3))
 
 }
 \keyword{math}
