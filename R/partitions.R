@@ -629,7 +629,7 @@ if(FALSE){
   return(as.partition(out))
 }
 
-`multiset` <-  function(v){
+`mset` <-  function(v){
   v <- sort(v)
   stopifnot(all(v==round(v)))
   n <- length(v)
@@ -646,5 +646,8 @@ if(FALSE){
   return(as.partition(out))
 }
 
-
-# letters["pepper" %>% strsplit("") %>% `[[`(1) %>% match(letters) %>% multiset] %>% matrix(nrow=6) %>% apply(2,paste,collapse="")
+`multiset` <- function(v,n){
+  v <- sort(v)
+  if(missing(n)){n <- length(v)}
+  as.partition(do.call("cbind",apply(apply(blockparts(table(v),n),2,function(u){rep(unique(v),u)}),2,mset)))
+}

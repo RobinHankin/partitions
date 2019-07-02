@@ -5,6 +5,7 @@
 \alias{blockparts}
 \alias{compositions}
 \alias{multiset}
+\alias{mset}
 \alias{c_allblockparts}
 \alias{c_alldiffparts}
 \alias{c_allparts}
@@ -44,7 +45,8 @@ diffparts(n)
 restrictedparts(n, m, include.zero=TRUE, decreasing=TRUE)
 blockparts(f, n=NULL, include.fewer=FALSE)
 compositions(n, m=NULL, include.zero=TRUE)
-multiset(v)
+multiset(v,n)
+mset(v)
 }
 \arguments{
   \item{n}{Integer to be partitioned.  In function \code{blockparts()},
@@ -113,7 +115,7 @@ multiset(v)
     faster.
 
     \item Function \code{multiset()} returns all ways of ordering a
-    multiset
+    multiset.  \code{mset()} is a low-level helper function.
   }
 }
 \author{Robin K. S. Hankin}
