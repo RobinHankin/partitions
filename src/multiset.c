@@ -13,10 +13,10 @@
 int nextmultiset(int *a, const int n){
 
 	int j,k,l,m;
-	for(j=n-2  ; a[j] >= a[j+1] ; j--){} /* L2 */
+	for(j=n-2 ; a[j] >= a[j+1] ; j--){continue;} /* L2 */
 	if(j<0){ return 1; } /* should not happen */   
-
-	for(l=n-1 ; a[l] <= a[j] ; l--){}
+	
+	for(l=n-1 ; a[l] <= a[j] ; l--){continue;}
 
 	m    = a[l];
 	a[l] = a[j];
@@ -25,34 +25,24 @@ int nextmultiset(int *a, const int n){
 	k = j+1;   /* L4 */
 	l = n-1;  /* off by one */
 	
-	while(k < l){
-		m      = a[l];
-		a[l--] = a[k];
-		a[k++] = m;
-	}
-
-	/*	while(k < l){
-		m    = a[l];
-		a[l] = a[k];
-		a[k] = m;
-		k++;
-		l--; 
-		}*/
-
-
+	for(; k<l ; m=a[l], a[l--]=a[k], a[k++]=m){continue;}
 	return 0;
 }
 
 void c_multiset(const int *v, const int *n, const int *nn, int *a){
+	
+        const int nc = (*n);  /* nr = number of rows */ 
+	const int ne = (*nn); /* ne = number of (matrix) elements */	
 	int i;
-	for(i=0 ; i < (*n) ; i++){
+
+	for(i=0 ; i < nc ; i++){
 		a[i] = v[i];
 	}
 
-	for(i=1 ; i < (*nn) ; i++){
-		for(int j=0 ; j < (*n) ; j++){
-			a[i*(*n) + j] = a[(i-1)*(*n) + j];
+	for(i=1 ; i < ne ; i++){
+		for(int j=0 ; j < nc ; j++){
+			a[i*nc + j] = a[(i-1)*nc + j];
 	  }
-		nextmultiset(a+i*(*n), *n); 
+		nextmultiset(a+i*nc, nc); 
 	}
 }
