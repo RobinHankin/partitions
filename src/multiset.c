@@ -12,49 +12,46 @@
 
 int nextmultiset(int *a, const int n){
 
-	int j=n-1, l=n;
-	int k,m;
+	int j,k,l,m;
+	for(j=n-2  ; a[j] >= a[j+1] ; j--){} /* L2 */
+	if(j<0){ return 1; } /* should not happen */   
 
-	while(a[j] >= a[j+1]){j--;};
-	if(j == 0){
-		return 1;  /* algorithm terminated: no successor */
+	for(l=n-1 ; a[l] <= a[j] ; l--){}
+
+	m    = a[l];
+	a[l] = a[j];
+	a[j] = m;
+
+	k = j+1;   /* L4 */
+	l = n-1;  /* off by one */
+	
+	while(k < l){
+		m      = a[l];
+		a[l--] = a[k];
+		a[k++] = m;
 	}
 
-	if(a[j] >= a[l]){
-		while(a[j] >= a[l]){l--;}
-		/* swap: */
+	/*	while(k < l){
 		m    = a[l];
-		a[l] = a[j];
-		a[j] = m;
-	}
+		a[l] = a[k];
+		a[k] = m;
+		k++;
+		l--; 
+		}*/
 
-	k = j+1;
-	l = n;
 
-
-  while(a[j] >= a[l]){ l--; }
-
-  k = j+1;
-  l = n-1;
-  while(k<l){
-    m    = a[l];
-    a[l] = a[k];
-    a[k] = m;
-    k++;
-    l--;
-  } 
-  return 0;
+	return 0;
 }
 
-void c_multiset(int *v, int *n, int *nn, int *a){
+void c_multiset(const int *v, const int *n, const int *nn, int *a){
 	int i;
-	for(i=0 ; i< (*n)  ;i++){
+	for(i=0 ; i < (*n) ; i++){
 		a[i] = v[i];
 	}
 
 	for(i=1 ; i < (*nn) ; i++){
-		for(int j=0 ; j< (*n) ; j++){
-			a[i* (*n) + j] = a[(i-1)*(*n)+j];
+		for(int j=0 ; j < (*n) ; j++){
+			a[i*(*n) + j] = a[(i-1)*(*n) + j];
 	  }
 		nextmultiset(a+i*(*n), *n); 
 	}
