@@ -530,29 +530,19 @@ function(n, give=FALSE){
      PACKAGE="partitions")$ans
 }
 
-if(FALSE){
-  "U" <- function(y,naive=FALSE){
-    if(naive){
-      return(as.integer(.fac(sum(y))/prod(.fac(y))))
-    } else {
-      stop("not implemented")
-    }
-  }
-  
-  "perms" <- function(y){
-    n <- length(y)
-    x <- rep(1:n,y)
-    nn <- U(y)
-    
-    out <- .C("c_allperms",
-              as.integer(n),
-              as.integer(n*nn),
-              ans = integer(n*nn),
-              PACKAGE="partitions"
-              )$ans
-    dim(out) <- c(n,nn)
-    return(out)
-  }
+"perms" <- function(n){
+  stopifnot(length(n) ==1)
+  stopifnot(n == round(n))
+  nc <- factorial(n)  # nc = number of columns
+  out <- .C("c_allperms",
+            as.integer(seq_len(n)),
+            as.integer(n),
+            as.integer(nc),
+            ans=integer(n*nc),
+            PACKAGE="partitions"
+            )$ans
+  dim(out) <- c(n,nc)
+  return(as.partition(out))
 }
 
 "tobin" <- function(n,len,check=TRUE){
@@ -599,21 +589,6 @@ if(FALSE){
   }
 }
 
-"perms" <- function(n){
-  fn <- factorial(n)
-  a <- integer(n*fn)
-
-  out <- .C("c_allperms",
-            ans = a,
-            as.integer(n),
-            as.integer(fn),
-            PACKAGE="partitions"
-            )$ans
-    
-  dim(out) <- c(n,fn)
-  return(as.partition(out))
-}
-
 "plainperms" <- function(n){
   fn <- factorial(n)
   kk <- integer(n*fn)
@@ -635,7 +610,7 @@ if(FALSE){
   n <- length(v)
   nn <- round(exp(lfactorial(n)-sum(lfactorial(table(v)))))
 
-  out <- .C("c_multiset",
+  out <- .C("c_allperms",
             as.integer(v),
             as.integer(n),
             as.integer(nn),

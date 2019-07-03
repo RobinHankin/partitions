@@ -185,6 +185,47 @@ In the above, column `2 3 1 1` would correspond to the set partition
 ![\\{\\{3,4\\},\\{1\\},\\{2\\}\\}](https://latex.codecogs.com/png.latex?%5C%7B%5C%7B3%2C4%5C%7D%2C%5C%7B1%5C%7D%2C%5C%7B2%5C%7D%5C%7D
 "\\{\\{3,4\\},\\{1\\},\\{2\\}\\}").
 
+## Multiset
+
+Knuth deals with multisets (that is, a generalization of the concept of
+set, in which elements may appear more than once) and gives an algorithm
+for enumerating a multiset. His simplest example is the permutations of
+![\\{1,2,2,3\\}](https://latex.codecogs.com/png.latex?%5C%7B1%2C2%2C2%2C3%5C%7D
+"\\{1,2,2,3\\}"):
+
+``` r
+multiset(c(1,2,2,3))
+#>                             
+#> [1,] 1 1 1 2 2 2 2 2 2 3 3 3
+#> [2,] 2 2 3 1 1 2 2 3 3 1 2 2
+#> [3,] 2 3 2 2 3 1 3 1 2 2 1 2
+#> [4,] 3 2 2 3 2 3 1 2 1 2 2 1
+```
+
+It is possible to answer questions such as the permutations of the word
+“pepper”:
+
+``` r
+library("magrittr")
+
+
+"pepper"    %>%
+strsplit("") %>%
+unlist        %>%
+match(letters) %>%
+multiset        %>%
+apply(2,function(x){x %>% `[`(letters,.) %>% paste(collapse="")})
+#>  [1] "eepppr" "eepprp" "eeprpp" "eerppp" "epeppr" "epeprp" "eperpp"
+#>  [8] "eppepr" "epperp" "eppper" "epppre" "epprep" "epprpe" "eprepp"
+#> [15] "eprpep" "eprppe" "ereppp" "erpepp" "erppep" "erpppe" "peeppr"
+#> [22] "peeprp" "peerpp" "pepepr" "peperp" "pepper" "peppre" "peprep"
+#> [29] "peprpe" "perepp" "perpep" "perppe" "ppeepr" "ppeerp" "ppeper"
+#> [36] "ppepre" "pperep" "pperpe" "pppeer" "pppere" "pppree" "ppreep"
+#> [43] "pprepe" "pprpee" "preepp" "prepep" "preppe" "prpeep" "prpepe"
+#> [50] "prppee" "reeppp" "repepp" "reppep" "repppe" "rpeepp" "rpepep"
+#> [57] "rpeppe" "rppeep" "rppepe" "rpppee"
+```
+
 # Further information
 
 For more detail, see the package vignettes
