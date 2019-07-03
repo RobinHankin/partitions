@@ -1,3 +1,5 @@
+/* This created by tools::package_native_routine_registration_skeleton() */
+
 #include <stdlib.h> // for NULL
 #include <R_ext/Rdynload.h>
 
@@ -9,13 +11,12 @@
 extern void c_allblockparts(void *, void *, void *, void *, void *);
 extern void c_alldiffparts(void *, void *, void *, void *);
 extern void c_allparts(void *, void *, void *);
-extern void c_allperms(void *, void *, void *);
+extern void c_allperms(void *, void *, void *, void *);
 extern void c_allrestrictedparts(void *, void *, void *, void *, void *);
 extern void c_bintocomp(void *, void *, void *);
 extern void c_comptobin(void *, void *, void *);
 extern void c_conjugate(void *, void *, void *, void *, void *);
 extern void c_durfee(void *, void *, void *, void *);
-extern void c_multiset(void *, void *, void *, void *);
 extern void c_nextblockpart(void *, void *, void *);
 extern void c_nextdiffpart(void *, void *);
 extern void c_nextpart(void *);
@@ -31,13 +32,12 @@ static const R_CMethodDef CEntries[] = {
     {"c_allblockparts",       (DL_FUNC) &c_allblockparts,       5},
     {"c_alldiffparts",        (DL_FUNC) &c_alldiffparts,        4},
     {"c_allparts",            (DL_FUNC) &c_allparts,            3},
-    {"c_allperms",            (DL_FUNC) &c_allperms,            3},
+    {"c_allperms",            (DL_FUNC) &c_allperms,            4},
     {"c_allrestrictedparts",  (DL_FUNC) &c_allrestrictedparts,  5},
     {"c_bintocomp",           (DL_FUNC) &c_bintocomp,           3},
     {"c_comptobin",           (DL_FUNC) &c_comptobin,           3},
     {"c_conjugate",           (DL_FUNC) &c_conjugate,           5},
     {"c_durfee",              (DL_FUNC) &c_durfee,              4},
-    {"c_multiset",            (DL_FUNC) &c_multiset,            4},
     {"c_nextblockpart",       (DL_FUNC) &c_nextblockpart,       3},
     {"c_nextdiffpart",        (DL_FUNC) &c_nextdiffpart,        2},
     {"c_nextpart",            (DL_FUNC) &c_nextpart,            1},

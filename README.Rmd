@@ -127,6 +127,32 @@ In the above, column ```2 3 1 1``` would correspond to the set
 partition $\{\{3,4\},\{1\},\{2\}\}$.
 
 
+## Multiset
+
+Knuth deals with multisets (that is, a generalization of the concept
+of set, in which elements may appear more than once) and gives an
+algorithm for enumerating a multiset.  His simplest example is the
+permutations of $\{1,2,2,3\}$:
+
+```{r}
+multiset(c(1,2,2,3))
+```
+
+It is possible to answer questions such as the permutations of the
+word "pepper":
+
+```{r}
+library("magrittr")
+
+"pepper"    %>%
+strsplit("") %>%
+unlist        %>%
+match(letters) %>%
+multiset        %>%
+apply(2,function(x){x %>% `[`(letters,.) %>% paste(collapse="")})
+```
+
+
 # Further information
 For more detail, see the package vignettes
 

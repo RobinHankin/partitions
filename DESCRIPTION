@@ -12,7 +12,7 @@ Description: Additive partitions of integers.  Enumerates the
 Suggests: spray
 License: GPL
 URL: https://github.com/RobinHankin/partitions.git
-BugReports: https://github.com/RobinHankin/issues
+BugReports: https://github.com/RobinHankin/partitions/issues
 
 
 
