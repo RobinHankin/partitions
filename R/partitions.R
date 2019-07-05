@@ -627,3 +627,16 @@ function(n, give=FALSE){
   if(n==1){return(as.partition(rbind(sort(unique(v)))))}
   as.partition(do.call("cbind",apply(apply(blockparts(table(v),n),2,function(u){rep(unique(v),u)}),2,mset)))
 }
+
+`vec_to_set` <- function(x){
+    jj <- sort(unique(x))
+    M <- outer(jj,x,`==`)
+    out <- lapply(split(M, seq_len(nrow(M))),which)
+    names(out) <- NULL
+    do.call(sets::set,lapply(out,sets::as.set))
+  }
+
+`part_to_set` <- function(x){
+  do.call(sets::set,apply(x,2,vec_to_set))
+}
+
