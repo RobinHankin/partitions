@@ -80,13 +80,14 @@ print.summary.partition <- function(x, ...){
   return(as.partition(out))
 }
 
-"listParts" <- function(x) {
-  f <- function(pp){
-    out <- split(seq_along(pp),pp)
-    class(out) <- c(class(out),"equivalence")
-    out
-  }
-  apply(setparts(x), 2, f)
+"listParts" <- function(x,do.set=FALSE) {
+    jj <- setparts(x)
+    if(do.set){
+        out <- do.call(sets::set,apply(jj,2,vec_to_set))
+    } else {
+        out <- apply(jj, 2, vec_to_eq)
+    }
+    return(out)
 }
 
 "print.equivalence" <- function(x,sep=getOption("separator"), ...){
@@ -628,15 +629,17 @@ function(n, give=FALSE){
   as.partition(do.call("cbind",apply(apply(blockparts(table(v),n),2,function(u){rep(unique(v),u)}),2,mset)))
 }
 
-`vec_to_set` <- function(x){
-    jj <- sort(unique(x))
-    M <- outer(jj,x,`==`)
+`vec_to_set` <- function(vec){
+    jj <- sort(unique(vec))
+    M <- outer(jj,vec,`==`)
     out <- lapply(split(M, seq_len(nrow(M))),which)
     names(out) <- NULL
-    do.call(sets::set,lapply(out,sets::as.set))
-  }
-
-`part_to_set` <- function(x){
-  do.call(sets::set,apply(x,2,vec_to_set))
+    return(do.call(sets::set,lapply(out,sets::as.set)))
 }
+
+`vec_to_eq` <- function(vec){
+    out <- split(seq_along(vec),vec)
+    class(out) <- c(class(out),"equivalence")
+    return(out)
+  }
 
