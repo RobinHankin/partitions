@@ -4,7 +4,7 @@ Title: Additive Partitions of Integers
 Version: 1.9-22
 Authors@R: person(given=c("Robin", "K. S."), family="Hankin", role = c("aut","cre"), email="hankin.robin@gmail.com", comment = c(ORCID = "0000-0001-5982-0415"))
 Maintainer: Robin K. S. Hankin <hankin.robin@gmail.com>
-Imports: gmp, polynom
+Imports: gmp, polynom, sets
 Description: Additive partitions of integers.  Enumerates the
   partitions, unequal partitions, and restricted partitions of an
   integer; the three corresponding partition functions are also

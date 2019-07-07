@@ -1,13 +1,17 @@
 \name{setparts}
 \alias{setparts}
 \alias{listParts}
+\alias{vec_to_set}
+\alias{vec_to_eq}
 \title{Set partitions}
 \description{
   Enumeration of set partitions
 }
 \usage{
 setparts(x)
-listParts(x)
+listParts(x,do.set=FALSE)
+vec_to_set(vec)
+vec_to_eq(vec)
 }
 \arguments{
   \item{x}{If a vector of length 1, the size of the set to be
@@ -15,6 +19,11 @@ listParts(x)
     equivalence relations with equivalence classes with sizes of the
     elements of \code{x}.  If a matrix, return all equivalence classes
     with sizes of the columns of \code{x}}
+  \item{do.set}{Boolean, with \code{TRUE} meaning to return  the set
+    partitions in terms of sets (as per \pkg{sets} package) and default
+    \code{FALSE} meaning to present the result in terms of equivalence
+    classes}
+  \item{vec}{An integer vector representing a set partition}
 }
 \details{
   A \dfn{partition} of a set
@@ -72,7 +81,13 @@ listParts(x)
   (because the third element of \code{x} is 3)}.  Formally, class
 \code{i} has elements \code{which(x==u[i])}.
 
-You can change the print method by setting, eg,  \code{option(separator="")}.
+You can change the print method by setting, eg,
+\code{option(separator="")}.
+
+Functions \code{vec_to_set()} and \code{vec_to_eq()} are low-level
+helper functions.  These take an integer vector, typically a column of a
+matrix produced by \code{setparts()} and return their set
+representation.
 }
 \value{
   Returns a matrix each of whose columns show a set partition; an object
@@ -82,7 +97,8 @@ You can change the print method by setting, eg,  \code{option(separator="")}.
 \note{
   The \pkg{clue} package  by Kurt Hornik contains functionality for
   partitions (specifically \code{cl_meet()} and \code{cl_join()}) which
-  might be useful.
+  might be useful.  Option \code{do.set} invokes functionality from the
+  \pkg{sets} package by Meyer et al.
 }  
 \references{
   \itemize{
