@@ -1,4 +1,4 @@
-library(partitions)
+test_that("Test suite aab",{
 
 # Function f() tests the various next...() functions by creating a
 # matrix by successively cbind()ing the next() partition; then
@@ -115,3 +115,5 @@ f <- function(n1,n2,n3,n4,n5,n6,n7){
 
 f(7, 11, 3, 4, 4, 5, 4)
 f(8, 10, 4, 4, 3, 5, 5)
+
+})

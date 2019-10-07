@@ -1,4 +1,4 @@
-library(partitions)
+test_that("Test suite aaa",{
 
 # a little function for equality:
 minmax <- function(x){all.equal(min(x), max(x))}
@@ -139,3 +139,5 @@ f <- function(n){
 if(FALSE){
   f(1000)
 }
+
+})
