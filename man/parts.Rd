@@ -45,7 +45,7 @@ diffparts(n)
 restrictedparts(n, m, include.zero=TRUE, decreasing=TRUE)
 blockparts(f, n=NULL, include.fewer=FALSE)
 compositions(n, m=NULL, include.zero=TRUE)
-multiset(v,n)
+multiset(v,n=length(v))
 mset(v)
 }
 \arguments{
@@ -72,7 +72,7 @@ mset(v)
     positive integers that gives the maximal number of blocks; see
     details}
   \item{v}{In function \code{multiset()}, an integer vector representing
-    a multiset}
+    a multiset.  Argument \code{n} is the size of the sample to be taken}
 }
 \details{
   \itemize{

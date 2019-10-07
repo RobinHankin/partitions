@@ -622,11 +622,14 @@ function(n, give=FALSE){
   return(as.partition(out))
 }
 
-`multiset` <- function(v,n){
+`multiset` <- function(v,n=length(v)){
   v <- sort(v)
-  if(missing(n)){return(mset(v))}
+  if(n==length(v)){return(mset(v))} # unnecessary, function works if this line is commented out
   if(n==1){return(as.partition(rbind(sort(unique(v)))))}
-  as.partition(do.call("cbind",apply(apply(blockparts(table(v),n),2,function(u){rep(unique(v),u)}),2,mset)))
+  m <- blockparts(table(v),n)
+  m <- lapply(split(m,col(m)),function(u){rep(unique(v),u)})
+  m <- lapply(m,mset)
+  as.partition(do.call("cbind",m))
 }
 
 `vec_to_set` <- function(vec){
