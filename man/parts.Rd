@@ -115,7 +115,7 @@ mset(v)
     faster.
 
     \item Function \code{multiset()} returns all ways of ordering a
-    multiset.  \code{mset()} is a low-level helper function.
+    multiset (\code{mset()} is a low-level helper function).
   }
 }
 \author{Robin K. S. Hankin}
