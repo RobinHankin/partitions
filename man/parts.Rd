@@ -143,8 +143,7 @@ mset(v)
       \R}. \emph{Journal of Statistical Software}, Volume
     23, code snippet 2
     \item N. J. A. Sloane, 2008, The On-Line Encyclopedia of Integer
-    Sequences, \url{www.research.att.com/~njas/sequences/}, Sequence
-    A001700
+    Sequences.  Sequence A001700
     \item D. Knuth, 2004.  The art of computer programming, pre-fascicle
   2B \dQuote{Generating all permutations}
   }
