@@ -1,15 +1,23 @@
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
 
 before_install:
-    - tlmgr init-usertree
+    - tlmgr install collection-latexrecommended
+    - tlmgr install collection-fontsrecommended
+    - tlmgr install letltxmacro
     - tlmgr install wasysym
-    - tlmgr install ec
-    - tlmgr install cm-super
     - tlmgr install yfonts
-    - tlmgr install scheme-full
-    - sudo apt-get install texlive-fonts-recommended
-    - sudo apt-get install texlive texlive-latex3
-    - sudo apt install texlive-latex-extra
-    - sudo apt-get install texlive-fonts-recommended texlive-fonts-extra texlive-latex-recommended
+    - tlmgr update --self --all
+
 language: R
 cache: packages
+branches:
+  only:
+  - master
+r_build_args: '--resave-data --compact-vignettes="both" '
+
+r_packages:
+  - covr
+
+after_success:
+  - Rscript -e 'library(covr); codecov()'
+  
