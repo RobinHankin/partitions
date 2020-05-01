@@ -7,7 +7,6 @@ before_install:
     - tlmgr install wasysym
     - tlmgr install yfonts
     - tlmgr install xypic
-    - tlmgr update --self --all
 
 language: R
 cache: packages
