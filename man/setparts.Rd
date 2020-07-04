@@ -4,7 +4,7 @@
 \alias{vec_to_set}
 \alias{vec_to_eq}
 \title{Set partitions}
-\description{
+\description{\loadmathjax
   Enumeration of set partitions
 }
 \usage{
@@ -27,17 +27,17 @@ vec_to_eq(vec)
 }
 \details{
   A \dfn{partition} of a set
-  \eqn{S=\left\{1,\ldots,n\right\}}{S={1,...,n}} is a family of
-  sets \eqn{T_1,\ldots,T_k}{T1,...,Tk} satisfying
+  \mjeqn{S=\left\lbrace 1,\ldots,n\right\rbrace}{S={1,...,n}} is a family of
+  sets \mjeqn{T_1,\ldots,T_k}{T1,...,Tk} satisfying
   \itemize{
-    \item \eqn{i\neq j\longrightarrow T_i\cap
+    \item \mjeqn{i\neq j\longrightarrow T_i\cap
       T_j=\emptyset}{union(Ti,Tj) empty if i != j}
-    \item \eqn{\cup_{i=1}^kT_k=S}{union(T1,T2,...,Tk)=S}
-    \item \eqn{T_i\neq\emptyset}{Ti not empty} for \eqn{i=1,\ldots,
+    \item \mjeqn{\cup_{i=1}^kT_k=S}{union(T1,T2,...,Tk)=S}
+    \item \mjeqn{T_i\neq\emptyset}{Ti not empty} for \mjeqn{i=1,\ldots,
       k}{1,...,k} 
   }
   
-  The induced \dfn{equivalence relation} has \eqn{i\sim j}{i~j} if
+  The induced \dfn{equivalence relation} has \mjeqn{i\sim j}{i~j} if
   and only if \eqn{i} and \eqn{j} belong to the same partition.
   Equivalence classes may be listed using \code{listParts()}
   

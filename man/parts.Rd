@@ -27,7 +27,7 @@
 \alias{c_numbparts}
 \alias{numbrestrictedparts_R}
 \title{Enumerate the partitions of an integer}
-\description{
+\description{\loadmathjax
   Given an integer, return a matrix whose columns enumerate various
   partitions.
 
@@ -86,29 +86,29 @@ mset(v)
     \eqn{m} parts, the same Hindenburg's algorithm is used but with a
     start vector of \code{c(rep(0,m-1),n)}.
 
-    If \eqn{m>n}, the partitions are padded with zeros.
+    If \mjseqn{m>n}, the partitions are padded with zeros.
 
     \item Function \code{blockparts()} enumerates the compositions of an
     integer subject to a maximum criterion: given vector
-    \eqn{y=(y_1,\ldots,y_n)}{y=(y_1,...,y_p)} all sets of
-    \eqn{a=(a_1,\ldots,a_n)}{a=(a_1,...,a_p)} satisfying
-    \eqn{\sum_{i=1}^pa_i=n}{sum(a_i)=n} subject to \eqn{0\leq a_i\leq
+    \mjeqn{y=(y_1,\ldots,y_n)}{y=(y_1,...,y_p)} all sets of
+    \mjeqn{a=(a_1,\ldots,a_n)}{a=(a_1,...,a_p)} satisfying
+    \mjeqn{\sum_{i=1}^pa_i=n}{sum(a_i)=n} subject to \mjeqn{0\leq a_i\leq
     y_i}{0 <= a_i <= y_i} for all \eqn{i} are given in lexicographical
     order.  If argument \code{y} includes zero elements, these are
     treated consistently (ie a position with zero capacity).
 
     If \code{n} takes its default value of \code{NULL}, then the
-    restriction \eqn{\sum_{i=1}^pa_i=n}{sum(a_i)=n} is relaxed (so that
+    restriction \mjeqn{\sum_{i=1}^pa_i=n}{sum(a_i)=n} is relaxed (so that
     the numbers may sum to anything).  Note that these solutions are not
     necessarily in standard form, so functions \code{durfee()} and
     \code{conjugate()} may fail.
 
     \item With a single argument, \code{compositions(n)} returns
-    all \eqn{2^{n-1}}{2^(n-1)} ways of partitioning an integer; thus
+    all \mjeqn{2^{n-1}}{2^(n-1)} ways of partitioning an integer; thus
     \code{4+1+1} is distinct from \code{1+4+1} or \code{1+1+4}.
 
     With two arguments, \code{compositions(n,m)} returns all
-    nonnegative solutions to \eqn{x_1+\cdots+x_m=n}{x_1+...+x_m=n}.
+    nonnegative solutions to \mjeqn{x_1+\cdots+x_m=n}{x_1+...+x_m=n}.
 
     This function is different from all the others in the package in
     that it is written in \R; it is not clear that C would be any
