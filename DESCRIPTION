@@ -9,7 +9,7 @@ Imports: gmp, polynom, sets
 Description: Additive partitions of integers.  Enumerates the
   partitions, unequal partitions, and restricted partitions of an
   integer; the three corresponding partition functions are also
-  given.  Set partitions are now included.
+  given.  Set partitions and now compositions are included.
 Suggests: spray,testthat
 License: GPL
 URL: https://github.com/RobinHankin/partitions.git
