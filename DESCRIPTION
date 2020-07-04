@@ -1,7 +1,7 @@
 Package: partitions
 Type: Package
 Title: Additive Partitions of Integers
-Version: 1.9-23
+Version: 1.9-24
 Depends: R (>= 3.6.0)
 Authors@R: person(given=c("Robin", "K. S."), family="Hankin", role = c("aut","cre"), email="hankin.robin@gmail.com", comment = c(ORCID = "0000-0001-5982-0415"))
 Maintainer: Robin K. S. Hankin <hankin.robin@gmail.com>
