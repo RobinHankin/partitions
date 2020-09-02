@@ -10,4 +10,4 @@ S3method(print,summary.partition)
 S3method(summary,partition)
 S3method(as.matrix,partition)
 
-export(print)
+# export(print)

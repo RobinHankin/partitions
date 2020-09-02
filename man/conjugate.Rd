@@ -7,13 +7,15 @@
 Given a partition, provide its conjugate or Durfee square
 }
 \usage{
-conjugate(x)
-durfee(x)
+conjugate(x, sorted = TRUE)
+durfee(x, sorted = TRUE)
 }
 \arguments{
   \item{x}{Either a vector describing a partition, in standard form
     (ie nonincreasing); or a matrix whose columns are partitions in
     standard form}
+  \item{sorted}{A logical indicating whether the data is already in standard
+    form. That is to say, are the data sorted in decreasing order?}
 }
 \details{
   Conjugation is described in Andrews, and (eg) Hardy and Wright.
@@ -22,7 +24,7 @@ durfee(x)
   Ferrers diagram and considering the partition defined by columns
   instead of rows.  This may be visualised by flipping the Ferrers
   diagram about the leading diagonal.
-  
+
   Essentially, \code{conjugate()} carries out \R idiom
   \code{rev(cumsum(table(factor(a[a>0],levels=max(a):1))))}, but faster.
 
@@ -33,7 +35,7 @@ durfee(x)
   of the Durfee square, which Andrews denotes
   \eqn{d(\lambda)}{d(lambda)}.  It is equivalent to \R idiom
   \code{function(a){sum(a>=1:length(a))}}, but faster.
-  
+
 }
 \value{
 Returns either a partition in standard form, or a matrix whose
@@ -41,9 +43,9 @@ columns are partitions in standard form.
 }
 \author{Robin K. S. Hankin}
 \note{
-If argument \code{x} is not nonincreasing, all bets are off: these
-functions will not work and will silently return garbage.  Caveat
-emptor!  (output from \code{blockparts()} is not necessarily
+If argument \code{x} is not nonincreasing, you must use the \code{sorted}
+flag. Otherwise, these functions will not work and will silently return
+garbage.  Caveat emptor!  (output from \code{blockparts()} is not necessarily
 non-increasing)
 }
 \examples{
@@ -60,7 +62,7 @@ durfee(10:1)
 
 conjugate(restrictedparts(8,3))
 
-# (restrictedparts(8,3) splits 8 into at most 3 parts; 
+# (restrictedparts(8,3) splits 8 into at most 3 parts;
 # so no part of the conjugate partition is larger than 3).
 
 
