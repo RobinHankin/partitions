@@ -3,7 +3,7 @@
 #include <stdlib.h> // for NULL
 #include <R_ext/Rdynload.h>
 
-/* FIXME: 
+/* FIXME:
    Check these declarations against the C/Fortran source code.
 */
 
@@ -15,7 +15,7 @@ extern void c_allperms(void *, void *, void *, void *);
 extern void c_allrestrictedparts(void *, void *, void *, void *, void *);
 extern void c_bintocomp(void *, void *, void *);
 extern void c_comptobin(void *, void *, void *);
-extern void c_conjugate(void *, void *, void *, void *, void *);
+extern void c_conjugate(void *, void *, void *, void *, void *, void *);
 extern void c_durfee(void *, void *, void *, void *);
 extern void c_nextblockpart(void *, void *, void *);
 extern void c_nextdiffpart(void *, void *);
@@ -36,7 +36,7 @@ static const R_CMethodDef CEntries[] = {
     {"c_allrestrictedparts",  (DL_FUNC) &c_allrestrictedparts,  5},
     {"c_bintocomp",           (DL_FUNC) &c_bintocomp,           3},
     {"c_comptobin",           (DL_FUNC) &c_comptobin,           3},
-    {"c_conjugate",           (DL_FUNC) &c_conjugate,           5},
+    {"c_conjugate",           (DL_FUNC) &c_conjugate,           6},
     {"c_durfee",              (DL_FUNC) &c_durfee,              4},
     {"c_nextblockpart",       (DL_FUNC) &c_nextblockpart,       3},
     {"c_nextdiffpart",        (DL_FUNC) &c_nextdiffpart,        2},

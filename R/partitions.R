@@ -504,8 +504,8 @@ function(n, give=FALSE){
 
 "conjugate" <- function(x, sorted = TRUE){
   x <- as.matrix(x)
-  if (!sorted)
-    x <- apply(x, 2, sort, decreasing = TRUE)
+  # if (!sorted)
+  #   x <- apply(x, 2, sort, decreasing = TRUE)
   mx <- max(x)
   nc <- ncol(x)
   out <- .C("c_conjugate",
@@ -513,7 +513,7 @@ function(n, give=FALSE){
            as.integer(nrow(x)),
            as.integer(nc),
            as.integer(mx),
-           # as.integer(sorted),
+           as.integer(sorted),
            ans=integer(mx*nc),
            PACKAGE = "partitions"
            )$ans
