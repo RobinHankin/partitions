@@ -5,9 +5,9 @@
 
 void c_nextpart(int *x)
 {
-        int i, yy, n, a, b;
+  int i, yy, n, a, b;
 
-        a=0;
+  a=0;
 	while(x[++a] >0){}
 	a--; /* a position of last nonzero */
 
@@ -263,7 +263,7 @@ int min_element(int *x, int len){
 void c_sort(int *x, const int len, int *y)
 {
   if (min_element(x, len) < 0)
-    error("This function only takes positive integers");
+    error("All elements must be integers >= 0");
   int max = max_element(x, len);
   int *a = (int *) calloc(sizeof(int), max + 1);
 
