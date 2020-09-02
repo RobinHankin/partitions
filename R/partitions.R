@@ -503,6 +503,8 @@ function(n, give=FALSE){
 }
 
 "conjugate" <- function(x, sorted = TRUE){
+  if (!length(x))
+    return(integer(0))
   x <- as.matrix(x)
   # if (!sorted)
   #   x <- apply(x, 2, sort, decreasing = TRUE)
