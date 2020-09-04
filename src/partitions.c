@@ -260,7 +260,7 @@ int min_element(int *x, int len){
   return best;
 }
 
-void c_sort(int *x, const int len, int *y)
+void c_sort(int *x, const int len)
 {
   if (min_element(x, len) < 0)
     error("All elements must be integers >= 0");
@@ -277,7 +277,7 @@ void c_sort(int *x, const int len, int *y)
   /* replace existing array with reverse-sorted data */
   for (int i=0; max >= 0; max--)
     while (a[max]--)
-      y[i++] = max;
+      x[i++] = max;
 
   free(a);
 }
@@ -285,13 +285,8 @@ void c_sort(int *x, const int len, int *y)
 void conjugate_vector(int *x, const int len, const int sorted, int *y)
 {
 	int i,j;
-  if (!sorted) {
-    int *tmp = (int *) malloc(sizeof(int) * len);
-    if (tmp == NULL)
-      error("Could not allocate memory");
-    c_sort(x, len, tmp);
-    x = tmp;
-  }
+  if (!sorted)
+    c_sort(x, len);
 	for(j=0 ; x[0] > 0; j++)
 	{
 		for(i=0; (i<len) && (x[i]>0) ; i++)
@@ -300,8 +295,6 @@ void conjugate_vector(int *x, const int len, const int sorted, int *y)
 			y[j]++;
 		}
 	}
-	if (!sorted)
-	  free(x);
 }
 
 void c_conjugate(int *x, const int *nrow, const int *ncol, const int *nmax, const int *sorted, int *y)
