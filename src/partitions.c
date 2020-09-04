@@ -292,7 +292,7 @@ void conjugate_vector(int *x, const int len, const int sorted, int *y)
     c_sort(x, len, tmp);
     x = tmp;
   }
-	for(j=0 ; x[0]>0 ; j++)
+	for(j=0 ; x[0] > 0; j++)
 	{
 		for(i=0; (i<len) && (x[i]>0) ; i++)
 		{
@@ -312,10 +312,11 @@ void c_conjugate(int *x, const int *nrow, const int *ncol, const int *nmax, cons
 	}
 }
 
-int durfee_vector(const int *x)
+int durfee_vector(const int *x, const int nrow)
 {
       int i;
-      for(i=0 ; x[i]>i ; i++){}
+      for(i=0 ; x[i] > i && i < nrow; i++)
+        ;
       return i;
 }
 
@@ -323,7 +324,7 @@ void c_durfee(const int *x, const int *nrow, const int *ncol, int *y)
 {
 	int i;
 	for(i=0 ; i< (*ncol) ; i++){
-   	       y[i] = durfee_vector(x +  i*(*nrow));
+    y[i] = durfee_vector(x +  i*(*nrow), *nrow);
 	}
 }
 
