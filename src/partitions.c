@@ -265,7 +265,7 @@ void c_sort(int *x, const int len)
   if (min_element(x, len) < 0)
     error("All elements must be integers >= 0");
   int max = max_element(x, len);
-  int *a = (int *) calloc(sizeof(int), max + 1);
+  int *a = (int *) calloc(max + 1, sizeof(int));
 
   if (a == NULL)
     error("Could not allocate memory");
