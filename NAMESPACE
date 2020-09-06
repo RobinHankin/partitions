@@ -1,6 +1,7 @@
 exportPattern("^[^\\.]")
 useDynLib(partitions, .registration=TRUE)
 import("gmp")
+import("mathjaxr")
 importFrom("polynom",polynomial)
 
 S3method(print,partition)
@@ -9,5 +10,3 @@ S3method(print,summary.partition)
 
 S3method(summary,partition)
 S3method(as.matrix,partition)
-
-# export(print)
