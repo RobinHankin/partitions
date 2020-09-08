@@ -23,7 +23,7 @@ f <- function(n){
   minmax(apply(conjugate(restrictedparts(n,m)),2,sum))
 }
 
-stopifnot(all(f(3:N)))
+expect_true(all(f(3:N)))
 
 
 # now check that parts() has rep(1,n) as the last partition:
@@ -35,16 +35,16 @@ g <- function(n){
   minmax(c(1,jj[,ncol(jj)]))
 }
 
-stopifnot(all(g(1:N)))
+expect_true(all(g(1:N)))
 
 # now some spot checks:
 
 # Andrews, page232:
-stopifnot(all.equal(R(5,12), 13))
+expect_equal(R(5,12), 13)
 
 # a couple of values taken from A&S, table 21.5, page 836:
-stopifnot(all.equal(P(100), 190569292))
-stopifnot(all.equal(Q(100), 444793))
+expect_equal(P(100), 190569292)
+expect_equal(Q(100), 444793)
 
 
 # some checks of conjugation.  Because conjugation is a bijection, the
@@ -76,7 +76,7 @@ compare <- function(n){
   return(identical(a,b))
 }
 
-stopifnot(all(compare(1:15)))
+expect_true(all(compare(1:15)))
 
 
 
@@ -84,7 +84,7 @@ stopifnot(all(compare(1:15)))
 
 # some tests of durfee() and conjugate(), from p28 of Andrews:
 a <- c(7,7,5,4,4,2,1)
-stopifnot(identical(conjugate(a),as.integer(c(7,6,5,5,3,2,2))))
+expect_identical(conjugate(a),as.integer(c(7,6,5,5,3,2,2)))
 
 
 # now verify that the conjugate of an unequal partition is of the form
@@ -92,15 +92,17 @@ stopifnot(identical(conjugate(a),as.integer(c(7,6,5,5,3,2,2))))
 # that is, something like  4 3 2 2 2 2 1 1 1 1 1 0 0 0 0 0 0 0 0 0 ---
 # this being  "conjugate(diffparts(20))[,30]".
 
- f <- function(x){ #note second and third tests are the same
-   (min(x)  %in%  0:1)            &
-   all(diff(x) %in% -1:0)         &
-   all(diff(x[cumsum(rle(x)$lengths)]) == -1)
- }
+f <- function(x){ #note second and third tests are the same
+ (min(x)  %in%  0:1)            &
+ all(diff(x) %in% -1:0)         &
+ all(diff(x[cumsum(rle(x)$lengths)]) == -1)
+}
 
- g <- function(n){all(apply(conjugate(diffparts(n)),2,f))}
+g <- function(n){all(apply(conjugate(diffparts(n)),2,f))}
 
- stopifnot(c(g(10),g(11),g(20)))
+expect_true(g(10))
+expect_true(g(11))
+expect_true(g(20))
 
 # Check for issue #9
 expect_identical(conjugate(integer(0)), integer(0))
@@ -124,27 +126,27 @@ expect_identical(durfee(matrix(rep(9, 9), nrow = 3)), rep(3L, 3L))
 
 # Now verify that S() is independent of the order of y:
 jj <- S(rep(1:4,each=2),5)
-stopifnot(jj == 474)
-stopifnot(jj == S(rep(1:4,each=2),5))
+expect_equal(jj, 474)
+expect_equal(jj, S(rep(1:4,each=2),5))
 
 
 
 # Now some tests on compositions():
 jj <- compositions(7)
-stopifnot(all(apply(jj,2,sum)==7))
+expect_true(all(apply(jj,2,sum)==7))
 
 # test that the bug has been corrected:
-stopifnot(all(apply(compositions(15,4,TRUE ),2,sum)==15))
-stopifnot(all(apply(compositions(15,4,FALSE),2,sum)==15))
+expect_true(all(apply(compositions(15,4,TRUE ),2,sum)==15))
+expect_true(all(apply(compositions(15,4,FALSE),2,sum)==15))
 
 
 
 
 # some tests of setparts:
 f <- function(jj){all(apply(setparts(jj),2,table)==jj)}
-stopifnot(f(c(3,2)))
-stopifnot(f(c(3,1)))
-stopifnot(f(c(3,2,1)))
+expect_true(f(c(3,2)))
+expect_true(f(c(3,1)))
+expect_true(f(c(3,2,1)))
 
 
 # some tests of the comptobin(); not run because it needs the elliptic package:
