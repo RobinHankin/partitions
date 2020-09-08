@@ -14,17 +14,17 @@ f <- function(n){
   }
 
   m <- ceiling(n/2)
-  
+
   minmax(apply(           parts(n  ) ,2,sum))          &
   minmax(apply(       diffparts(n  ) ,2,sum))          &
   minmax(apply( restrictedparts(n,m) ,2,sum))          &
   minmax(apply(conjugate(          parts(n  )),2,sum)) &
   minmax(apply(conjugate(      diffparts(n  )),2,sum)) &
-  minmax(apply(conjugate(restrictedparts(n,m)),2,sum)) 
+  minmax(apply(conjugate(restrictedparts(n,m)),2,sum))
 }
 
-stopifnot(all(f(3:N)))          
-  
+stopifnot(all(f(3:N)))
+
 
 # now check that parts() has rep(1,n) as the last partition:
 g <- function(n){
@@ -69,7 +69,7 @@ compare <- function(n){
 
   a <- as.matrix(a[do.call(order,a),])
   b <- as.matrix(b[do.call(order,b),])
-  
+
   dimnames(a) <- NULL
   dimnames(b) <- NULL
 
@@ -94,13 +94,32 @@ stopifnot(identical(conjugate(a),as.integer(c(7,6,5,5,3,2,2))))
 
  f <- function(x){ #note second and third tests are the same
    (min(x)  %in%  0:1)            &
-   all(diff(x) %in% -1:0)         &   
-   all(diff(x[cumsum(rle(x)$lengths)]) == -1)  
+   all(diff(x) %in% -1:0)         &
+   all(diff(x[cumsum(rle(x)$lengths)]) == -1)
  }
-   
+
  g <- function(n){all(apply(conjugate(diffparts(n)),2,f))}
-                  
+
  stopifnot(c(g(10),g(11),g(20)))
+
+# Check for issue #9
+expect_identical(conjugate(integer(0)), integer(0))
+expect_identical(conjugate(NULL), integer(0))
+expect_identical(conjugate(c()), integer(0))
+
+# Accepting sorted data
+set.seed(777)
+a_rand <- sample(a)
+expect_identical(conjugate(a), conjugate(a_rand, sorted = FALSE))
+expect_identical(durfee(a), durfee(a_rand, sorted = FALSE))
+
+new_matrix <- matrix(sample(30, replace = TRUE), nrow = 6)
+sorted_matrix <- apply(new_matrix, 2, sort, decreasing = TRUE)
+expect_identical(conjugate(sorted_matrix), conjugate(new_matrix, sorted = FALSE))
+expect_identical(durfee(sorted_matrix), durfee(new_matrix, sorted = FALSE))
+
+# See issue #11
+expect_identical(durfee(matrix(rep(9, 9), nrow = 3)), rep(3L, 3L))
 
 
 # Now verify that S() is independent of the order of y:

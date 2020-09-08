@@ -1,33 +1,36 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <limits.h>
+#include <R.h>
 
 void c_nextpart(int *x)
 {
-        int i, yy, n, a, b;
+  int i, yy, n, a, b;
 
-        a=0;
-	while(x[++a] >0){} 
+  a=0;
+	while(x[++a] >0){}
 	a--; /* a position of last nonzero */
 
 	b=a;
 	while(x[b--] == 1){ }
 	b++; /* b: pos of last elt >1 */
-	
+
         if(x[a]>1){ /* if last nonzero number >1 */
                 x[a]-- ; /* subtract one from it */
                 x[a+1] = 1; /* and put a 1 next to it */
                 return ;
-        } 
+        }
         n = a-b;   /* n: number of 1s*/
         x[b]--;    /* decrement final nonzero digit (perforce >1) */
         yy = x[b]; /* and add 1 to the next place */
 
         n++;           /* n is now number of 1s plus 1 (thus "n" is to
 			* to be distributed as evenly as possible
-			* after x[a]) */ 
-	i = b;        
+			* after x[a]) */
+	i = b;
 	while(n >= yy){        /* distribute n among elements x[a] onwards */
 		x[++i] = yy;   /* by repeatedly adding yy until no longer */
-		n -= yy;       /* possible */ 
+		n -= yy;       /* possible */
 	}
 	if(n){
 		x[++i] = n;    /* add the remainder to x */
@@ -35,14 +38,14 @@ void c_nextpart(int *x)
 	while(i < a){          /* set remaining elements to 0 */
 		x[++i] = 0;
 	}
-	
+
 	return;
 }
 
 void c_nextdiffpart(int *x, const int *ntri)
 {
         int yy, a, aa, d, n;
-	
+
 	a = *ntri;
 	while(x[--a] ==0){ }
 	aa=a; /* position of last nonzero */
@@ -52,12 +55,12 @@ void c_nextdiffpart(int *x, const int *ntri)
 	while ( (x[a]-d) < 2) {
 		n += x[a--];  /* n is running total */
 		d++;
-	} 
-        yy= --x[a++];  
+	}
+        yy= --x[a++];
 	n++; /* add one to n to compensate for decrementing x[a+1] */
 	while(n >= yy){   /*now add a decreasing sequence to x[a],x[a+1],...*/
-		x[a++] = --yy;  
-		n -= yy;       
+		x[a++] = --yy;
+		n -= yy;
 	};
 	x[a] = n;            /* add the remainder to x */
 	while(a < aa){       /* set remaining elements to 0 */
@@ -79,7 +82,7 @@ int c_nextrestrictedpart(int *x, const int *len) /* algorithm on p232 of Andrews
 			return 1;
 		}
 	}
-	
+
      	                               /* thus a is Andrews's Lambda_j.
 	                                 The diagnostic for existence
 					 of a next partition is a >= 0;
@@ -184,7 +187,7 @@ int numbrestrictedparts(int *x, const int m){ /* array x is  c(rep(1,m-1),n-m+1)
 	while(c_nextrestrictedpart(x, &m)==0)
 	{
 		count++;
-	} 
+	}
 	return count;
 }
 
@@ -195,10 +198,10 @@ void numbrestrictedparts_R(int *x, const int *m, int *ans){
 void c_allparts(const int *n, const int *len, int *x){
 	int i,j;
 	x[0] = *n;
-	for(i=1 /* sic */ ; i < *n ;  i++){ 
+	for(i=1 /* sic */ ; i < *n ;  i++){
 		x[i] = 0 ;
 	}
-	
+
 	for(i= *n ; i < *len ; i += *n){
 		for(j=0 ; j < *n ; j++){
 			x[i+j] = x[i+j - *n];
@@ -210,7 +213,7 @@ void c_allparts(const int *n, const int *len, int *x){
 void c_alldiffparts(const int *n, const int *len, const int *ntri, int *x){
 	int i,j;
 	x[0] = *n;
-	
+
 	for(i= *ntri ; i < *len ; i += *ntri){
 		for(j=0 ; j < *ntri ; j++){
 			x[i+j] = x[i+j - *ntri];
@@ -222,12 +225,12 @@ void c_alldiffparts(const int *n, const int *len, const int *ntri, int *x){
 void c_allrestrictedparts(const int *m, const int *n, const int *len, const int *inc, int *x){
 	int i,j;
 	if(*inc == 0){
-		for(i=0 ; i < (*m)-1 ; i++){ 
+		for(i=0 ; i < (*m)-1 ; i++){
 			x[i] = 1 ;
 		}
 		x[*m-1] = *n - *m + 1;
 	} else {
-		for(i=0 ; i < (*m)-1 ; i++){ 
+		for(i=0 ; i < (*m)-1 ; i++){
 			x[i] = 0 ;
 		}
 		x[*m-1] = *n ;
@@ -241,32 +244,72 @@ void c_allrestrictedparts(const int *m, const int *n, const int *len, const int 
 	}
 }
 
+int max_element(int *x, int len){
+  int best=INT_MIN;
+  for (int i=0; i < len; i++)
+    if (x[i] > best)
+      best = x[i];
+  return best;
+}
 
-void conjugate_vector(int *x, const int len, int *y)
+int min_element(int *x, int len){
+  int best=INT_MAX;
+  for (int i=0; i < len; i++)
+    if (x[i] < best)
+      best = x[i];
+  return best;
+}
+
+void c_sort(int *x, const int len)
+{
+  if (min_element(x, len) < 0)
+    error("All elements must be integers >= 0");
+  volatile int max = max_element(x, len);
+  int *a = (int *) calloc((unsigned int) max + 1, sizeof(int));
+
+  if (a == NULL)
+    error("Could not allocate memory");
+
+  /* make an array of counts */
+  for (int i=0; i < len; i++)
+    a[*(x + i)]++;
+
+  /* replace existing array with reverse-sorted data */
+  for (int i=0; max >= 0; max--)
+    while (a[max]--)
+      x[i++] = max;
+
+  free(a);
+}
+
+void conjugate_vector(int *x, const int len, const int sorted, int *y)
 {
 	int i,j;
-	for(j=0 ; x[0]>0 ; j++)
+  if (!sorted)
+    c_sort(x, len);
+	for(j=0 ; x[0] > 0; j++)
 	{
 		for(i=0; (i<len) && (x[i]>0) ; i++)
 		{
 			x[i]--;
 			y[j]++;
-		} 
+		}
 	}
 }
 
-void c_conjugate(int *x, const int *nrow, const int *ncol, const int *nmax, int *y)
+void c_conjugate(int *x, const int *nrow, const int *ncol, const int *nmax, const int *sorted, int *y)
 {
 	int i;
 	for(i=0 ; i< (*ncol) ; i++){
-		conjugate_vector(x+ (i*(*nrow)) , *nrow, y+i*(*nmax));
+		conjugate_vector(x+ (i*(*nrow)), *nrow, *sorted, y+i*(*nmax));
 	}
 }
 
-int durfee_vector(const int *x)
+int durfee_vector(const int *x, const int nrow)
 {
       int i;
-      for(i=0 ; x[i]>i ; i++){}
+      for(i=0 ; x[i] > i && i < nrow; i++)
+        ;
       return i;
 }
 
@@ -274,7 +317,7 @@ void c_durfee(const int *x, const int *nrow, const int *ncol, int *y)
 {
 	int i;
 	for(i=0 ; i< (*ncol) ; i++){
-   	       y[i] = durfee_vector(x +  i*(*nrow));
+    y[i] = durfee_vector(x +  i*(*nrow), *nrow);
 	}
 }
 
@@ -285,7 +328,7 @@ int c_nextblockpart(int *x, const int *y, const int *inlen)
         int a,i,j;
 	const int len = *inlen;
 	for(i=0 , a=x[0] ; (!x[i++]) || (x[i] ==y[i]) ; a += x[i]){};
-	/* i: position of first stack into which a block can be moved */ 
+	/* i: position of first stack into which a block can be moved */
 	/* a: number of blocks in stacks up to and including the first movable one */
 
 	if(i >= len){  /* check for all elements being at the right (ie x is the
@@ -303,14 +346,14 @@ int c_nextblockpart(int *x, const int *y, const int *inlen)
 	/* Now reallocate the "a" blocks by filling up the stack one by one from x[0] to x[i]:*/
 	for(j=0 ; j<i ; j++){
 	  if(a < y[j]){  /* empty all "a" blocks into x[j] */
-	    x[j] = a;   
+	    x[j] = a;
 	    a = 0;
 	  } else {
 	    x[j]=y[j];
 	    a -= y[j];
 	  }
 	}
-	
+
 	/* Getting here means that the function executed correctly: return 0 */
 	return 0;
 }
@@ -328,7 +371,7 @@ void c_allblockparts(int *x, const int *y, const int *nb, const int *len, const 
 	a = *total;
 	for(i=0 ; i< (*len) ; i++){
 	  if(a < y[i]){  /* empty all "a" blocks into x[j] */
-	    x[i] = a;   
+	    x[i] = a;
 	    a = 0;
 	  } else {
 	    x[i]=y[i];
@@ -340,7 +383,7 @@ void c_allblockparts(int *x, const int *y, const int *nb, const int *len, const 
 	  for(j=0 ; j < *len ; j++){
 	    x[i+j] = x[i+j - *len];
 	  }
-	  c_nextblockpart(x+i, y, len); 
+	  c_nextblockpart(x+i, y, len);
 	}
 }
 
@@ -369,12 +412,12 @@ int nextperm(int *x, const int len)
 
 void allperms(int *x, int *len, int *nb){
 	int i,j;
-			
+
 	for(i= *len ; i < (*len) * (*nb) ; i += *len){
 		for(j=0 ; j < *len ; j++){
 			x[i+j] = x[i+j - *len];
 		}
-		nextperm(x+i, *len); 
+		nextperm(x+i, *len);
 	}
 }
 */
