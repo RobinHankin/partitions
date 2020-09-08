@@ -15,6 +15,6 @@ Description: Additive partitions of integers.  Enumerates the
   given.  Set partitions and now compositions are included.
 Suggests: spray,testthat
 License: GPL
-URL: https://github.com/RobinHankin/partitions.git
+URL: https://github.com/RobinHankin/partitions
 BugReports: https://github.com/RobinHankin/partitions/issues
 RdMacros: mathjaxr

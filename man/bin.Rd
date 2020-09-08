@@ -40,9 +40,8 @@ bintocomp(bin,  use.C=TRUE, check=TRUE)
 }
 \author{Robin K. S. Hankin}
 \references{
-  Wikipedia 2008. \dQuote{Composition (number theory) --- Wikipedia, The
-    Free Encyclopedia},
-  \url{http://en.wikipedia.org/w/index.php?title=Composition_(number_theory)&oldid=243080178}; Online; accessed 3-February-2009
+Wikipedia contributors, 2020. \dQuote{Composition (combinatorics) --- Wikipedia, The Free Encyclopedia},
+\url{https://en.wikipedia.org/w/index.php?title=Composition_(combinatorics)&oldid=944285378}
 }
 \examples{
 tobin(10,5)

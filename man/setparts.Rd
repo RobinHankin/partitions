@@ -111,7 +111,7 @@ representation.
     package version 0.3-53. \url{https://CRAN.R-project.org/package=clue}
     \item  Kurt Hornik (2005).  \emph{A CLUE for CLUster Ensembles}.
     Journal of Statistical Software 14/12.
-    \url{http://www.jstatsoft.org/v14/i12/}
+    \url{https://www.jstatsoft.org/v14/i12/}
   }
 }
 \author{Luke G. West (\code{C++}) and Robin K. S. Hankin (\R);
