@@ -28,7 +28,8 @@ plainperms(n)
   \itemize{
     \item D. E. Knuth 2004.  \dQuote{The art of computer programming,
       pre-fascicle 2B.  A draft of section 7.2.1.2: Generating all
-      permutations}.  \url{http://www-cs-faculty.stanford.edu/~knuth/taocp.html}}
+      permutations}.
+    \url{https://www-cs-faculty.stanford.edu/~knuth/taocp.html}}
 }
 \examples{
 summary(perms(5))
