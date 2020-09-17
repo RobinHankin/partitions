@@ -62,7 +62,7 @@ print.summary.partition <- function(x, ...){
     } else
     return(Recall(parts(x)))
   }
-  if(is.matrix(x)){
+  if(is.matrix(x) && NCOL(x) > 1L){
     out <- apply(x,2,setparts)
     if(is.list(out)){out <- do.call("cbind",out)}
   } else {
