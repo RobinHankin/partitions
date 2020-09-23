@@ -13,6 +13,7 @@ cache: packages
 branches:
   only:
   - master
+  - /^issue-.*/
 r_build_args: '--resave-data --compact-vignettes="both" '
 
 r_packages:
@@ -20,4 +21,3 @@ r_packages:
 
 after_success:
   - Rscript -e 'library(covr); codecov()'
-  

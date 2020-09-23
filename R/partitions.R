@@ -63,8 +63,10 @@ print.summary.partition <- function(x, ...){
     return(Recall(parts(x)))
   }
   if(is.matrix(x)){
-    out <- apply(x,2,setparts)
-    if(is.list(out)){out <- do.call("cbind",out)}
+    out <- do.call(
+      "cbind",
+      lapply(seq_len(ncol(x)), function(i) setparts(x[, i]))
+    )
   } else {
     x <- sort(x[x>0], decreasing=TRUE)
     num.of.parts <-
@@ -77,7 +79,7 @@ print.summary.partition <- function(x, ...){
               )$ans
     dim(out) <- c(sum(x),num.of.parts)
   }
-  return(as.partition(out))
+  as.partition(out)
 }
 
 "listParts" <- function(x,do.set=FALSE) {
