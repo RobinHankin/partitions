@@ -115,7 +115,7 @@ are currently part of the \pkg{partitions} package~\citep{hankin2006},
 version 1.3-3.  These functions call \proglang{C} code, also written
 by the author, which is available as part of the package.
 
-All software is available from CRAN, \url{http://CRAN.r-project.org/}.
+All software is available from CRAN, \url{https://CRAN.r-project.org/}.
 
 \section{Examples}
 

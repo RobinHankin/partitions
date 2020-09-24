@@ -10,7 +10,7 @@ The partitions package: enumeration in R
 [![Build
 Status](https://travis-ci.org/RobinHankin/partitions.svg?branch=master)](https://travis-ci.org/RobinHankin/partitions)
 [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/partitions)](https://cran.r-project.org/package=partitions)
-[![Rdoc](http://www.rdocumentation.org/badges/version/partitions)](http://www.rdocumentation.org/packages/partitions)
+[![Rdoc](https://www.rdocumentation.org/badges/version/partitions)](https://www.rdocumentation.org/packages/partitions)
 
 <!-- badges: end -->
 
@@ -20,9 +20,8 @@ The `partitions` package provides efficient vectorized code to enumerate
 solutions to various integer equations. For example, we might note that
 
   
-![
-5 = 4+1 = 3+2 = 3+1+1 = 2+2+1 = 2+1+1+1 = 1+1+1+1+1
-](https://latex.codecogs.com/png.latex?%0A5%20%3D%204%2B1%20%3D%203%2B2%20%3D%203%2B1%2B1%20%3D%202%2B2%2B1%20%3D%202%2B1%2B1%2B1%20%3D%201%2B1%2B1%2B1%2B1%0A
+![&#10;5 = 4+1 = 3+2 = 3+1+1 = 2+2+1 = 2+1+1+1
+= 1+1+1+1+1&#10;](https://latex.codecogs.com/png.latex?%0A5%20%3D%204%2B1%20%3D%203%2B2%20%3D%203%2B1%2B1%20%3D%202%2B2%2B1%20%3D%202%2B1%2B1%2B1%20%3D%201%2B1%2B1%2B1%2B1%0A
 "
 5 = 4+1 = 3+2 = 3+1+1 = 2+2+1 = 2+1+1+1 = 1+1+1+1+1
 ")  
@@ -36,8 +35,7 @@ to be the same as ![1+3](https://latex.codecogs.com/png.latex?1%2B3
 # Installation
 
 You can install the released version of wedge from
-[CRAN](https://CRAN.R-project.org)
-with:
+[CRAN](https://CRAN.R-project.org) with:
 
 ``` r
 # install.packages("partitions")  # uncomment this to install the package
@@ -99,9 +97,11 @@ summary(diffparts(16))
 
 Sometimes we have restrictions on the partition. For example, to
 enumerate the partitions of 9 into 5 parts we would use
-`restrictedparts()`:
 
-``` r
+~~~~ restrictedparts()```:
+
+
+```r
 summary(restrictedparts(9,5))
 #>                                                 
 #> [1,] 9 8 7 6 5 7 6 5 4 5 ... 5 4 4 3 3 5 4 3 3 2
@@ -109,7 +109,7 @@ summary(restrictedparts(9,5))
 #> [3,] 0 0 0 0 0 1 1 1 1 2 ... 1 1 2 2 2 1 1 1 2 2
 #> [4,] 0 0 0 0 0 0 0 0 0 0 ... 1 1 1 1 2 1 1 1 1 2
 #> [5,] 0 0 0 0 0 0 0 0 0 0 ... 0 0 0 0 0 1 1 1 1 1
-```
+~~~~
 
 and if we want the partitions of 9 into parts not exceeding 5 we would
 use the conjugate of this:
@@ -208,21 +208,19 @@ It is possible to answer questions such as the permutations of the word
 ``` r
 library("magrittr")
 
-
 "pepper"    %>%
 strsplit("") %>%
 unlist        %>%
 match(letters) %>%
 multiset        %>%
 apply(2,function(x){x %>% `[`(letters,.) %>% paste(collapse="")})
-#>  [1] "eepppr" "eepprp" "eeprpp" "eerppp" "epeppr" "epeprp" "eperpp"
-#>  [8] "eppepr" "epperp" "eppper" "epppre" "epprep" "epprpe" "eprepp"
-#> [15] "eprpep" "eprppe" "ereppp" "erpepp" "erppep" "erpppe" "peeppr"
-#> [22] "peeprp" "peerpp" "pepepr" "peperp" "pepper" "peppre" "peprep"
-#> [29] "peprpe" "perepp" "perpep" "perppe" "ppeepr" "ppeerp" "ppeper"
-#> [36] "ppepre" "pperep" "pperpe" "pppeer" "pppere" "pppree" "ppreep"
-#> [43] "pprepe" "pprpee" "preepp" "prepep" "preppe" "prpeep" "prpepe"
-#> [50] "prppee" "reeppp" "repepp" "reppep" "repppe" "rpeepp" "rpepep"
+#>  [1] "eepppr" "eepprp" "eeprpp" "eerppp" "epeppr" "epeprp" "eperpp" "eppepr"
+#>  [9] "epperp" "eppper" "epppre" "epprep" "epprpe" "eprepp" "eprpep" "eprppe"
+#> [17] "ereppp" "erpepp" "erppep" "erpppe" "peeppr" "peeprp" "peerpp" "pepepr"
+#> [25] "peperp" "pepper" "peppre" "peprep" "peprpe" "perepp" "perpep" "perppe"
+#> [33] "ppeepr" "ppeerp" "ppeper" "ppepre" "pperep" "pperpe" "pppeer" "pppere"
+#> [41] "pppree" "ppreep" "pprepe" "pprpee" "preepp" "prepep" "preppe" "prpeep"
+#> [49] "prpepe" "prppee" "reeppp" "repepp" "reppep" "repppe" "rpeepp" "rpepep"
 #> [57] "rpeppe" "rppeep" "rppepe" "rpppee"
 ```
 

@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 [![Build Status](https://travis-ci.org/RobinHankin/partitions.svg?branch=master)](https://travis-ci.org/RobinHankin/partitions)
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/partitions)](https://cran.r-project.org/package=partitions)
-[![Rdoc](http://www.rdocumentation.org/badges/version/partitions)](http://www.rdocumentation.org/packages/partitions)
+[![Rdoc](https://www.rdocumentation.org/badges/version/partitions)](https://www.rdocumentation.org/packages/partitions)
 
 <!-- badges: end -->
 
