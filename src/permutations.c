@@ -1,7 +1,7 @@
 /* Algorithm L of Knuth, fasc2b.pdf, 7.2.1.2, p1.
 
    Given a sequence of n elements a1,a2,...,an initially sorted so
-   that a1 <=a2 <- ... <= an, generate all permutations of {a1,...,an}
+   that a1 <= a2 <= ... <= an, generate all permutations of {a1,...,an}
    visiting them in lexicographic order.  For example, the
    permutations of 1223 are
 
