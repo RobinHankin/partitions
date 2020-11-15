@@ -26,7 +26,7 @@ knitr::opts_chunk$set(
 
 # Overview
 
-The ```partitions``` package provides efficient vectorized code to
+The `partitions` package provides efficient vectorized code to
 enumerate solutions to various integer equations.  For example, we
 might note that
 
@@ -47,7 +47,7 @@ You can install the released version of wedge from [CRAN](https://CRAN.R-project
 library("partitions")
 ```
 
-# The ```partitions``` package in use
+# The `partitions` package in use
 
 To enumerate the partitions of 5:
 
@@ -57,7 +57,7 @@ parts(5)
 ```
 
 (each column is padded with zeros).  Of course, larger integers have
-many more partitions and in this case we can use ```summary()```:
+many more partitions and in this case we can use `summary()`:
 
 
 ```{r}
@@ -76,7 +76,7 @@ summary(diffparts(16))
 
 Sometimes we have restrictions on the partition.  For example, to
 enumerate the partitions of 9 into 5 parts we would use
-```restrictedparts()```:
+`restrictedparts()`:
 
 ```{r}
 summary(restrictedparts(9,5))
@@ -93,7 +93,7 @@ summary(conjugate(restrictedparts(9,5)))
 ## Block parts
 
 Sometimes we have restrictions on each element of a partition and in
-this case we would use ```blockparts()```:
+this case we would use `blockparts()`:
 
 ```{r}
 summary(blockparts(1:6,10))
@@ -117,13 +117,13 @@ compositions(4)
 
 A set of 4 elements, WLOG $\{1,2,3,4\}$, may be partitioned into
 subsets in a number of ways and these are enumerated with the
-```setparts()``` function:
+`setparts()` function:
 
 ```{r}
 setparts(4)
 ```
 
-In the above, column ```2 3 1 1``` would correspond to the set
+In the above, column `2 3 1 1` would correspond to the set
 partition $\{\{3,4\},\{1\},\{2\}\}$.
 
 
