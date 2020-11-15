@@ -97,11 +97,9 @@ summary(diffparts(16))
 
 Sometimes we have restrictions on the partition. For example, to
 enumerate the partitions of 9 into 5 parts we would use
+`restrictedparts()`:
 
-~~~~ restrictedparts()```:
-
-
-```r
+``` r
 summary(restrictedparts(9,5))
 #>                                                 
 #> [1,] 9 8 7 6 5 7 6 5 4 5 ... 5 4 4 3 3 5 4 3 3 2
@@ -109,7 +107,7 @@ summary(restrictedparts(9,5))
 #> [3,] 0 0 0 0 0 1 1 1 1 2 ... 1 1 2 2 2 1 1 1 2 2
 #> [4,] 0 0 0 0 0 0 0 0 0 0 ... 1 1 1 1 2 1 1 1 1 2
 #> [5,] 0 0 0 0 0 0 0 0 0 0 ... 0 0 0 0 0 1 1 1 1 1
-~~~~
+```
 
 and if we want the partitions of 9 into parts not exceeding 5 we would
 use the conjugate of this:
