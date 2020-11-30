@@ -189,7 +189,7 @@ mset(v)
   One commonly encountered idiom is \code{blockparts(rep(n,n),n)}, which
   is equivalent to \code{compositions(n,n)} [Sloane's \code{A001700}].
 
-  If you have a \emph{minimum{ number of balls in each block, a
+  If you have a \emph{minimum} number of balls in each block, a
   construction like
 
   \preformatted{
@@ -201,7 +201,6 @@ mset(v)
   can be helpful (that is, subtract off the minimum number of balls and
 add them back again at the end). 
 }
-
 \seealso{\code{\link{nextpart}}}
 \references{
   \itemize{
