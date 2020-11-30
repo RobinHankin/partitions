@@ -22,6 +22,8 @@ plainperms(n)
 \note{
   Comments in the \code{C} code; algorithm lifted from
   \file{fasc2b.pdf}.
+
+
 }
 \seealso{\code{\link{parts}}}
 \references{
