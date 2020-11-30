@@ -188,7 +188,20 @@ mset(v)
 
   One commonly encountered idiom is \code{blockparts(rep(n,n),n)}, which
   is equivalent to \code{compositions(n,n)} [Sloane's \code{A001700}].
+
+  If you have a \emph{minimum{ number of balls in each block, a
+  construction like
+
+  \preformatted{
+    x <- c(1,1,2,1)   # min
+    y <- c(2,3,4,5)   # max
+    
+    sweep(blockparts(y-x,7-sum(x)),1,x,"+")
+  }
+  can be helpful (that is, subtract off the minimum number of balls and
+add them back again at the end). 
 }
+
 \seealso{\code{\link{nextpart}}}
 \references{
   \itemize{
@@ -209,6 +222,7 @@ mset(v)
   2B \dQuote{Generating all permutations}
   }
 }
+
 \examples{
 parts(5)
 diffparts(10)
