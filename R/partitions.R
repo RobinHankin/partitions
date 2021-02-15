@@ -528,17 +528,23 @@ function(n, give=FALSE){
   return(drop(out))
 }
 
-"durfee" <- function(x, sorted = TRUE){
+"durfee_sorted" <- function(x){
   x <- as.matrix(x)
-  if (sorted)
     .C("c_durfee",
        as.integer(x),
        as.integer(nrow(x)),
        as.integer(ncol(x)),
        ans=integer(ncol(x)),
        PACKAGE="partitions")$ans
-  else
-    apply(x, 2, eddington::E_num)
+}
+
+"durfee" <- function(x, sorted = TRUE){
+  x <- as.matrix(x)
+  if (sorted){
+      return(durfee_sorted(x))
+  } else {
+      return(durfee_sorted(apply(x,2,sort,decreasing=TRUE)))
+  }
 }
 
 "perms" <- function(n){

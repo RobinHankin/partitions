@@ -1,6 +1,7 @@
 \name{conjugate}
 \alias{conjugate}
 \alias{durfee}
+\alias{durfee_sorted}
 \alias{Durfee}
 \title{Conjugate partitions and Durfee squares}
 \description{
@@ -9,6 +10,7 @@ Given a partition, provide its conjugate or Durfee square
 \usage{
 conjugate(x, sorted = TRUE)
 durfee(x, sorted = TRUE)
+durfee_sorted(x)
 }
 \arguments{
   \item{x}{Either a vector describing a partition or a matrix whose

@@ -1,14 +1,14 @@
 Package: partitions
 Type: Package
 Title: Additive Partitions of Integers
-Version: 1.10-1
+Version: 1.10-2
 Depends: R (>= 3.6.0)
 Authors@R: c(
     person(given=c("Robin", "K. S."), family="Hankin", role = c("aut","cre"), email="hankin.robin@gmail.com", comment = c(ORCID = "0000-0001-5982-0415")),
     person("Paul", "Egeler", email = "paulegeler@gmail.com", role = c("ctb"), comment = c(ORCID = "0000-0001-6948-9498"))
     )
 Maintainer: Robin K. S. Hankin <hankin.robin@gmail.com>
-Imports: gmp, polynom, sets, eddington, mathjaxr
+Imports: gmp, polynom, sets, mathjaxr
 Description: Additive partitions of integers.  Enumerates the
   partitions, unequal partitions, and restricted partitions of an
   integer; the three corresponding partition functions are also
