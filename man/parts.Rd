@@ -86,6 +86,11 @@ mset(v)
     \eqn{m} parts, the same Hindenburg's algorithm is used but with a
     start vector of \code{c(rep(0,m-1),n)}.
 
+    Functions \code{parts()} and \code{restrictedparts()} overlap in
+    functionality.  Note, however, that they can return identical
+    partitions but in a different order: \code{parts(6)} and
+    \code{restrictedparts(6,6)} for example.
+
     If \mjseqn{m>n}, the partitions are padded with zeros.
 
     \item Function \code{blockparts()} enumerates the compositions of an
