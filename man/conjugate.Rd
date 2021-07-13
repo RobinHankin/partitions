@@ -28,7 +28,10 @@ durfee_sorted(x)
   diagram about the leading diagonal.
 
   Essentially, \code{conjugate()} carries out \R idiom
-  \code{rev(cumsum(table(factor(a[a>0],levels=max(a):1))))}, but faster.
+
+  \code{rev(cumsum(table(factor(a[a>0],levels=max(a):1))))}
+
+  but is faster.
 
   The \dQuote{Durfee square} of a partition is defined on page 281 of
   Hardy and Wright.  It is the largest square of nodes contained in the
@@ -36,7 +39,10 @@ durfee_sorted(x)
   length of the side
   of the Durfee square, which Andrews denotes
   \eqn{d(\lambda)}{d(lambda)}.  It is equivalent to \R idiom
-  \code{function(a){sum(a>=1:length(a))}}, but faster.
+
+  \code{function(a){sum(a>=1:length(a))}}
+
+  but is faster.
 
 }
 \value{
