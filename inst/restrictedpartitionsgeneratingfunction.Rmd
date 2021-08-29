@@ -27,6 +27,7 @@ partitions, function `restrictedparts()`:
 
 ```{r, label=userestrictedpartsfunction}
 library("partitions")
+library("disordR")
 (jj <- restrictedparts(7,3))
 ncol(jj)
 ```
@@ -111,7 +112,7 @@ R_gf <- function(k,n){   # version 1
    for(i in seq_len(k)){  # starts at 1
      P <- P*ooom(x^i*y,n)
    }
-   return(value(P[k,n]))
+   return(drop(coeffs(P[k,n])))
 }
 ```
 
@@ -128,7 +129,7 @@ out powers higher than needed:
 ```{r,label=define_strip}
 strip <- function(P,k,n){  # strips out powers higher than needed
   ind <- index(P)
-  val <- value(P)
+  val <- elements(coeffs(P))
   wanted <- (ind[,1] <= k) & (ind[,2] <= n)
   spray(ind[wanted,],val[wanted])
 }
@@ -147,7 +148,7 @@ R_gf2 <- function(k,n,give_poly=FALSE){
    if(give_poly){
      return(P)
    } else {
-     return(value(P[k,n]))
+     return(drop(coeffs(P[k,n])))
    }
 }
 ```
