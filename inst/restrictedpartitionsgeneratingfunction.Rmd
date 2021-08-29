@@ -178,7 +178,7 @@ So the generating function approach is not particularly efficient, at
 least not in this sort of use-case with the `spray` package.  It
 might be better with the `mvp` package; I don't know.
 
-Of course, `R_gf2()}` calculates the generating polynomial
+Of course, `R_gf2()` calculates the generating polynomial
 which gives very much more information than is returned.  Perhaps this
 is why it is so slow compared to function `R()`, although it is
 surprising to see direct enumeration so heavily outperforming a
