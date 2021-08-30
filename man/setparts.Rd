@@ -102,29 +102,11 @@ representation.
 
   Note carefully that \code{setparts(c(2,1,1))} does \emph{not}
   enumerate the ways of placing four numbered balls in three boxes of
-  capacities 2,1,1:
-
-  \preformatted{
-> setparts(c(2,1,1))
-                
-[1,] 1 1 1 2 2 2
-[2,] 2 1 2 1 1 3
-[3,] 3 2 1 3 1 1
-[4,] 1 3 3 1 3 1
-
-}
-
-Note the absence of a column reading \code{1 1 3 2}.  This would
-correspond to placing balls 1 and 2 in box 1 (of size 2), ball 3 in box
-3 (of size 1) and ball 4 in box 2 (also of size 1).  The missing column
-is because the two boxes of size 1 are indistinguishable, so \code{1 1 3
-2} is the same \emph{set} partition as \code{1 1 2 3}, as in each case
-balls 3 and 4 are placed in \dQuote{a box of size 1}.  In function
-\code{setparts()} we have the line
-
-\code{as.integer(.fac(sum(x))/(prod(c(.fac(x),.fac(table(x))))))}
-
- 
+  capacities 2,1,1.  This is because there are two boxes of capacity 1,
+  and swapping the balls between these boxes gives the same set
+  partition (because sets are unordered).  To do this, use
+  \code{multinomial(c(a=2,b=1,c=1))}.  See the \code{setparts} vignette
+  for more details.
 }
 \references{
   \itemize{

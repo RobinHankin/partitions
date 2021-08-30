@@ -662,3 +662,11 @@ function(n, give=FALSE){
     return(out)
   }
 
+`multinomial` <- function(v){
+    jj <- rep(seq_along(v),v)
+    out <- as.partition(apply(multiset(jj),2,order))
+    rownames(out) <- rep(names(v),v)
+    return(out)
+}
+
+            

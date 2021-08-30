@@ -715,6 +715,53 @@ criteria, one could gain at least two units of support by adopting
 instead the best supported hypothesis~$H_{[3,2,1,1,1,1,2]}$,
 corresponding to~$(3456)(27)(1)$.
 
+\section{Note: a gotcha}
+
+Note carefully that \code{setparts(c(2,1,1))} does \emph{not}
+enumerate the ways of placing four numbered balls in three labelled
+boxes of capacities 2,1,1.  This is because there are two boxes of
+capacity 1, and swapping the balls between these boxes gives a
+different box partition but the same set partition (because sets are
+unordered).
+
+<<echo=TRUE>>=
+setparts(c(2,1,1))
+@ 
+
+Note the absence of a column reading \code{1 1 3 2}.  This would
+correspond to placing balls 1 and 2 in box 1 (of size 2), ball 3 in
+box 3 (of size 1) and ball 4 in box 2 (also of size 1).  The missing
+column is because the two boxes of size 1 are indistinguishable, so
+\code{1 1 3 2} is the same \emph{set} partition as \code{1 1 2 3}, as
+in each case balls 3 and 4 are placed in ``a box of size 1''.
+
+If you want to enumerate the ways of choosing two workers, a secretary
+and a chair from four people (who are conveniently numbered 1,2,3,4),
+use \code{multinomial()}:
+
+<<echo=TRUE>>=
+multinomial(c(worker=2,secretary=1,chair=1))
+@ 
+
+Above, see how the rows are named for their equivalence class.  The
+first two columns differ only in the identity of the secretary and the
+chair (and would be identical set partitions as given by
+\code{setparts(c(2,1,1))}).  The reason I mention this is to avoid the
+following gotcha (which looks plausible but is incorrect):
+
+
+<<echo=TRUE>>=
+v <- c(worker=2,secretary=1,chair=1)
+a <- apply(setparts(v),2,order)
+rownames(a) <- rep(names(v),v)
+as.partition(a)
+@ 
+
+The above is an incomplete enumeration.  We see 1,4,2,3 [which would
+  correspond to set partition 1,2,3,1] but not 1,4,3,2 [which would
+  correspond to set partition 1,3,2,1].  These two differ in that the
+secretary and chair have swapped roles.
+
 \section{Conclusions}
 
 Enumeration of set partitions is required in several branches of

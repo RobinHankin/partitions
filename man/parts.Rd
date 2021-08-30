@@ -5,6 +5,7 @@
 \alias{blockparts}
 \alias{compositions}
 \alias{multiset}
+\alias{multinomial}
 \alias{mset}
 \alias{c_allblockparts}
 \alias{c_alldiffparts}
@@ -47,6 +48,7 @@ blockparts(f, n=NULL, include.fewer=FALSE)
 compositions(n, m=NULL, include.zero=TRUE)
 multiset(v,n=length(v))
 mset(v)
+multinomial(v)
 }
 \arguments{
   \item{n}{Integer to be partitioned.  In function \code{blockparts()},
@@ -121,9 +123,12 @@ mset(v)
 
     \item Function \code{multiset()} returns all ways of ordering a
     multiset (\code{mset()} is a low-level helper function).
+
+    \item Function \code{multinomial(v)} returns all ways of
+    partitioning a set into \emph{distinguishable} boxes of capacities
+    \code{v[1], v[2],...,v[n]}.  The number of columns is given by the
+    multinomial coefficient \mjeqn{{\sum v_i\choose v_1\,v_2\,\ldots\,v_n}}{omitted}.
   }
-
-
 
 \preformatted{
 >  parts(7)
@@ -180,8 +185,14 @@ mset(v)
 [3,] 3 2 2 3 2 2 1 1 1 3 2 2 2 1 2
 [4,] 2 3 2 2 3 2 3 2 2 1 1 1 2 2 1
 [5,] 1 1 1 2 2 3 2 3 2 2 3 2 1 2 2
-}
 
+> multinomial(c(a=1,b=2,c=1))
+                         
+a 1 1 1 2 2 3 4 3 4 2 3 4
+b 2 2 3 1 1 1 1 1 1 3 2 2
+b 3 4 4 3 4 2 2 4 3 4 4 3
+c 4 3 2 4 3 4 3 2 2 1 1 1 
+}
 
 }
 \author{Robin K. S. Hankin}
