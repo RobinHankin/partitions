@@ -669,4 +669,4 @@ function(n, give=FALSE){
     return(out)
 }
 
-            
+`allbinom` <- function(n,k){as.partition(multinomial(c(k,n-k))[seq_len(k),,drop=FALSE])}
