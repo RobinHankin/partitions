@@ -3,7 +3,7 @@ The partitions package: enumeration in R
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# partitions
+# partitions <img src="man/figures/partitions.png" width = "150" align="right" />
 
 <!-- badges: start -->
 

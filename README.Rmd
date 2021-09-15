@@ -15,7 +15,8 @@ knitr::opts_chunk$set(
   out.width = "100%"
 )
 ```
-# partitions
+
+# partitions <img src="man/figures/partitions.png" width = "150" align="right" />
 
 <!-- badges: start -->
 [![Build Status](https://app.travis-ci.com/RobinHankin/partitions.svg?branch=master)](https://app.travis-ci.com/RobinHankin/partitions)
