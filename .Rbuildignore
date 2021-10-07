@@ -4,3 +4,5 @@
 ^\.travis\.yml$
 ^appveyor\.yml$
 inst/.RData
+inst/partitions_stickermaker.R
+inst/restrictedpartitionsgeneratingfunction.Rmd
