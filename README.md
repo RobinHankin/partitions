@@ -3,14 +3,11 @@ The partitions package: enumeration in R
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# partitions <img src="man/figures/partitions.png" width = "150" align="right" />
+# <img src="man/figures/partitions.png" width = "150" align="right" />
 
 <!-- badges: start -->
 
-[![Build
-Status](https://app.travis-ci.com/RobinHankin/partitions.svg?branch=master)](https://app.travis-ci.com/RobinHankin/partitions)
 [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/partitions)](https://cran.r-project.org/package=partitions)
-[![Rdoc](https://www.rdocumentation.org/badges/version/partitions)](https://www.rdocumentation.org/packages/partitions)
 [![](http://cranlogs.r-pkg.org/badges/grand-total/onion?color=blue)](https://cran.r-project.org/package=onion)
 
 <!-- badges: end -->
