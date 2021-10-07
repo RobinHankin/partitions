@@ -119,7 +119,7 @@ representation.
     package version 0.3-53. \url{https://CRAN.R-project.org/package=clue}
     \item  Kurt Hornik (2005).  \emph{A CLUE for CLUster Ensembles}.
     Journal of Statistical Software 14/12.
-    \url{https://www.jstatsoft.org/htaccess.php?volume=14&type=i&issue=12}
+    \doi{10.18637/jss.v014.i12}
   }
 }
 \author{Luke G. West (\code{C++}) and Robin K. S. Hankin (\R);
