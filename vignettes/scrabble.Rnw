@@ -4,7 +4,6 @@
 \usepackage{bbm}
 \usepackage{amsfonts}
 \usepackage{wasysym}
-\pdfsuppressptexinfo=-1
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% declarations for jss.cls %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

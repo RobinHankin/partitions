@@ -5,7 +5,6 @@
 \usepackage{amsfonts}
 \usepackage{wasysym}
 \usepackage{xypic}
-\pdfsuppressptexinfo=-1
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% declarations for jss.cls %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
