@@ -3,9 +3,8 @@
 }
 
 .addZeros <- function(lambda){
-  l <- length(lambda)
-  lambda <- lambda[seq_len(match(0L, lambda, nomatch = l + 1L)-1L)]
-  lambda <- c(lambda, rep(0L, sum(lambda) - l))
+  lambda <- lambda[seq_len(match(0L, lambda, nomatch = length(lambda) + 1L)-1L)]
+  c(lambda, rep(0L, sum(lambda) - length(lambda)))
 }
 
 .removeZeros <- function(lambda){
@@ -83,4 +82,32 @@ dominates <- function(lambda, mu){
 #' @export
 `%.>%` <- function(lambda, mu){
   !.equalPartitions(mu, lambda) && isDominated(lambda, mu)
+}
+
+
+#' @title Dominated and dominating partitions
+#' @description Returns the partitions dominated by a given partition or
+#'   dominating this partition.
+#'
+#' @param lambda an integer partition
+#'
+#' @return A set of integer partitions.
+#' @export
+#' @name dominated-partition
+#'
+#' @examples
+#' dominatedPartitions(c(2, 1, 1))
+#' dominatingPartitions(c(2, 1, 1))
+dominatedPartitions <- function(lambda){
+  stopifnot(.isPartition(lambda))
+  allParts <- parts(sum(lambda))
+  allParts[, apply(allParts, 2L, isDominated, lambda = lambda), drop = FALSE]
+}
+
+#' @rdname dominated-partition
+#' @export
+dominatingPartitions <- function(lambda){
+  stopifnot(.isPartition(lambda))
+  allParts <- parts(sum(lambda))
+  allParts[, apply(allParts, 2L, dominates, mu = lambda), drop = FALSE]
 }
