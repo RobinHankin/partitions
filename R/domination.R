@@ -23,10 +23,16 @@
 #'
 #' @name domination-order
 #'
-#' @examples c(2, 1, 1) < c(3, 2, 1)
+#' @examples c(2, 1, 1) %.<% c(3, 1)
 isDominated <- function(mu, lambda){
   stopifnot(.isPartition(mu))
   stopifnot(.isPartition(lambda))
+  if(sum(mu) != sum(lambda)){
+    message(
+      "The two partitions do not have the same weight, hence are not comparable."
+    )
+    return(FALSE)
+  }
   lambda <- .addZeros(lambda)
   mu <- .removeZeros(mu)
   for(i in seq_along(mu)){

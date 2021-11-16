@@ -30,5 +30,5 @@ A Boolean value, whether \code{mu} is dominated by \code{lambda}.
 Test whether a partition is dominated by another one.
 }
 \examples{
-c(2, 1, 1) \%.<\% c(3, 2, 1)
+c(2, 1, 1) \%.<\% c(3, 1)
 }
