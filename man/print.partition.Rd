@@ -1,17 +1,22 @@
 \name{print.partition}
 \alias{print.partition}
+\alias{as.character.partition}
 \alias{print.equivalence}
+\alias{as.character.equivalence}
 \alias{print.summary.partition}
 \alias{print}
-\title{Print methods for partition objects and equivalence objects}
+\alias{as.character}
+\title{Print and as.character methods for partition objects and equivalence objects}
 \description{
-  A print method for partition objects, summary partition objects, and
-  equivalence classes.  Includes various configurable options
+  Methods for printing and casting to character of partition objects, summary partition objects, and
+  equivalence classes.  Includes various configurable options.
 }
 \usage{
 \S3method{print}{partition}(x, mat = getOption("matrixlike"), h = getOption("horiz"), ...)
+\S3method{as.character}{partition}(x, mat = getOption("matrixlike"), h = getOption("horiz"), ...)
 \S3method{print}{summary.partition}(x, ...)
 \S3method{print}{equivalence}(x, sep = getOption("separator"), ...)
+\S3method{as.character}{equivalence}(x, sep = getOption("separator"), ...)
 }
 \arguments{
   \item{x}{Object to be printed: an object of class either
@@ -29,8 +34,11 @@
 \author{Robin K. S. Hankin}
 \examples{
 print(parts(5))
+as.character(parts(5))
 
 summary(parts(7))
+
+as.character(listParts(3)[[2]])
 
 listParts(3)
 options(separator="")

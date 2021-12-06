@@ -5,7 +5,9 @@ import("mathjaxr")
 importFrom("polynom",polynomial)
 
 S3method(print,partition)
+S3method(as.character,partition)
 S3method(print,equivalence)
+S3method(as.character,equivalence)
 S3method(print,summary.partition)
 
 S3method(summary,partition)

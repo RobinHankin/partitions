@@ -100,6 +100,14 @@ print.summary.partition <- function(x, ...){
   return(invisible(print(noquote(out))))
 }
 
+"as.character.equivalence" <- function(x,sep=getOption("separator"), ...){
+  if(is.null(sep)){sep <- ","}
+  f <- function(x){paste(c("(",paste(x,collapse=sep),")"),collapse="")}
+  out <- paste(unlist(lapply(x,f)),collapse="")
+  x <-  unclass(x)
+  return(out)
+}
+
 "print.partition" <- function(x, mat=getOption("matrixlike"), h=getOption("horiz"), ...){
   class(x) <- "matrix"
   if(!isTRUE(mat)){
@@ -109,6 +117,17 @@ print.summary.partition <- function(x, ...){
     x <- t(x)
   }
   return(invisible(print(noquote(x))))
+}
+
+"as.character.partition" <- function(x, mat=getOption("matrixlike"), h=getOption("horiz"), ...){
+  class(x) <- "matrix"
+  if(!isTRUE(mat)){
+    colnames(x) <- rep(" ", ncol(x))
+  }
+  if(isTRUE(h)){
+    x <- t(x)
+  }
+  return(x)
 }
 
 "parts" <-
