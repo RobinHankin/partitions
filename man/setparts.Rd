@@ -137,7 +137,13 @@ jj <- restrictedparts(5,3)
 setparts(jj)               # partitions of a set of 5 elements into
                            # at most 3 sets
 
-listParts(jj)              # induced equivalence classes
+listParts(jj)              # The induced equivalence classes
+
+
+jj <- restrictedparts(6,3,TRUE)
+setparts(jj)               # partitions of a set of 6 elements into
+ncol(setparts(jj))         # _exactly_ 3 sets; cf StirlingS2[6,3]==90
+
 
 setparts(conjugate(jj))    # partitions of a set of 5 elements into
                            # sets not exceeding 3 elements
