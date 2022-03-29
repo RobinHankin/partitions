@@ -28,7 +28,9 @@
 \alias{c_numbdiffparts}
 \alias{c_numbparts}
 \alias{numbrestrictedparts_R}
-\title{Enumerate the partitions of an integer}
+\title{Enumerate the partitions of an integer
+  \Sexpr[stage=build,results=hide]{require(partitions)}
+}
 \description{\loadmathjax
   Given an integer, return a matrix whose columns enumerate various
   partitions.
@@ -142,70 +144,6 @@ allbinom(n,k)
 
   }
 
-\preformatted{
->  parts(7)
-                                  
-[1,] 7 6 5 5 4 4 4 3 3 3 3 2 2 2 1
-[2,] 0 1 2 1 3 2 1 3 2 2 1 2 2 1 1
-[3,] 0 0 0 1 0 1 1 1 2 1 1 2 1 1 1
-[4,] 0 0 0 0 0 0 1 0 0 1 1 1 1 1 1
-[5,] 0 0 0 0 0 0 0 0 0 0 1 0 1 1 1
-[6,] 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1
-[7,] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1
-> P(7)
-[1] 15
-> diffparts(9)
-                    
-[1,] 9 8 7 6 6 5 5 4
-[2,] 0 1 2 3 2 4 3 3
-[3,] 0 0 0 0 1 0 1 2
-> Q(9)
-[1] 8
-> restrictedparts(9,4)
-                                        
-[1,] 9 8 7 6 5 7 6 5 4 5 4 3 6 5 4 4 3 3
-[2,] 0 1 2 3 4 1 2 3 4 2 3 3 1 2 3 2 3 2
-[3,] 0 0 0 0 0 1 1 1 1 2 2 3 1 1 1 2 2 2
-[4,] 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 2
-> R(4,9,include.zero=TRUE)
-[1] 18
-> blockparts(1:4,5)
-                                                
-[1,] 1 1 0 1 1 0 1 0 1 1 0 1 0 0 1 0 1 0 0 1 0 0
-[2,] 2 1 2 2 1 2 0 1 2 1 2 0 1 0 1 2 0 1 0 0 1 0
-[3,] 2 3 3 1 2 2 3 3 0 1 1 2 2 3 0 0 1 1 2 0 0 1
-[4,] 0 0 0 1 1 1 1 1 2 2 2 2 2 2 3 3 3 3 3 4 4 4
-> S(1:4,5)
-[1] 22
-> compositions(5,3)
-                                              
-[1,] 5 4 3 2 1 0 4 3 2 1 0 3 2 1 0 2 1 0 1 0 0
-[2,] 0 1 2 3 4 5 0 1 2 3 4 0 1 2 3 0 1 2 0 1 0
-[3,] 0 0 0 0 0 0 1 1 1 1 1 2 2 2 2 3 3 3 4 4 5
-> S(rep(5,3),5)
-[1] 21
-> setparts(4)
-                                  
-[1,] 1 1 1 1 2 1 1 1 1 1 1 2 2 2 1
-[2,] 1 1 1 2 1 2 1 2 2 1 2 1 1 3 2
-[3,] 1 2 1 1 1 2 2 1 3 2 1 3 1 1 3
-[4,] 1 1 2 1 1 1 2 2 1 3 3 1 3 1 4
->  setparts(c(1,2,2))
-                                  
-[1,] 1 1 1 1 1 1 1 1 1 1 1 1 3 3 3
-[2,] 2 2 3 1 1 1 2 2 3 2 2 3 1 1 1
-[3,] 3 2 2 3 2 2 1 1 1 3 2 2 2 1 2
-[4,] 2 3 2 2 3 2 3 2 2 1 1 1 2 2 1
-[5,] 1 1 1 2 2 3 2 3 2 2 3 2 1 2 2
-
-> multinomial(c(a=1,b=2,c=1))
-                         
-a 1 1 1 2 2 3 4 3 4 2 3 4
-b 2 2 3 1 1 1 1 1 1 3 2 2
-b 3 4 4 3 4 2 2 4 3 4 4 3
-c 4 3 2 4 3 4 3 2 2 1 1 1 
-}
-
 }
 \author{Robin K. S. Hankin}
 \note{
@@ -220,14 +158,23 @@ c 4 3 2 4 3 4 3 2 2 1 1 1
   If you have a \emph{minimum} number of balls in each block, a
   construction like
 
-  \preformatted{
+  \printExample{
     x <- c(1,1,2,1)   # min
     y <- c(2,3,4,5)   # max
     
     sweep(blockparts(y-x,7-sum(x)),1,x,"+")
   }
+
   can be helpful (that is, subtract off the minimum number of balls and
-add them back again at the end). 
+  add them back again at the end).
+
+  \preformatted{
+    blockparts(c(4,3,3,2),5)  # Knuth's example, pre-fascicle 3a, p16
+    multiset(c(1,2,2,3))      # also Knuth
+  }
+
+
+
 }
 \seealso{\code{\link{nextpart}}}
 \references{
@@ -250,33 +197,19 @@ add them back again at the end).
   }
 }
 
-\examples{
-parts(5)
-diffparts(10)
-matplot(t(diffparts(27)),type='l',lty=1)
-
-restrictedparts(9,4)
-restrictedparts(9,4,FALSE)
-restrictedparts(9,4,decreasing=TRUE)
-
-blockparts(1:4)
-blockparts(1:4,3)
-blockparts(1:4,3,include.fewer=TRUE)
-
-blockparts(c(4,3,3,2),5)  # Knuth's example, pre-fascicle 3a, p16
-
-compositions(4)           # not the same as parts(4)
-compositions(4,4) 
-
-# With 10 blocks, enumerate all partitions with maxima of 1:5 and minima
-# of c(0,1,1,2,1):
-
-a <- c(0,1,1,2,1)
-sweep(blockparts(1:5-a,10-sum(a)),1,a,"+")
-
-#Knuth's example:
-multiset(c(1,2,2,3))
-
-multiset(rep(4+1:3,1:3),3)
-}
+\runExamples{
+    parts(7)
+    P(7)
+    diffparts(9)
+    Q(9)
+    restrictedparts(9,4)
+    R(4,9,include.zero=TRUE)
+    blockparts(1:4,5)
+    S(1:4,5)
+    compositions(5,3)
+    S(rep(5,3),5)
+    setparts(4)
+    setparts(c(1,2,2))
+    multinomial(c(a=1,b=2,c=1))
+  }
 \keyword{math}

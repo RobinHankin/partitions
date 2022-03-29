@@ -3,6 +3,9 @@ useDynLib(partitions, .registration=TRUE)
 import("gmp")
 import("mathjaxr")
 importFrom("polynom",polynomial)
+import("Rdpack")
+importFrom("Rdpack",reprompt)
+
 
 S3method(print,partition)
 S3method(print,equivalence)
