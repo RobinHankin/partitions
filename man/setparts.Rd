@@ -37,9 +37,12 @@ vec_to_eq(vec)
       k}{1,...,k} 
   }
   
-  The induced \dfn{equivalence relation} has \mjeqn{i\sim j}{i~j} if
-  and only if \eqn{i} and \eqn{j} belong to the same partition.
-  Equivalence classes may be listed using \code{listParts()}
+  The induced \dfn{equivalence relation} has \mjeqn{i\sim j}{i~j} if and
+  only if \eqn{i} and \eqn{j} belong to the same partition.  Equivalence
+  classes of \mjeqn{S=\left\lbrace 1,\ldots,n\right\rbrace}{S={1,...,n}}
+  may be listed using \code{listParts()}.  Thus
+
+
   
   There are exactly fifteen ways to partition a set of four
   elements:
@@ -117,7 +120,7 @@ representation.
     23, code snippet 2
     \item  Kurt Hornik (2017).  \emph{clue: Cluster ensembles}.  R
     package version 0.3-53. \url{https://CRAN.R-project.org/package=clue}
-    \item  Kurt Hornik (2005).  \emph{A CLUE for CLUster Ensembles}.
+    \item  Kurt Hornik (2005).  \emph{A CLUE for Cluster Ensembles}.
     Journal of Statistical Software 14/12.
     \doi{10.18637/jss.v014.i12}
   }
@@ -133,11 +136,16 @@ setparts(c(3,3,2))         # all partitions of a set of 8 elements
                            # into sets of sizes 3,3,2.
 
 
+listParts(c(2,2,1))        # all 15 ways of defining subsets of
+                           # {1,2,3,4,5} with sizes 2,2,1
+
 jj <- restrictedparts(5,3)
 setparts(jj)               # partitions of a set of 5 elements into
                            # at most 3 sets
 
 listParts(jj)              # The induced equivalence classes
+
+
 
 
 jj <- restrictedparts(6,3,TRUE)
