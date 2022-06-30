@@ -24,7 +24,7 @@ function \code{durfee()} gives the size of the Durfee square.
 \strong{NB} the emphasis in this package is terse, efficient C code.
 This means that there is a minimum of argument checking.  For example,
 function \code{conjugate()} assumes that the partition is in standard
-form (ie nonincreasing); supplying a vector in nonstandard form will
+form (i.e. nonincreasing); supplying a vector in nonstandard form will
 result in garbage being returned silently.  Note that a block partition
 is not necessarily in standard form.
 }

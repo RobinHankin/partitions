@@ -14,13 +14,13 @@ durfee_sorted(x)
 }
 \arguments{
   \item{x}{Either a vector describing a partition or a matrix whose
-    columns are partitions.}
-  \item{sorted}{A logical indicating whether the data is already in standard
-    form. That is to say, are the data within each colum sorted in decreasing
-    order?}
+    columns are partitions}
+  \item{sorted}{A logical indicating whether the data is already in
+    standard form.  That is to say, are the data within each column
+    sorted in decreasing order?}
 }
 \details{
-  Conjugation is described in Andrews, and (eg) Hardy and Wright.
+  Conjugation is described in Andrews, and (e.g.) Hardy and Wright.
 
   The \dfn{conjugate} of a partition may be calculated by taking its
   Ferrers diagram and considering the partition defined by columns
@@ -65,7 +65,7 @@ conjugate(restrictedparts(6,4))
 
 durfee(10:1)
 
-# A parition in nonstandard form --- use `sorted = FALSE`
+# A partition in nonstandard form --- use `sorted = FALSE`
 x <- parts(5)[sample(5),]
 durfee(x, sorted = FALSE)
 conjugate(x, sorted = FALSE)

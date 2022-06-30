@@ -24,7 +24,7 @@ first and last few partitions (columns)
   A summary object is a list, comprising three elements:
   
   \item{shortened}{Boolean, with \code{TRUE} meaning that the middle
-    section of the matrix is ommitted, and \code{FALSE} meaning that the
+    section of the matrix is omitted, and \code{FALSE} meaning that the
     entire matrix is returned because \code{n} is too big}
   \item{n}{Number of columns to return at the start and the end of the matrix}
   \item{out}{Matrix returned: just the first and last \code{n} columns
