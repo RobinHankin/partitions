@@ -22,8 +22,6 @@ plainperms(n)
 \note{
   Comments in the \code{C} code; algorithm lifted from
   \file{fasc2b.pdf}.
-
-
 }
 \seealso{\code{\link{parts}}}
 \references{
@@ -31,17 +29,16 @@ plainperms(n)
     \item D. E. Knuth 2004.  \dQuote{The art of computer programming,
       pre-fascicle 2B.  A draft of section 7.2.1.2: Generating all
       permutations}.
-    \url{https://www-cs-faculty.stanford.edu/~knuth/taocp.html}}
+    \code{https://www-cs-faculty.stanford.edu/~knuth/taocp.html}}
 }
 \examples{
+perms(4)
 summary(perms(5))
 
 # Knuth's Figure 18:
 matplot(t(apply(plainperms(4),2,order)),
         type='l', lty=1, lwd=5, asp=1,
         frame=FALSE, axes=FALSE, ylab="", col=gray((1:5)/5))
-
-
 
 }
 \keyword{math}
