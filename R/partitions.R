@@ -8,7 +8,7 @@
 }
 
 "as.matrix.partition" <- function(x, ...){
-  class(x) <- "matrix"
+  x <- unclass(x)
   NextMethod("as.matrix")
 }
 
@@ -101,7 +101,7 @@ print.summary.partition <- function(x, ...){
 }
 
 "print.partition" <- function(x, mat=getOption("matrixlike"), h=getOption("horiz"), ...){
-  class(x) <- "matrix"
+  x <- as.matrix(unclass(x))
   if(!isTRUE(mat)){
     colnames(x) <- rep(" ", ncol(x))
   }
