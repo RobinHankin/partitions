@@ -671,24 +671,29 @@ function(n, give=FALSE){
 
 `allbinom` <- function(n,k){as.partition(multinomial(c(k,n-k))[seq_len(k),,drop=FALSE])}
 
-`riffle` <- function(p,q=p){
-  b <- blockparts(rep(1,p+q),p)
+
+`genrif` <- function(v){
+
   f <- function(x){
     out <- x
-    out[x==1] <- seq_len(p)
-    out[x==0] <- p + seq_len(q)
-    out
-  }
-  as.partition(apply(blockparts(rep(1,p+q),p),2,f))
-}
-
-`allriffles` <- function(n){
-    out <- matrix(seq_len(n))
-    for(i in seq_len(n-1)){
-        out <- cbind(out,riffle(i,n-i)[,-1])
+    n <- 0
+    for(i in seq_along(v)){
+      out[x==i] <- n + seq_len(v[i])
+      n <- n + v[i]
     }
-    return(as.partition(out))
+    return(out)
+  }
+  as.partition(apply(multiset(rep(seq_along(v),times=v)),2,f))
 }
-    
 
-    
+`riffle` <- function(p,q=p){genrif(c(p,q))}
+
+`allriffles` <- function(n,r=2){
+  m <- blockparts(rep(n,r),n)
+  m <- compositions(n,r)
+  out <- matrix(seq_len(n))
+  for(j in seq_len(ncol(m)-1)){
+    out <- cbind(out,genrif(m[,j])[,-1])
+  }
+  return(as.partition(out))
+}

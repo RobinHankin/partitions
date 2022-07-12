@@ -238,8 +238,12 @@ and if
 ![p+1\\leq j_1 \< j_2\\leq p+q](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;p%2B1%5Cleq%20j_1%20%3C%20j_2%5Cleq%20p%2Bq "p+1\leq j_1 < j_2\leq p+q"),
 then
 ![\\sigma(j_1) \< \\sigma(i_j)](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;%5Csigma%28j_1%29%20%3C%20%5Csigma%28i_j%29 "\sigma(j_1) < \sigma(i_j)").
-The two groups of integers appear in their original order. To enumerate
-all
+The two groups of integers appear in their original order. A generalized
+riffle shuffle has
+![r](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;r "r")
+groups of integers which appear in their original order.
+
+To enumerate all
 ![(p,q)](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;%28p%2Cq%29 "(p,q)")
 riffles, use `riffle()` and to enumerate all
 ![(p,q)](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;%28p%2Cq%29 "(p,q)")
@@ -250,19 +254,53 @@ use `allriffles()`:
 ``` r
 riffle(2,4)
 #>                                   
-#> [1,] 1 1 3 1 3 3 1 3 3 3 1 3 3 3 3
-#> [2,] 2 3 1 3 1 4 3 1 4 4 3 1 4 4 4
-#> [3,] 3 2 2 4 4 1 4 4 1 5 4 4 1 5 5
-#> [4,] 4 4 4 2 2 2 5 5 5 1 5 5 5 1 6
-#> [5,] 5 5 5 5 5 5 2 2 2 2 6 6 6 6 1
-#> [6,] 6 6 6 6 6 6 6 6 6 6 2 2 2 2 2
+#> [1,] 1 1 1 1 1 3 3 3 3 3 3 3 3 3 3
+#> [2,] 2 3 3 3 3 1 1 1 1 4 4 4 4 4 4
+#> [3,] 3 2 4 4 4 2 4 4 4 1 1 1 5 5 5
+#> [4,] 4 4 2 5 5 4 2 5 5 2 5 5 1 1 6
+#> [5,] 5 5 5 2 6 5 5 2 6 5 2 6 2 6 1
+#> [6,] 6 6 6 6 2 6 6 6 2 6 6 2 6 2 2
 allriffles(5)
-#>                                                           
-#> [1,] 1 2 2 2 2 1 3 1 3 3 1 3 3 3 1 1 4 1 1 4 1 4 4 1 1 1 5
-#> [2,] 2 1 3 3 3 3 1 3 1 4 3 1 4 4 2 4 1 2 4 1 4 1 5 2 2 5 1
-#> [3,] 3 3 1 4 4 2 2 4 4 1 4 4 1 5 4 2 2 4 2 2 5 5 1 3 5 2 2
-#> [4,] 4 4 4 1 5 4 4 2 2 2 5 5 5 1 3 3 3 5 5 5 2 2 2 5 3 3 3
-#> [5,] 5 5 5 5 1 5 5 5 5 5 2 2 2 2 5 5 5 3 3 3 3 3 3 4 4 4 4
+#>               
+#> [1,] 1 1 1 1 5
+#> [2,] 2 2 2 5 1
+#> [3,] 3 3 5 2 2
+#> [4,] 4 5 3 3 3
+#> [5,] 5 4 4 4 4
+```
+
+To enumerate all riffles with sizes
+![v_1,v_2,\\ldots,v_r](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;v_1%2Cv_2%2C%5Cldots%2Cv_r "v_1,v_2,\ldots,v_r"),
+use `genrif()`:
+
+``` r
+genrif(1:3)
+#>                                                                               
+#> [1,] 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 4 4 4 4 4 4 4
+#> [2,] 2 2 2 2 4 4 4 4 4 4 1 1 1 1 3 3 3 3 4 4 4 4 4 4 4 4 4 4 4 4 1 1 1 1 1 1 2
+#> [3,] 3 4 4 4 2 2 2 5 5 5 3 4 4 4 1 4 4 4 1 1 1 3 3 3 5 5 5 5 5 5 2 2 2 5 5 5 1
+#> [4,] 4 3 5 5 3 5 5 2 2 6 4 3 5 5 4 1 5 5 3 5 5 1 5 5 1 1 3 3 6 6 3 5 5 2 2 6 3
+#> [5,] 5 5 3 6 5 3 6 3 6 2 5 5 3 6 5 5 1 6 5 3 6 5 1 6 3 6 1 6 1 3 5 3 6 3 6 2 5
+#> [6,] 6 6 6 3 6 6 3 6 3 3 6 6 6 3 6 6 6 1 6 6 3 6 6 1 6 3 6 1 3 1 6 6 3 6 3 3 6
+#>                                                   
+#> [1,] 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4
+#> [2,] 2 2 2 2 2 2 2 2 2 2 2 5 5 5 5 5 5 5 5 5 5 5 5
+#> [3,] 1 1 3 3 3 5 5 5 5 5 5 1 1 1 2 2 2 2 2 2 6 6 6
+#> [4,] 5 5 1 5 5 1 1 3 3 6 6 2 2 6 1 1 3 3 6 6 1 2 2
+#> [5,] 3 6 5 1 6 3 6 1 6 1 3 3 6 2 3 6 1 6 1 3 2 1 3
+#> [6,] 6 3 6 6 1 6 3 6 1 3 1 6 3 3 6 3 6 1 3 1 3 3 1
+```
+
+And to enumerate all r-riffles, use `allriffles(n,r)`:
+
+``` r
+allriffles(5,3)
+#>                                                                       
+#> [1,] 1 1 1 1 5 1 1 1 1 1 4 4 4 4 1 1 1 1 1 1 1 1 1 1 1 4 4 4 4 5 5 5 5
+#> [2,] 2 2 2 5 1 2 2 4 4 4 1 1 1 5 2 2 2 2 2 4 4 4 5 5 5 1 1 1 5 1 1 1 4
+#> [3,] 3 3 5 2 2 4 4 2 2 5 2 2 5 1 3 4 4 5 5 2 2 5 2 2 4 2 2 5 1 2 2 4 1
+#> [4,] 4 5 3 3 3 3 5 3 5 2 3 5 2 2 5 3 5 3 4 3 5 2 3 4 2 3 5 2 2 3 4 2 2
+#> [5,] 5 4 4 4 4 5 3 5 3 3 5 3 3 3 4 5 3 4 3 5 3 3 4 3 3 5 3 3 3 4 3 3 3
 ```
 
 # Further information

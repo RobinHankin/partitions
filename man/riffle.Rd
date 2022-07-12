@@ -1,17 +1,24 @@
 \name{riffle}
 \alias{riffle}
+\alias{genrif}
 \alias{allriffles}
 \title{Riffle shuffles}
 \description{\loadmathjax
   Enumeration of riffle shuffles
 }
 \usage{
+genrif(v)
 riffle(p,q=p)
-allriffles(n)
+allriffles(n,r=2)
 }
 \arguments{
-  \item{p,q}{Integers specifying length of the increasing sequences}
-  \item{n}{Size of pack}
+  \item{p,q,v}{In function \code{riffle()}, integers \code{p},\code{q}
+    specify the length of the two increasing sequences.  In function
+    \code{genrif()}, the elements of \code{v} specify the lengths of all
+    the increasing sequences}
+  \item{n,r}{In function \code{allriffles()}, integer \code{n} specifies
+    the size of the pack and \code{r} specifies the number of increasing
+    sequences}
 }
 \details{
 
@@ -19,34 +26,16 @@ allriffles(n)
   \mjeqn{1,2,\ldots,n}{1,2,...,n} containing one or two rising
   sequences.
 
-  \code{riffle(p,q)} returns a riffle shuffle of rising sequence
-  \code{1:p} and \code{(p+1):q}; function \code{allriffles(n)} returns
-  all riffle shuffles of the type \code{p,q} with \mjseqn{p+q=n}.
+  A \dfn{generalized riffle shuffle}, or \dfn{\mjseqn{r}-riffle
+  shuffle}, contains \mjseqn{r} rising sequences.
+\itemize{
+  \item\code{riffle(p,q)} returns a riffle shuffle of rising sequence
+  \code{1:p} and \code{(p+1):q}
 
-\preformatted{ 
-> riffle(4,2)
-                                  
-[1,] 1 1 1 1 5 1 1 1 5 1 1 5 1 5 5
-[2,] 2 2 2 5 1 2 2 5 1 2 5 1 5 1 6
-[3,] 3 3 5 2 2 3 5 2 2 5 2 2 6 6 1
-[4,] 4 5 3 3 3 5 3 3 3 6 6 6 2 2 2
-[5,] 5 4 4 4 4 6 6 6 6 3 3 3 3 3 3
-[6,] 6 6 6 6 6 4 4 4 4 4 4 4 4 4 4
-> riffle(2,4)
-                                  
-[1,] 1 1 3 1 3 3 1 3 3 3 1 3 3 3 3
-[2,] 2 3 1 3 1 4 3 1 4 4 3 1 4 4 4
-[3,] 3 2 2 4 4 1 4 4 1 5 4 4 1 5 5
-[4,] 4 4 4 2 2 2 5 5 5 1 5 5 5 1 6
-[5,] 5 5 5 5 5 5 2 2 2 2 6 6 6 6 1
-[6,] 6 6 6 6 6 6 6 6 6 6 2 2 2 2 2
-> allriffles(5)
-                                                          
-[1,] 1 2 2 2 2 1 3 1 3 3 1 3 3 3 1 1 4 1 1 4 1 4 4 1 1 1 5
-[2,] 2 1 3 3 3 3 1 3 1 4 3 1 4 4 2 4 1 2 4 1 4 1 5 2 2 5 1
-[3,] 3 3 1 4 4 2 2 4 4 1 4 4 1 5 4 2 2 4 2 2 5 5 1 3 5 2 2
-[4,] 4 4 4 1 5 4 4 2 2 2 5 5 5 1 3 3 3 5 5 5 2 2 2 5 3 3 3
-[5,] 5 5 5 5 1 5 5 5 5 5 2 2 2 2 5 5 5 3 3 3 3 3 3 4 4 4 4
+  \item\code{genrif(v)} returns a riffle shuffle of rising sequences
+  with lengths the entries of \code{v}
+  \item\code{allriffles(n,v)} returns
+  all \mjseqn{r}-riffle shuffles of size \mjseqn{n}
 }
 }
 \value{
@@ -55,7 +44,9 @@ allriffles(n)
 }
 \author{Robin K. S. Hankin}
 \seealso{\code{\link{parts}}}
-\examples{
+\runExamples{
 riffle(3,4)
 allriffles(4)
+genrif(1:3)
 }
+
