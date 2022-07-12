@@ -11,8 +11,9 @@ Maintainer: Robin K. S. Hankin <hankin.robin@gmail.com>
 Imports: gmp, polynom, sets, mathjaxr, Rdpack
 Description: Additive partitions of integers.  Enumerates the
   partitions, unequal partitions, and restricted partitions of an
-  integer; the three corresponding partition functions are also
-  given.  Set partitions and now compositions are included.
+  integer; the three corresponding partition functions are also given.
+  Set partitions and now compositions and riffle shuffles are
+  included.
 Suggests: testthat
 License: GPL
 URL: https://github.com/RobinHankin/partitions
