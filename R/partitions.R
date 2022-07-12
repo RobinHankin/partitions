@@ -671,7 +671,6 @@ function(n, give=FALSE){
 
 `allbinom` <- function(n,k){as.partition(multinomial(c(k,n-k))[seq_len(k),,drop=FALSE])}
 
-
 `genrif` <- function(v){
 
   f <- function(x){
@@ -689,7 +688,6 @@ function(n, give=FALSE){
 `riffle` <- function(p,q=p){genrif(c(p,q))}
 
 `allriffles` <- function(n,r=2){
-  m <- blockparts(rep(n,r),n)
   m <- compositions(n,r)
   out <- matrix(seq_len(n))
   for(j in seq_len(ncol(m)-1)){
