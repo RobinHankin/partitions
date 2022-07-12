@@ -152,6 +152,21 @@ multiset        %>%
 apply(2,function(x){x %>% `[`(letters,.) %>% paste(collapse="")})
 ```
 
+## Riffle shuffle
+
+A $(p,q)$ riffle shuffle is an ordering $\sigma$ of integers
+$1,2,\ldots,p+q$ such that $1,\ldots p$ and $p+1,\ldots p+q$ appear in
+their original order: if $1\leq i_1 < i_2\leq p$, then $\sigma(i_1) <
+\sigma(i_2)$, and if $p+1\leq j_1 < j_2\leq p+q$, then $\sigma(j_1) <
+\sigma(i_j)$.  The two groups of integers appear in their original
+order.  To enumerate all $(p,q)$ riffles, use `riffle()` and to
+enumerate all $(p,q)$ riffle shuffles where $p+q=n$, use
+`allriffles()`:
+
+```{r,label=riffleshuffle}
+riffle(2,4)
+allriffles(5)
+```
 
 # Further information
 For more detail, see the package vignettes
