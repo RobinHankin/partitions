@@ -670,3 +670,25 @@ function(n, give=FALSE){
 }
 
 `allbinom` <- function(n,k){as.partition(multinomial(c(k,n-k))[seq_len(k),,drop=FALSE])}
+
+`riffle` <- function(p,q=p){
+  b <- blockparts(rep(1,p+q),p)
+  f <- function(x){
+    out <- x
+    out[x==1] <- seq_len(p)
+    out[x==0] <- p + seq_len(q)
+    out
+  }
+  as.partition(apply(blockparts(rep(1,p+q),p),2,f))
+}
+
+`allriffles` <- function(n){
+    out <- matrix(seq_len(n))
+    for(i in seq_len(n-1)){
+        out <- cbind(out,riffle(i,n-i)[,-1])
+    }
+    return(as.partition(out))
+}
+    
+
+    
