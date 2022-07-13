@@ -27,7 +27,7 @@
 
   This vignette introduces the \pkg{partitions} package of
   \proglang{R} routines, for numerical calculation of integer
-  partititions.  Functionality for unrestricted partitions, unequal
+  partitions.  Functionality for unrestricted partitions, unequal
   partitions, and restricted partitions is provided in a small package
   that accompanies this note; the emphasis is on terse, efficient
   \proglang{C} code.  A simple combinatorial problem is solved using
