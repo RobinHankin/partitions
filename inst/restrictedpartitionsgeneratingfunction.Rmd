@@ -9,6 +9,12 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+<p style="text-align: right;">
+![](`r system.file("help/figures/partitions.png", package = "partitions")`){width=10%}
+</p>
+
+
+
 ## Abstract 
 
 
@@ -103,7 +109,7 @@ further brackets contain only one and powers of $x$ above the eighth.
 The R implementation uses the `spray` package, in particular
 function `ooom(x)` which returns $\frac{1}{1-x}$.
 
-```{r}
+```{r, label=sprayooom}
 library("spray")
 R_gf <- function(k,n){   # version 1
    x <- spray(cbind(1,0))
@@ -119,7 +125,7 @@ R_gf <- function(k,n){   # version 1
 
 Thus
 
-```{r}
+```{r, label=rgf}
 R_gf(7,3)
 ```
 
@@ -155,7 +161,7 @@ R_gf2 <- function(k,n,give_poly=FALSE){
 
 then
 
-```{r,gf2_use}
+```{r, label=gf2_use}
 R_gf2(7,3)
 ```
 
@@ -165,7 +171,7 @@ We can test the computational efficiency of the generating function
 approach using larger values of $k$ and $n$:
 
 
-```{r}
+```{r, label=compeff}
 k <- 140
 n <- 4
 
