@@ -73,6 +73,8 @@
 
 \newsymbol\leqslant 1336
 
+\hfill\includegraphics[width=1in]{\Sexpr{system.file("help/figures/partitions.png",package="partitions")}}
+
 \section{Introduction}
 A {\em partition} of a positive integer~$n$ is a non-increasing
 sequence of positive integers~$\lambda_1,\lambda_2,\ldots,\lambda_r$
