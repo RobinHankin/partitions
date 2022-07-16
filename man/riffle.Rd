@@ -29,13 +29,17 @@ allriffles(n,r=2)
   A \dfn{generalized riffle shuffle}, or \dfn{\mjseqn{r}-riffle
   shuffle}, contains \mjseqn{r} rising sequences.
 \itemize{
-  \item\code{riffle(p,q)} returns a riffle shuffle of rising sequence
-  \code{1:p} and \code{(p+1):q}
 
-  \item\code{genrif(v)} returns a riffle shuffle of rising sequences
-  with lengths the entries of \code{v}
-  \item\code{allriffles(n,v)} returns
-  all \mjseqn{r}-riffle shuffles of size \mjseqn{n}
+  \item\code{riffle(p,q)} returns all riffle shuffles with rising
+  sequences of \code{1:p} and \code{(p+1):q}
+
+  \item\code{genrif(v)} returns all riffle shuffles with rising
+  sequences having lengths the entries of \code{v}, the deck being
+  numbered consecutively
+
+  \item\code{allriffles(n,v)} returns all \mjseqn{r}-riffle shuffles of
+  size \mjseqn{n}
+
 }
 }
 \value{
