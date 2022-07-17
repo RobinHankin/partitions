@@ -687,11 +687,3 @@ function(n, give=FALSE){
 
 `riffle` <- function(p,q=p){genrif(c(p,q))}
 
-`allriffles` <- function(n,r=2){
-  m <- compositions(n,r)
-  out <- matrix(seq_len(n))
-  for(j in seq_len(ncol(m)-1)){
-    out <- cbind(out,genrif(m[,j])[,-1])
-  }
-  return(as.partition(out))
-}
