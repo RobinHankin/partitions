@@ -152,23 +152,17 @@ multiset        %>%
 apply(2,function(x){x %>% `[`(letters,.) %>% paste(collapse="")})
 ```
 
-## Riffle shuffle
+## Riffle shuffles
 
 A $(p,q)$ riffle shuffle is an ordering $\sigma$ of integers
 $1,2,\ldots,p+q$ such that $1,\ldots p$ and $p+1,\ldots p+q$ appear in
 their original order: if $1\leq i_1 < i_2\leq p$, then $\sigma(i_1) <
 \sigma(i_2)$, and if $p+1\leq j_1 < j_2\leq p+q$, then $\sigma(j_1) <
 \sigma(i_j)$.  The two groups of integers appear in their original
-order.  A generalized riffle shuffle has $r$ groups of integers which
-appear in their original order.
-
-To enumerate all $(p,q)$ riffles, use `riffle()` and to
-enumerate all $(p,q)$ riffle shuffles where $p+q=n$, use
-`allriffles()`:
+order.  To enumerate all $(p,q)$ riffles, use `riffle()`:
 
 ```{r,label=riffleshuffle}
 riffle(2,4)
-allriffles(5)
 ```
 
 To enumerate all riffles with sizes $v_1,v_2,\ldots,v_r$, use  `genrif()`:
@@ -177,11 +171,6 @@ To enumerate all riffles with sizes $v_1,v_2,\ldots,v_r$, use  `genrif()`:
 genrif(1:3)
 ```
 
-And to enumerate all r-riffles, use `allriffles(n,r)`:
-
-```{r,label=allrifffles}
-allriffles(5,3)
-```
 
 
 # Further information
