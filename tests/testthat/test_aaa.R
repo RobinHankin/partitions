@@ -170,4 +170,6 @@ if(FALSE){
   f(1000)
 }
 
+expect_true(c(allbinom(1,1)) == 1)
+
 })

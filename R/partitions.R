@@ -664,7 +664,7 @@ function(n, give=FALSE){
 
 `multinomial` <- function(v){
     jj <- rep(seq_along(v),v)
-    out <- as.partition(apply(multiset(jj),2,order))
+    out <- as.partition(as.matrix(apply(multiset(jj),2,order)))
     rownames(out) <- rep(names(v),v)
     return(out)
 }
