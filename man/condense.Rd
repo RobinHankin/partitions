@@ -13,17 +13,16 @@ condense(x, minval=1, col)
     1 [meaning to ignore zero values].  Set to \dQuote{0} for compositions}
   \item{col}{String specifying the collapse value with missing value
     meaning to use the empty string if values are all single digit, and
-    a comma if not}
+    a comma if not.  Using \dQuote{\code{+}} is good for actual partitions
+  }
 }
-\details{
-Experimental: caveat emptor!
-}
+\details{Experimental: caveat emptor!}
 \author{Robin K. S. Hankin}
 \examples{
 
 condense(parts(9))
 condense(compositions(9,3),0)
-condense(diffparts(17))
+condense(diffparts(17),col="+")
 
 }
 \keyword{math}
