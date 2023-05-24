@@ -77,9 +77,11 @@ allbinom(n,k)
   \item{f}{In function \code{blockparts()}, a vector of strictly
     positive integers that gives the maximal number of blocks; see
     details}
-  \item{v}{In function \code{multiset()}, an integer vector representing
-    a multiset.  Argument \code{n} is the size of the sample to be
-    taken}
+  \item{v}{An integer vector.  In function \code{multiset()}, argument
+    \code{v} represents a multiset (argument \code{n} is the size of the
+    sample to be taken).  In function \code{multinomial()}, \code{v} is
+    specifies the sizes of the sets; use a named vector for easier
+    interpretation}
   \item{k}{In function \code{allbinom()}, the size of the set to be
       chosen; arguments match those of \code{choose()}}
 }
@@ -133,9 +135,10 @@ allbinom(n,k)
 
     \item Function \code{multinomial(v)} returns all ways of
     partitioning a set into \emph{distinguishable} boxes of capacities
-    \code{v[1], v[2],...,v[n]}.  The number of columns is given by the
-    multinomial coefficient \mjeqn{{\sum v_i\choose
-	v_1\,v_2\,\ldots\,v_n}}{omitted}.
+    \code{v[1], v[2],...,v[n]} (a named vector gives more understandable
+    output).  The number of columns is given by the multinomial
+    coefficient \mjeqn{{\sum v_i\choose
+    v_1\,v_2\,\ldots\,v_n}}{omitted}.
 
     \item Function \code{allbinom(n,k)} is provided for convenience; it
     enumerates the ways of choosing \eqn{k} objects from \code{n}.
