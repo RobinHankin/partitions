@@ -683,7 +683,7 @@ function(n, give=FALSE){
 
 `riffle` <- function(p,q=p){genrif(c(p,q))}
 
-`condense` <- function(x, minval=1, col){
+`condense` <- function(x, minval=1, collapse){
   if(missing(col)){col <- ifelse(any(x>9),",","")}
-  noquote(apply(x,2,function(x){paste("(",paste(x[x>=minval],collapse=col),")",sep="")}))
+  noquote(apply(x,2,function(x){paste("(",paste(x[x>=minval],collapse=collapse),")",sep="")}))
 }
