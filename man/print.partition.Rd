@@ -33,7 +33,7 @@
   printing.  Set to \code{TRUE} to print a partition like a matrix.
   Option \code{horiz} specifies whether or not to print a partition
   horizontally.
-
+}
 \author{Robin K. S. Hankin}
 \examples{
 print(parts(5))
