@@ -102,12 +102,8 @@ print.summary.partition <- function(x, ...){
 
 "print.partition" <- function(x, mat=getOption("matrixlike"), h=getOption("horiz"), ...){
   x <- as.matrix(unclass(x))
-  if(!isTRUE(mat)){
-    colnames(x) <- rep(" ", ncol(x))
-  }
-  if(isTRUE(h)){
-    x <- t(x)
-  }
+  if(isTRUE(h)){ x <- t(x) }
+  if(!isTRUE(mat)){ colnames(x) <- rep(" ", ncol(x)) }
   return(invisible(print(noquote(x))))
 }
 

@@ -26,6 +26,14 @@
     interpreted as a comma; see examples section}
   \item{\dots}{Further arguments provided for compatibility}
 }
+\details{
+
+  The print method is sensitive to the value of option \code{matrixlike}
+  which by default sets column names to a space for more compact
+  printing.  Set to \code{TRUE} to print a partition like a matrix.
+  Option \code{horiz} specifies whether or not to print a partition
+  horizontally.
+
 \author{Robin K. S. Hankin}
 \examples{
 print(parts(5))
