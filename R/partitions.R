@@ -94,7 +94,7 @@ print.summary.partition <- function(x, ...){
 
 "print.equivalence" <- function(x,sep=getOption("separator"), ...){
   if(is.null(sep)){sep <- ","}
-  f <- function(x){paste(c("(",paste(x,collapse=sep),")"),collapse="")}
+  f <- function(x){paste(c("{",paste(x,collapse=sep),"}"),collapse="")}
   out <- paste(unlist(lapply(x,f)),collapse="")
   x <-  unclass(x)
   return(invisible(print(noquote(out))))
