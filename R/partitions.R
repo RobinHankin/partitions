@@ -108,7 +108,17 @@ print.summary.partition <- function(x, ...){
 }
 
 `restrictedsetparts` <- function(vec){
+    if(any(diff(vec)>0)){
+        warning("argument vec not ordered: it is being sorted into non-increasing order")
+        vec <- sort(vec,decreasing=TRUE)
+    }
     out <- apply(setparts(vec),2,order)
+    rownames(out) <- rep(names(vec),vec)
+    return(as.partition(out))
+}
+
+`restrictedsetparts2` <- function(vec){
+    out <- apply(setparts(vec),2,function(v){c(split(seq_along(v),v),recursive=TRUE)})
     rownames(out) <- rep(names(vec),vec)
     return(as.partition(out))
 }
