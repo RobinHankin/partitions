@@ -1,5 +1,6 @@
 \name{setparts}
 \alias{setparts}
+\alias{restrictedsetparts}
 \alias{listParts}
 \alias{vec_to_set}
 \alias{vec_to_eq}
@@ -9,6 +10,7 @@
 }
 \usage{
 setparts(x)
+restrictedsetparts(vec)
 listParts(x,do.set=FALSE)
 vec_to_set(vec)
 vec_to_eq(vec)
@@ -40,12 +42,9 @@ vec_to_eq(vec)
   The induced \dfn{equivalence relation} has \mjeqn{i\sim j}{i~j} if and
   only if \eqn{i} and \eqn{j} belong to the same partition.  Equivalence
   classes of \mjeqn{S=\left\lbrace 1,\ldots,n\right\rbrace}{S={1,...,n}}
-  may be listed using \code{listParts()}.  Thus
+  may be listed using \code{listParts()}. There are exactly fifteen ways
+  to partition a set of four elements:
 
-
-  
-  There are exactly fifteen ways to partition a set of four
-  elements:
   \tabular{l}{
     \eqn{(1234)}\cr
     \eqn{(123)(4), (124)(3), (134)(2), (234)(1)}\cr
@@ -82,7 +81,7 @@ vec_to_eq(vec)
   \code{x} is 1); class 2 contains elements 2 and 4 (because the second
   and fourth element of \code{x} is 2); and class 3 contains element 3
   (because the third element of \code{x} is 3)}.  Formally, class
-\code{i} has elements \code{which(x==u[i])}.
+  \code{i} has elements \code{which(x==u[i])}.
 
 You can change the print method by setting, eg,
 \code{option(separator="")}.
@@ -91,6 +90,32 @@ Functions \code{vec_to_set()} and \code{vec_to_eq()} are low-level
 helper functions.  These take an integer vector, typically a column of a
 matrix produced by \code{setparts()} and return their set
 representation.
+
+Function \code{restrictedsetparts()} provides a matrix-based alternative
+to \code{listParts()}:
+
+\preformatted{
+> restrictedsetparts(c(a=1,b=2,c=2))
+                               
+a 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2
+b 5 5 5 2 2 2 3 3 3 4 4 4 5 3 4
+b 2 2 3 4 3 3 2 2 4 2 2 3 3 4 3
+c 4 3 4 5 5 4 5 4 5 5 3 5 4 5 5
+c 3 4 2 3 4 5 4 5 2 3 5 2 1 1 1 
+}
+
+Above, we set partitions of \mjeqn{\left\lbrace
+1,2,3,4,5\right\rbrace}{[5]} into equivalence classes of sizes 1,2,2.
+The first row, for example, corresponds to
+\mjeqn{\left\lbrace1\right\rbrace\left\lbrace5,2\right\rbrace\left\lbrace4,3\right\rbrace}{omitted}.
+Note the absence of
+\mjeqn{\left\lbrace1\right\rbrace\left\lbrace2,5\right\rbrace\left\lbrace4,3\right\rbrace}{omitted}
+and
+\mjeqn{\left\lbrace1\right\rbrace\left\lbrace4,3\right\rbrace\left\lbrace5,2\right\rbrace}{omitted},
+which correspond to the same (set) partition; compare
+\code{multinomial()}.  Observe that the individual subsets are not
+necessarily sorted.
+
 }
 \value{
   Returns a matrix each of whose columns show a set partition; an object
@@ -145,7 +170,7 @@ setparts(jj)               # partitions of a set of 5 elements into
 
 listParts(jj)              # The induced equivalence classes
 
-
+restrictedsetparts(c(a=2,b=2,c=1))  # alternative to listParts()
 
 
 jj <- restrictedparts(6,3,TRUE)
