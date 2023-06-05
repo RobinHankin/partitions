@@ -88,7 +88,7 @@ vec_to_eq(vec)
   \code{i} has elements \code{which(x==u[i])}.
 
 You can change the print method by setting, eg,
-\code{option(separator="")}.
+\code{options(separator="")}.
 
 Functions \code{vec_to_set()} and \code{vec_to_eq()} are low-level
 helper functions.  These take an integer vector, typically a column of a
