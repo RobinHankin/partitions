@@ -1,6 +1,7 @@
 \name{setparts}
 \alias{setparts}
 \alias{restrictedsetparts}
+\alias{restrictedsetparts2}
 \alias{listParts}
 \alias{vec_to_set}
 \alias{vec_to_eq}
@@ -11,6 +12,7 @@
 \usage{
 setparts(x)
 restrictedsetparts(vec)
+restrictedsetparts2(vec)
 listParts(x,do.set=FALSE)
 vec_to_set(vec)
 vec_to_eq(vec)
@@ -25,7 +27,9 @@ vec_to_eq(vec)
     partitions in terms of sets (as per \pkg{sets} package) and default
     \code{FALSE} meaning to present the result in terms of equivalence
     classes}
-  \item{vec}{An integer vector representing a set partition}
+  \item{vec}{An integer vector representing a set partition.  In
+    \code{restrictedsetparts()} if not sorted, it is sorted into
+    non-increasing order and a warning is given}
 }
 \details{
   A \dfn{partition} of a set
@@ -92,29 +96,33 @@ matrix produced by \code{setparts()} and return their set
 representation.
 
 Function \code{restrictedsetparts()} provides a matrix-based alternative
-to \code{listParts()}:
+to \code{listParts()}.  Note that the vector must be in
+non-increasing order:
 
 \preformatted{
-> restrictedsetparts(c(a=1,b=2,c=2))
+ restrictedsetparts(c(a=2,b=2,c=1))
                                
 a 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2
-b 5 5 5 2 2 2 3 3 3 4 4 4 5 3 4
+a 5 5 5 2 2 2 3 3 3 4 4 4 5 3 4
 b 2 2 3 4 3 3 2 2 4 2 2 3 3 4 3
-c 4 3 4 5 5 4 5 4 5 5 3 5 4 5 5
-c 3 4 2 3 4 5 4 5 2 3 5 2 1 1 1 
+b 4 3 4 5 5 4 5 4 5 5 3 5 4 5 5
+c 3 4 2 3 4 5 4 5 2 3 5 2 1 1 1
 }
 
 Above, we set partitions of \mjeqn{\left\lbrace
-1,2,3,4,5\right\rbrace}{[5]} into equivalence classes of sizes 1,2,2.
-The first row, for example, corresponds to
-\mjeqn{\left\lbrace1\right\rbrace\left\lbrace5,2\right\rbrace\left\lbrace4,3\right\rbrace}{omitted}.
+1,2,3,4,5\right\rbrace}{[5]} into equivalence classes of sizes 2,2,1.
+The first column, for example, corresponds to
+\mjeqn{\left\lbrace1,5\right\rbrace\left\lbrace2,4\right\rbrace\left\lbrace3\right\rbrace}{omitted}.
 Note the absence of
-\mjeqn{\left\lbrace1\right\rbrace\left\lbrace2,5\right\rbrace\left\lbrace4,3\right\rbrace}{omitted}
+\mjeqn{\left\lbrace5,1\right\rbrace\left\lbrace2,4\right\rbrace\left\lbrace3\right\rbrace}{omitted}.
 and
-\mjeqn{\left\lbrace1\right\rbrace\left\lbrace4,3\right\rbrace\left\lbrace5,2\right\rbrace}{omitted},
-which correspond to the same (set) partition; compare
+\mjeqn{\left\lbrace2,4\right\rbrace\left\lbrace1,5\right\rbrace\left\lbrace3\right\rbrace}{omitted}
+which would correspond to the same (set) partition; compare
 \code{multinomial()}.  Observe that the individual subsets are not
 necessarily sorted.
+
+Function \code{restrictedsetparts2()} uses an alternative implementation
+which might be faster under some circumstances.
 
 }
 \value{
