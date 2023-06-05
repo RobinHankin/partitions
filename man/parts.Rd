@@ -213,6 +213,7 @@ allbinom(n,k)
     S(rep(5,3),5)
     setparts(4)
     setparts(c(1,2,2))
+    restrictedsetparts(c(a=1,b=2,c=1))
     multinomial(c(a=1,b=2,c=1))
   }
 \keyword{math}
