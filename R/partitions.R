@@ -107,6 +107,12 @@ print.summary.partition <- function(x, ...){
   return(invisible(print(noquote(x))))
 }
 
+`restrictedsetparts` <- function(v){
+    out <- as.partition(apply(setparts(v),2,function(x){c(split(seq_along(x),x),recursive=TRUE)}))
+    rownames(out) <- rep(names(v),v)
+    return(out)
+}
+
 "parts" <-
   function(n){
     if(length(n)>1){
