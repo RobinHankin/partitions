@@ -81,8 +81,8 @@ void c_plainperms(int *x, const int *nin, const int *fn){
   
   for(int i=1 /*sic*/ ; i < (*fn) ; i++){
     /* P1: */
-	  for(int j=0 ; j<n ; j++){
-		  x[i*n + j] = x[(i-1)*n + j]; /* P2 */
+	  for(int jj=0 ; jj<n ; jj++){  // 'jj' not 'j' to avoid shadowing
+		  x[i*n + jj] = x[(i-1)*n + jj]; /* P2 */
 	  }
 	  
 	  /* P3: */
