@@ -73,10 +73,10 @@ void c_plainperms(int *x, const int *nin, const int *fn){
   int j,m,q,s,i1,i2;
   int c[n], o[n];
 
-  for(int j=0 ; j<n ; j++){
-	  c[j]=0; /* P1 */
-	  o[j]=1;
-	  x[j]=j+1;
+  for(int jj=0 ; jj<n ; jj++){
+	  c[jj]=0; /* P1 */
+	  o[jj]=1;
+	  x[jj]=jj+1;
   }
   
   for(int i=1 /*sic*/ ; i < (*fn) ; i++){
