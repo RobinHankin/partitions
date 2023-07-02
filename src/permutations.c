@@ -70,7 +70,7 @@ void c_allperms(const int *starta, const int *lenn, const int *ncol, int *a){
 
 void c_plainperms(int *x, const int *nin, const int *fn){
   const int n = *nin;
-  int j,m,q,s,i1,i2;
+  int j,m,q,i1,i2;
   int c[n], o[n];
 
   for(int jj=0 ; jj<n ; jj++){
@@ -87,7 +87,7 @@ void c_plainperms(int *x, const int *nin, const int *fn){
 	  
 	  /* P3: */
 	  j=n-1;  /* off-by-one: Knuth's 'n' = my n-1.*/
-	  s=0; 
+	  int s=0; 
 	  
 	  /* P4: */
 	  for(;;){
