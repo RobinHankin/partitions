@@ -241,7 +241,7 @@ void c_allrestrictedparts(const int *m, const int *n, const int *len, const int 
 	}
 }
 
-int max_element(int *x, int len){
+int max_element(const int *x, int len){
   int best=INT_MIN;
   for (int i=0; i < len; i++)
     if (x[i] > best)
@@ -249,7 +249,7 @@ int max_element(int *x, int len){
   return best;
 }
 
-int min_element(int *x, int len){
+int min_element(const int *x, int len){
   int best=INT_MAX;
   for (int i=0; i < len; i++)
     if (x[i] < best)
