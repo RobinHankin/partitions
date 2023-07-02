@@ -105,17 +105,15 @@ int c_nextrestrictedpart(int *x, const int *len) /* algorithm on p232 of Andrews
 void c_numbparts(const int *n, double *p){/* p(1)...p(n) calculated using
 				     Euler's recursive formula on p825
 				     of Abramowitz & Stegun */
-	int i, s, f, r;
-	unsigned long long int *ip;
 	unsigned long long int pp[*n];
 
 	pp[0] = pp[1] = 1;
-	for(i=2 ; i< *n ; i++){
+	for(int i=2 ; i< *n ; i++){
 		/* first do r = m(3m+1)/2  */
-		s = 1;  /* "s" for "sign" */
-		f = 5;  /* f is first difference  */
-		r = 2;  /* initial value (viz m(3m+1)/2 for m=1) */
-
+		int s = 1;  /* "s" for "sign" */
+		int f = 5;  /* f is first difference  */
+		int r = 2;  /* initial value (viz m(3m+1)/2 for m=1) */
+		unsigned long long int *ip;
 		ip = pp+i;
 		*ip = 0;
 		while(i-r >= 0){
@@ -136,7 +134,7 @@ void c_numbparts(const int *n, double *p){/* p(1)...p(n) calculated using
 			s *= -1;
 		}
 	}
-	for(i=0 ; i < *n ; i++){
+	for(int i=0 ; i < *n ; i++){
                 p[i] = (double) pp[i];
         }
 }
@@ -144,15 +142,14 @@ void c_numbparts(const int *n, double *p){/* p(1)...p(n) calculated using
 void c_numbdiffparts(const int *n, double *q){/* q(1)...q(n) calculated using
 					 the recursion on p826 of
 					 Abramowitz and Stegun*/
-	int i,s,f,r;
 	unsigned long long int qq[*n];
 	qq[0] = qq[1] = 1;
-	for(i=2 ; i < *n ; i++){
+	for(int i=2 ; i < *n ; i++){
 		qq[i] = 0;
 		/* first do r = m(3m+1)/2  */
-		s = 1;  /* "s" for "sign" */
-		f = 5;  /* f is first difference  */
-		r = 2;  /* initial value (viz m(3m+1)/2 for m=1) */
+		int s = 1;  /* "s" for "sign" */
+		int f = 5;  /* f is first difference  */
+		int r = 2;  /* initial value (viz m(3m+1)/2 for m=1) */
 		while(i >= r){
 			qq[i] += s*qq[i-r] ;
 			/* change q[i] by 1 if i=m(3m+1): */
@@ -177,7 +174,7 @@ void c_numbdiffparts(const int *n, double *q){/* q(1)...q(n) calculated using
 			s *= -1;
 		}
 	}
-	for(i=0 ; i < *n ; i++){
+	for(int i=0 ; i < *n ; i++){
                 q[i] = (double) qq[i];
         }
 }
