@@ -24,12 +24,12 @@ vec_to_eq(vec)
     elements of \code{x}.  If a matrix, return all equivalence classes
     with sizes of the columns of \code{x}}
   \item{do.set}{Boolean, with \code{TRUE} meaning to return  the set
-    partitions in terms of sets (as per \pkg{sets} package) and default
-    \code{FALSE} meaning to present the result in terms of equivalence
-    classes}
+    partitions in terms of sets (as per the \CRANpkg{sets} package) and
+    default \code{FALSE} meaning to present the result in terms of
+    equivalence classes}
   \item{vec}{An integer vector representing a set partition.  In
-    \code{restrictedsetparts()} if not sorted, it is sorted into
-    non-increasing order and a warning is given}
+    \code{restrictedsetparts()}, if \code{vec} is not sorted, it is
+    sorted into non-increasing order and a warning is given}
 }
 \details{
   A \dfn{partition} of a set
@@ -148,17 +148,18 @@ which might be faster under some circumstances.
   \itemize{
     \item R. K. S. Hankin 2006.  \emph{Additive integer partitions in
       \R}.  Journal of Statistical Software, Code Snippets 16(1)
-    \item R. K. S. Hankin 2007.  \dQuote{Set partitions in
-      \R}. \emph{Journal of Statistical Software}, Volume
+    \item R. K. S. Hankin 2007.  \emph{Set partitions in
+      \R}.   Journal of Statistical Software, Volume
     23, code snippet 2
-    \item  Kurt Hornik (2017).  \emph{clue: Cluster ensembles}.  R
-    package version 0.3-53. \url{https://CRAN.R-project.org/package=clue}
+    \item  Kurt Hornik (2017).  \emph{\CRANpkg{clue}: Cluster
+      ensembles}. \R package version 0.3-53.
+    \url{https://CRAN.R-project.org/package=clue}
     \item  Kurt Hornik (2005).  \emph{A CLUE for Cluster Ensembles}.
     Journal of Statistical Software 14/12.
     \doi{10.18637/jss.v014.i12}
   }
 }
-\author{Luke G. West (\code{C++}) and Robin K. S. Hankin (\R);
+\author{Luke G. West (\proglang{C++}) and Robin K. S. Hankin (\R);
 \code{listParts()} provided by Diana Tichy
 }
 \seealso{\code{\link{parts}}, \code{\link{print.partition}}}

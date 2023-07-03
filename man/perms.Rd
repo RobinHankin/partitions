@@ -18,9 +18,10 @@ plainperms(n)
 \arguments{
   \item{n}{Integer argument; permutations of \code{1:n} returned}
 }
-\author{D. E. Knuth; \code{C} and \R transliteration by Robin K. S. Hankin}
+\author{D. E. Knuth; \proglang{C} and \proglang{R} transliteration
+  by Robin K. S. Hankin}
 \note{
-  Comments in the \code{C} code; algorithm lifted from
+  Comments in the \proglang{C} code; algorithm lifted from
   \file{fasc2b.pdf}.
 }
 \seealso{\code{\link{parts}}}
