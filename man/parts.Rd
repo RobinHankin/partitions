@@ -161,12 +161,16 @@ allbinom(n,k)
   If you have a \emph{minimum} number of balls in each block, a
   construction like
 
-  \printExample{
-    x <- c(1,1,2,1)   # min
-    y <- c(2,3,4,5)   # max
-    
-    sweep(blockparts(y-x,7-sum(x)),1,x,"+")
-  }
+\preformatted{
+x <- c(1,1,2,1)   # min
+y <- c(2,2,3,4)   # max
+sweep(blockparts(y-x,sum(y)-sum(x),TRUE),1,x,"+")
+#>
+#> [1,] 1 2 1 2 1 2 1 2 1 2 1 2 1 2 1 2 1 2 1 2 1 2 1 2 1 2 1 2 1 2 1 2
+#> [2,] 1 1 2 2 1 1 2 2 1 1 2 2 1 1 2 2 1 1 2 2 1 1 2 2 1 1 2 2 1 1 2 2
+#> [3,] 2 2 2 2 3 3 3 3 2 2 2 2 3 3 3 3 2 2 2 2 3 3 3 3 2 2 2 2 3 3 3 3
+#> [4,] 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 3 3 3 3 3 3 3 3 4 4 4 4 4 4 4 4
+}
 
   can be helpful (that is, subtract off the minimum number of balls and
   add them back again at the end).
