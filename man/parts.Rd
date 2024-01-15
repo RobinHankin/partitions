@@ -143,8 +143,6 @@ allbinom(n,k)
     \item Function \code{allbinom(n,k)} is provided for convenience; it
     enumerates the ways of choosing \eqn{k} objects from \code{n}.
 
-
-
   }
 
 }
@@ -219,5 +217,6 @@ sweep(blockparts(y-x,sum(y)-sum(x),TRUE),1,x,"+")
     setparts(c(1,2,2))
     restrictedsetparts(c(a=2,b=1,c=1))
     multinomial(c(a=2,b=1,c=1))
+    multiset(c(9,5,5,6))
   }
 \keyword{math}
