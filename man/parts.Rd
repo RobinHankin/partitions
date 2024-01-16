@@ -122,16 +122,15 @@ allbinom(n,k)
     \item With a single argument, \code{compositions(n)} returns
     all \mjeqn{2^{n-1}}{2^(n-1)} ways of partitioning an integer; thus
     \code{4+1+1} is distinct from \code{1+4+1} or \code{1+1+4}.
-
     With two arguments, \code{compositions(n,m)} returns all
     nonnegative solutions to \mjeqn{x_1+\cdots+x_m=n}{x_1+...+x_m=n}.
-
     This function is different from all the others in the package in
     that it is written in \R; it is not clear that C would be any
     faster.
 
-    \item Function \code{multiset()} returns all ways of ordering a
-    multiset (\code{mset()} is a low-level helper function).
+    \item Function \code{multiset(v)} returns all ways of ordering
+    multiset \code{v}.  Optional argument \code{n} specifies the size
+    of the subset to take (\code{mset()} is a low-level helper function).
 
     \item Function \code{multinomial(v)} returns all ways of
     partitioning a set into \emph{distinguishable} boxes of capacities
@@ -217,6 +216,7 @@ sweep(blockparts(y-x,sum(y)-sum(x),TRUE),1,x,"+")
     setparts(c(1,2,2))
     restrictedsetparts(c(a=2,b=1,c=1))
     multinomial(c(a=2,b=1,c=1))
-    multiset(c(9,5,5,6))
+    multiset(c(9,5,5,5,6))
+    multiset(c(9,5,5,5,6),3)
   }
 \keyword{math}
