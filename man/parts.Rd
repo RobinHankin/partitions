@@ -119,13 +119,13 @@ allbinom(n,k)
     necessarily in standard form, so functions \code{durfee()} and
     \code{conjugate()} may fail.
 
-    \item With a single argument, \code{compositions(n)} returns
-    all \mjeqn{2^{n-1}}{2^(n-1)} ways of partitioning an integer; thus
-    \code{4+1+1} is distinct from \code{1+4+1} or \code{1+1+4}.
-    With two arguments, \code{compositions(n,m)} returns all
-    nonnegative solutions to \mjeqn{x_1+\cdots+x_m=n}{x_1+...+x_m=n}.
-    This function is different from all the others in the package in
-    that it is written in \R; it is not clear that C would be any
+    \item With a single argument, \code{compositions(n)} returns all
+    \mjeqn{2^{n-1}}{2^(n-1)} ways of partitioning an integer; thus
+    \code{4+1+1} is distinct from \code{1+4+1} or \code{1+1+4}.  With
+    two arguments, \code{compositions(n,m)} returns all nonnegative
+    solutions to \mjeqn{x_1+\cdots+x_m=n}{x_1+...+x_m=n}.  This function
+    is different from all the others in the package in that it is
+    written in \R; it is not clear that \proglang{C} would be any
     faster.
 
     \item Function \code{multiset(v)} returns all ways of ordering
