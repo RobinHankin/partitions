@@ -129,8 +129,11 @@ allbinom(n,k)
     faster.
 
     \item Function \code{multiset(v)} returns all ways of ordering
-    multiset \code{v}.  Optional argument \code{n} specifies the size
-    of the subset to take (\code{mset()} is a low-level helper function).
+    multiset \code{v}.  Optional argument \code{n} specifies the size of
+    the subset to take (\code{mset()} is a low-level helper function).
+    File \code{README.Rmd} shows how to use \code{multiset()} to
+    reproduce \code{freealg::pepper()}, which gives related
+    functionality.
 
     \item Function \code{multinomial(v)} returns all ways of
     partitioning a set into \emph{distinguishable} boxes of capacities
