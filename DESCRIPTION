@@ -14,7 +14,7 @@ Description: Additive partitions of integers.  Enumerates the
   integer; the three corresponding partition functions are also given.
   Set partitions and now compositions and riffle shuffles are
   included.
-Suggests: testthat
+Suggests: testthat,covr
 License: GPL
 URL: https://github.com/RobinHankin/partitions
 BugReports: https://github.com/RobinHankin/partitions/issues
