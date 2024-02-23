@@ -1,10 +1,9 @@
 citHeader("To cite in publications use:")
 
-citEntry(entry = "Article",
-	 title = {
-             paste("Additive integer partitions in R")
-	     },
-	 author = "R. K. S. Hankin",
+bibentry(
+         bibtype = "Article",
+	 title = "{Additive integer partitions in R}",
+	 author = person("Robin K. S. Hankin"),
 	 journal = "Journal of Statistical Software, Code Snippets",
          year = "2006",
 	 month = "May",
@@ -17,7 +16,7 @@ citEntry(entry = "Article",
 	     	   "Journal of Statistical Software, Code Snippets",
 		   "16(1)"
 		   )
-         }	   
+         }
 )
 
 
