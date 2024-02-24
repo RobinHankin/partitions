@@ -13,7 +13,7 @@
 \newcommand{\cd}{\cdot}
 
 %% just as usual
-\author{Robin K. S. Hankin\\Auckland University of Technology\And
+\author{Robin K. S. Hankin\\University of Stirling\And
 Luke J. West\\National Oceanography Centre, Southampton}
 \title{Set Partitions in \proglang{R}}
 %\VignetteIndexEntry{Set partitions in R}
@@ -24,14 +24,16 @@ Luke J. West\\National Oceanography Centre, Southampton}
 \Shorttitle{Set partitions in \proglang{R}}
 
 %% an abstract and keywords
-\Abstract{This vignette is based on~\cite{hankin2007a}.
-
-This short paper introduces a code snippet in the form of an
-  \proglang{R} function that enumerates all possible partitions of a
-  finite set given the sizes of the equivalence classes.  Three
-  combinatorial problems are solved using the software: one from
-  bioinformatics, one from scheduling theory, and one from forensic
-  science.}
+\Abstract{
+  To cite the set partitions functionality discussed in this document,
+  use~\cite{hankin2007a}; to cite the \pkg{partitions} package in
+  general, use~\cite{hankin2006}.  This short paper introduces a code
+  snippet in the form of an \proglang{R} function that enumerates all
+  possible partitions of a finite set given the sizes of the
+  equivalence classes.  Three combinatorial problems are solved using
+  the software: one from bioinformatics, one from scheduling theory,
+  and one from forensic science.
+  }
 
 \Keywords{Set Partitions, Forensic Science,
 Enumerative Combinatorics, \proglang{R}}
@@ -53,9 +55,9 @@ Enumerative Combinatorics, R}
 %% in the following format:
 \Address{
   Robin K. S. Hankin\\
-  Auckland University of Technology\\
-  Auckland, New Zealand\\
-  E-mail: \email{hankin.robin@gmail.com}\\
+  University of Stirling\\
+  Scotland\\
+  \email{hankin.robin@gmail.com}\\
   {}\\
   Luke J. West\\
   National Oceanography Centre, Southampton\\

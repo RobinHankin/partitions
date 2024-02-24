@@ -11,7 +11,7 @@
 
 
 %% just as usual
-\author{Robin K. S. Hankin\\Auckland University of Technology}
+\author{Robin K. S. Hankin\\University of Stirling}
 \title{Urn Sampling Without Replacement: Enumerative Combinatorics In
   \proglang{R}}
 %\VignetteIndexEntry{Urn sampling without replacement}
@@ -23,18 +23,19 @@
 \Shorttitle{Urn sampling without replacement}
 
 %% an abstract and keywords
-\Abstract{This vignette is based on~\cite{hankin2007}.
-
-  This short paper introduces a code snippet in the form of
-  two new \proglang{R} functions that enumerate possible draws from an urn
-  without replacement; these functions call  \proglang{C}
-  code, written by the author.  Some simple combinatorial problems are solved
-  using the software.
-
-  For reasons of performance, this vignette uses pre-calculated
-  answers.  To calculate everything from scratch, set variable {\tt
-    calculate\_from\_scratch} in the first chunk to {\tt TRUE}.
+\Abstract{
+  To cite the set partitions functionality discussed in this document,
+  use~\cite{hankin2007}; to cite the \pkg{partitions} package in
+  general, use~\cite{hankin2006}.  This short paper introduces a code
+  snippet in the form of two new \proglang{R} functions that enumerate
+  possible draws from an urn without replacement; these functions call
+  \proglang{C} code, written by the author.  Some simple combinatorial
+  problems are solved using the software.  For reasons of performance,
+  this vignette uses pre-calculated answers.  To calculate everything
+  from scratch, set variable {\tt calculate\_from\_scratch} in the
+  first chunk to {\tt TRUE}.
 }
+
 
 \Keywords{Urn problems, drawing without replacement, enumerative
   combinatorics, Scrabble, \proglang{R}}
@@ -55,11 +56,9 @@
 %% in the following format:
 \Address{
   Robin K. S. Hankin\\
-  Auckland University of Technology\\
-  AUT Tower\\
-  Wakefield Street\\
-  Auckland, New Zealand\\
-  E-mail: \email{hankin.robin@gmail.com}\\
+  University of Stirling\\
+  Scotland\\
+  \email{hankin.robin@gmail.com}\\
   {\rule{10mm}{0mm}}\hfill\includegraphics[width=1in]{\Sexpr{system.file("help/figures/partitions.png",package="partitions")}}
 }
 %% It is also possible to add a telephone and fax number
