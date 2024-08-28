@@ -1,12 +1,12 @@
 # Workflow derived from https://github.com/r-lib/actions/tree/v2/examples
-# Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
+# for debugging help, https://github.com/r-lib/actions#where-to-find-help
 on:
   push:
-    branches: [main, master]
+    branches: [ master]
   pull_request:
-    branches: [main, master]
+    branches: [ master]
 
-name: R-CMD-check.yaml
+name: R-CMD-check-onion
 
 permissions: read-all
 
@@ -28,7 +28,23 @@ jobs:
           extra-packages: any::rcmdcheck
           needs: check
 
+      - uses: r-lib/actions/setup-tinytex@v2
+
+      - run: tlmgr install scheme-full
+      - run: tlmgr install wrapfig
+      - run: tlmgr install doublestroke
+      - run: tlmgr install bbm
+      - run: tlmgr install bbm-macros
+      - run: tlmgr install wasysym
+      - run: tlmgr install yfonts
+      - run: tlmgr install grfext
+      - run: tlmgr install cm-super
+
+      - run: |
+          sudo apt-get update
+          sudo apt-get install -y pandoc-citeproc
+
       - uses: r-lib/actions/check-r-package@v2
         with:
           upload-snapshots: true
-          build_args: 'c("--no-manual","--compact-vignettes=gs+qpdf")'
+          build_args: 'c("--compact-vignettes=both")'
