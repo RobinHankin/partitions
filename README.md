@@ -8,8 +8,7 @@ The partitions package: enumeration in R
 <!-- badges: start -->
 
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/partitions)](https://cran.r-project.org/package=partitions)
-[![](http://cranlogs.r-pkg.org/badges/grand-total/onion?color=blue)](https://cran.r-project.org/package=onion)
-
+[![R-CMD-check](https://github.com/RobinHankin/partitions/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/RobinHankin/partitions/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 # Overview
@@ -17,17 +16,13 @@ The partitions package: enumeration in R
 The `partitions` package provides efficient vectorized code to enumerate
 solutions to various integer equations. For example, we might note that
 
-![
-5 = 4+1 = 3+2 = 3+1+1 = 2+2+1 = 2+1+1+1 = 1+1+1+1+1
-](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;%0A5%20%3D%204%2B1%20%3D%203%2B2%20%3D%203%2B1%2B1%20%3D%202%2B2%2B1%20%3D%202%2B1%2B1%2B1%20%3D%201%2B1%2B1%2B1%2B1%0A "
-5 = 4+1 = 3+2 = 3+1+1 = 2+2+1 = 2+1+1+1 = 1+1+1+1+1
-")
+![5 = 4+1 = 3+2 = 3+1+1 = 2+2+1 = 2+1+1+1 = 1+1+1+1+1](https://latex.codecogs.com/png.latex?5%20%3D%204%2B1%20%3D%203%2B2%20%3D%203%2B1%2B1%20%3D%202%2B2%2B1%20%3D%202%2B1%2B1%2B1%20%3D%201%2B1%2B1%2B1%2B1 "5 = 4+1 = 3+2 = 3+1+1 = 2+2+1 = 2+1+1+1 = 1+1+1+1+1")
 
 and we might want to list all seven in a consistent format (note here
 that each sum is written in nonincreasing order, so
-![3+1](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;3%2B1 "3+1")
-is considered to be the same as
-![1+3](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;1%2B3 "1+3")).
+![3+1](https://latex.codecogs.com/png.latex?3%2B1 "3+1") is considered
+to be the same as
+![1+3](https://latex.codecogs.com/png.latex?1%2B3 "1+3")).
 
 # Installation
 
@@ -140,17 +135,16 @@ summary(blockparts(1:6,10))
 ```
 
 which would show all solutions to
-![\\sum\_{i=1}^6a_i=9](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;%5Csum_%7Bi%3D1%7D%5E6a_i%3D9 "\sum_{i=1}^6a_i=9"),
-![a_i\\leq i](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;a_i%5Cleq%20i "a_i\leq i").
+![\sum\_{i=1}^6a_i=9](https://latex.codecogs.com/png.latex?%5Csum_%7Bi%3D1%7D%5E6a_i%3D9 "\sum_{i=1}^6a_i=9"),
+![a_i\leq i](https://latex.codecogs.com/png.latex?a_i%5Cleq%20i "a_i\leq i").
 
 ## Compositions
 
 Above we considered
-![3+2](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;3%2B2 "3+2")
-and
-![2+3](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;2%2B3 "2+3")
-to be the same partition, but if these are considered to be distinct, we
-need the *compositions*, not partitions:
+![3+2](https://latex.codecogs.com/png.latex?3%2B2 "3+2") and
+![2+3](https://latex.codecogs.com/png.latex?2%2B3 "2+3") to be the same
+partition, but if these are considered to be distinct, we need the
+*compositions*, not partitions:
 
 ``` r
 compositions(4)
@@ -164,7 +158,7 @@ compositions(4)
 ## Set partitions
 
 A set of 4 elements, WLOG
-![\\{1,2,3,4\\}](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;%5C%7B1%2C2%2C3%2C4%5C%7D "\{1,2,3,4\}"),
+![\\1,2,3,4\\](https://latex.codecogs.com/png.latex?%5C%7B1%2C2%2C3%2C4%5C%7D "\{1,2,3,4\}"),
 may be partitioned into subsets in a number of ways and these are
 enumerated with the `setparts()` function:
 
@@ -178,14 +172,14 @@ setparts(4)
 ```
 
 In the above, column `2 3 1 1` would correspond to the set partition
-![\\{\\{3,4\\},\\{1\\},\\{2\\}\\}](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;%5C%7B%5C%7B3%2C4%5C%7D%2C%5C%7B1%5C%7D%2C%5C%7B2%5C%7D%5C%7D "\{\{3,4\},\{1\},\{2\}\}").
+![\\\\3,4\\,\\1\\,\\2\\\\](https://latex.codecogs.com/png.latex?%5C%7B%5C%7B3%2C4%5C%7D%2C%5C%7B1%5C%7D%2C%5C%7B2%5C%7D%5C%7D "\{\{3,4\},\{1\},\{2\}\}").
 
 ## Multiset
 
 Knuth deals with multisets (that is, a generalization of the concept of
 set, in which elements may appear more than once) and gives an algorithm
 for enumerating a multiset. His simplest example is the permutations of
-![\\{1,2,2,3\\}](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;%5C%7B1%2C2%2C2%2C3%5C%7D "\{1,2,2,3\}"):
+![\\1,2,2,3\\](https://latex.codecogs.com/png.latex?%5C%7B1%2C2%2C2%2C3%5C%7D "\{1,2,2,3\}"):
 
 ``` r
 multiset(c(1,2,2,3))
@@ -220,27 +214,26 @@ apply(2,function(x){x %>% `[`(letters,.) %>% paste(collapse="")})
 
 ## Riffle shuffles
 
-A
-![(p,q)](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;%28p%2Cq%29 "(p,q)")
+A ![(p,q)](https://latex.codecogs.com/png.latex?%28p%2Cq%29 "(p,q)")
 riffle shuffle is an ordering
-![\\sigma](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;%5Csigma "\sigma")
-of integers
-![1,2,\\ldots,p+q](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;1%2C2%2C%5Cldots%2Cp%2Bq "1,2,\ldots,p+q")
+![\sigma](https://latex.codecogs.com/png.latex?%5Csigma "\sigma") of
+integers
+![1,2,\ldots,p+q](https://latex.codecogs.com/png.latex?1%2C2%2C%5Cldots%2Cp%2Bq "1,2,\ldots,p+q")
 such that
-![1,\\ldots p](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;1%2C%5Cldots%20p "1,\ldots p")
+![1,\ldots p](https://latex.codecogs.com/png.latex?1%2C%5Cldots%20p "1,\ldots p")
 and
-![p+1,\\ldots p+q](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;p%2B1%2C%5Cldots%20p%2Bq "p+1,\ldots p+q")
+![p+1,\ldots p+q](https://latex.codecogs.com/png.latex?p%2B1%2C%5Cldots%20p%2Bq "p+1,\ldots p+q")
 appear in their original order: if
-![1\\leq i_1 \< i_2\\leq p](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;1%5Cleq%20i_1%20%3C%20i_2%5Cleq%20p "1\leq i_1 < i_2\leq p"),
-then
-![\\sigma(i_1) \< \\sigma(i_2)](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;%5Csigma%28i_1%29%20%3C%20%5Csigma%28i_2%29 "\sigma(i_1) < \sigma(i_2)"),
-and if
-![p+1\\leq j_1 \< j_2\\leq p+q](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;p%2B1%5Cleq%20j_1%20%3C%20j_2%5Cleq%20p%2Bq "p+1\leq j_1 < j_2\leq p+q"),
-then
-![\\sigma(j_1) \< \\sigma(i_j)](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;%5Csigma%28j_1%29%20%3C%20%5Csigma%28i_j%29 "\sigma(j_1) < \sigma(i_j)").
-The two groups of integers appear in their original order. To enumerate
-all
-![(p,q)](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;%28p%2Cq%29 "(p,q)")
+![1\leq i_1 \< i_2\leq p](https://latex.codecogs.com/png.latex?1%5Cleq%20i_1%20%3C%20i_2%5Cleq%20p "1\leq i_1 < i_2\leq p"),
+then ![\sigma(i_1) \<
+\sigma(i_2)](https://latex.codecogs.com/png.latex?%5Csigma%28i_1%29%20%3C%0A%5Csigma%28i_2%29 "\sigma(i_1) <
+\sigma(i_2)"), and if
+![p+1\leq j_1 \< j_2\leq p+q](https://latex.codecogs.com/png.latex?p%2B1%5Cleq%20j_1%20%3C%20j_2%5Cleq%20p%2Bq "p+1\leq j_1 < j_2\leq p+q"),
+then ![\sigma(j_1) \<
+\sigma(i_j)](https://latex.codecogs.com/png.latex?%5Csigma%28j_1%29%20%3C%0A%5Csigma%28i_j%29 "\sigma(j_1) <
+\sigma(i_j)"). The two groups of integers appear in their original
+order. To enumerate all
+![(p,q)](https://latex.codecogs.com/png.latex?%28p%2Cq%29 "(p,q)")
 riffles, use `riffle()`:
 
 ``` r
@@ -255,7 +248,7 @@ riffle(2,4)
 ```
 
 To enumerate all riffles with sizes
-![v_1,v_2,\\ldots,v_r](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;v_1%2Cv_2%2C%5Cldots%2Cv_r "v_1,v_2,\ldots,v_r"),
+![v_1,v_2,\ldots,v_r](https://latex.codecogs.com/png.latex?v_1%2Cv_2%2C%5Cldots%2Cv_r "v_1,v_2,\ldots,v_r"),
 use `genrif()`:
 
 ``` r

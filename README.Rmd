@@ -20,8 +20,7 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/partitions)](https://cran.r-project.org/package=partitions)
-[![](http://cranlogs.r-pkg.org/badges/grand-total/onion?color=blue)](https://cran.r-project.org/package=onion)
-
+[![R-CMD-check](https://github.com/RobinHankin/partitions/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/RobinHankin/partitions/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 # Overview

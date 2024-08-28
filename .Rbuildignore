@@ -6,3 +6,4 @@
 inst/.RData
 inst/partitions_stickermaker.R
 inst/restrictedpartitionsgeneratingfunction.Rmd
+^\.github$
