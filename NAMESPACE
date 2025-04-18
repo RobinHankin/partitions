@@ -1,7 +1,6 @@
 exportPattern("^[^\\.]")
 useDynLib(partitions, .registration=TRUE)
 import("gmp")
-import("mathjaxr")
 importFrom("polynom",polynomial)
 import("Rdpack")
 importFrom("Rdpack",reprompt)

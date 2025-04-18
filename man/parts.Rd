@@ -31,7 +31,7 @@
 \title{Enumerate the partitions of an integer
   \Sexpr[stage=build,results=hide]{require(partitions)}
 }
-\description{\loadmathjax
+\description{
   Given an integer, return a matrix whose columns enumerate various
   partitions.
 
@@ -102,28 +102,28 @@ allbinom(n,k)
     partitions but in a different order: \code{parts(6)} and
     \code{restrictedparts(6,6)} for example.
 
-    If \mjseqn{m>n}, the partitions are padded with zeros.
+    If \eqn{m>n}, the partitions are padded with zeros.
 
     \item Function \code{blockparts()} enumerates the compositions of an
     integer subject to a maximum criterion: given vector
-    \mjeqn{y=(y_1,\ldots,y_n)}{y=(y_1,...,y_p)} all sets of
-    \mjeqn{a=(a_1,\ldots,a_n)}{a=(a_1,...,a_p)} satisfying
-    \mjeqn{\sum_{i=1}^pa_i=n}{sum(a_i)=n} subject to \mjeqn{0\leq a_i\leq
+    \eqn{y=(y_1,\ldots,y_n)}{y=(y_1,...,y_p)} all sets of
+    \eqn{a=(a_1,\ldots,a_n)}{a=(a_1,...,a_p)} satisfying
+    \eqn{\sum_{i=1}^pa_i=n}{sum(a_i)=n} subject to \eqn{0\leq a_i\leq
     y_i}{0 <= a_i <= y_i} for all \eqn{i} are given in lexicographical
     order.  If argument \code{y} includes zero elements, these are
     treated consistently (ie a position with zero capacity).
 
     If \code{n} takes its default value of \code{NULL}, then the
-    restriction \mjeqn{\sum_{i=1}^pa_i=n}{sum(a_i)=n} is relaxed (so that
+    restriction \eqn{\sum_{i=1}^pa_i=n}{sum(a_i)=n} is relaxed (so that
     the numbers may sum to anything).  Note that these solutions are not
     necessarily in standard form, so functions \code{durfee()} and
     \code{conjugate()} may fail.
 
     \item With a single argument, \code{compositions(n)} returns all
-    \mjeqn{2^{n-1}}{2^(n-1)} ways of partitioning an integer; thus
+    \eqn{2^{n-1}}{2^(n-1)} ways of partitioning an integer; thus
     \code{4+1+1} is distinct from \code{1+4+1} or \code{1+1+4}.  With
     two arguments, \code{compositions(n,m)} returns all nonnegative
-    solutions to \mjeqn{x_1+\cdots+x_m=n}{x_1+...+x_m=n}.  This function
+    solutions to \eqn{x_1+\cdots+x_m=n}{x_1+...+x_m=n}.  This function
     is different from all the others in the package in that it is
     written in \R; it is not clear that \proglang{C} would be any
     faster.
@@ -139,7 +139,7 @@ allbinom(n,k)
     partitioning a set into \emph{distinguishable} boxes of capacities
     \code{v[1], v[2],...,v[n]} (a named vector gives more understandable
     output).  The number of columns is given by the multinomial
-    coefficient \mjeqn{{\sum v_i\choose
+    coefficient \eqn{{\sum v_i\choose
     v_1\,v_2\,\ldots\,v_n}}{omitted}.
 
     \item Function \code{allbinom(n,k)} is provided for convenience; it

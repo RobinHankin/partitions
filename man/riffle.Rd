@@ -3,7 +3,7 @@
 \alias{genrif}
 \alias{allriffles}
 \title{Riffle shuffles}
-\description{\loadmathjax
+\description{
   Enumeration of riffle shuffles
 }
 \usage{
@@ -19,11 +19,11 @@ riffle(p,q=p)
 \details{
 
   A \dfn{riffle shuffle} is a permutation of integers
-  \mjeqn{1,2,\ldots,n}{1,2,...,n} containing one or two rising
+  \eqn{1,2,\ldots,n}{1,2,...,n} containing one or two rising
   sequences.
   
-  A \dfn{generalized riffle shuffle}, or \dfn{\mjseqn{r}-riffle
-    shuffle}, contains at most \mjseqn{r} rising sequences.  This is not
+  A \dfn{generalized riffle shuffle}, or \dfn{\eqn{r}-riffle
+    shuffle}, contains at most \eqn{r} rising sequences.  This is not
     implemented in the package (earlier versions included a buggy
     version; the difficulty is ensuring that sequences do not appear
     more than once).
@@ -41,8 +41,8 @@ riffle(p,q=p)
   riffle shuffles
 }
 \note{
-  When we say \dQuote{contains \mjseqn{r} rising sequences} we generally
-  mean \dQuote{contains \emph{at most} \mjseqn{r} rising sequences}
+  When we say \dQuote{contains \eqn{r} rising sequences} we generally
+  mean \dQuote{contains \emph{at most} \eqn{r} rising sequences}
 }
 \author{Robin K. S. Hankin}
 \seealso{\code{\link{parts}}}
@@ -50,4 +50,3 @@ riffle(p,q=p)
 riffle(3,4)
 genrif(1:3)
 }
-

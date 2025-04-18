@@ -6,7 +6,7 @@
 \alias{vec_to_set}
 \alias{vec_to_eq}
 \title{Set partitions}
-\description{\loadmathjax
+\description{
   Enumeration of set partitions
 }
 \usage{
@@ -33,19 +33,19 @@ vec_to_eq(vec)
 }
 \details{
   A \dfn{partition} of a set
-  \mjeqn{S=\left\lbrace 1,\ldots,n\right\rbrace}{S={1,...,n}} is a family of
-  sets \mjeqn{T_1,\ldots,T_k}{T1,...,Tk} satisfying
+  \eqn{S=\left\lbrace 1,\ldots,n\right\rbrace}{S={1,...,n}} is a family of
+  sets \eqn{T_1,\ldots,T_k}{T1,...,Tk} satisfying
   \itemize{
-    \item \mjeqn{i\neq j\longrightarrow T_i\cap
+    \item \eqn{i\neq j\longrightarrow T_i\cap
       T_j=\emptyset}{union(Ti,Tj) empty if i != j}
-    \item \mjeqn{\cup_{i=1}^kT_k=S}{union(T1,T2,...,Tk)=S}
-    \item \mjeqn{T_i\neq\emptyset}{Ti not empty} for \mjeqn{i=1,\ldots,
+    \item \eqn{\cup_{i=1}^kT_k=S}{union(T1,T2,...,Tk)=S}
+    \item \eqn{T_i\neq\emptyset}{Ti not empty} for \eqn{i=1,\ldots,
       k}{1,...,k} 
   }
   
-  The induced \dfn{equivalence relation} has \mjeqn{i\sim j}{i~j} if and
+  The induced \dfn{equivalence relation} has \eqn{i\sim j}{i~j} if and
   only if \eqn{i} and \eqn{j} belong to the same partition.  Equivalence
-  classes of \mjeqn{S=\left\lbrace 1,\ldots,n\right\rbrace}{S={1,...,n}}
+  classes of \eqn{S=\left\lbrace 1,\ldots,n\right\rbrace}{S={1,...,n}}
   may be listed using \code{listParts()}. There are exactly fifteen ways
   to partition a set of four elements:
 
@@ -109,14 +109,14 @@ b 4 3 4 5 5 4 5 4 5 5 3 5 4 5 5
 c 3 4 2 3 4 5 4 5 2 3 5 2 1 1 1
 }
 
-Above, we set partitions of \mjeqn{\left\lbrace
+Above, we set partitions of \eqn{\left\lbrace
 1,2,3,4,5\right\rbrace}{[5]} into equivalence classes of sizes 2,2,1.
 The first column, for example, corresponds to
-\mjeqn{\left\lbrace1,5\right\rbrace\left\lbrace2,4\right\rbrace\left\lbrace3\right\rbrace}{omitted}.
+\eqn{\left\lbrace1,5\right\rbrace\left\lbrace2,4\right\rbrace\left\lbrace3\right\rbrace}{omitted}.
 Note the absence of
-\mjeqn{\left\lbrace5,1\right\rbrace\left\lbrace2,4\right\rbrace\left\lbrace3\right\rbrace}{omitted}.
+\eqn{\left\lbrace5,1\right\rbrace\left\lbrace2,4\right\rbrace\left\lbrace3\right\rbrace}{omitted}.
 and
-\mjeqn{\left\lbrace2,4\right\rbrace\left\lbrace1,5\right\rbrace\left\lbrace3\right\rbrace}{omitted}
+\eqn{\left\lbrace2,4\right\rbrace\left\lbrace1,5\right\rbrace\left\lbrace3\right\rbrace}{omitted}
 which would correspond to the same (set) partition; compare
 \code{multinomial()}.  Observe that the individual subsets are not
 necessarily sorted.
