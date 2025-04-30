@@ -46,7 +46,7 @@ riffle(p,q=p)
 }
 \author{Robin K. S. Hankin}
 \seealso{\code{\link{parts}}}
-\runExamples{
+\examples{
 riffle(3,4)
 genrif(1:3)
 }
