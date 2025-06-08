@@ -1,9 +1,8 @@
 #include"partitions.h"
 #include<iostream>
 
-
-using namespace prt;
-
+using prt::Tuple;
+using prt::Partitions;
 
 extern "C" void c_wrap(int* t, int* n, int* r) {
 
