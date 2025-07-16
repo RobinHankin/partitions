@@ -14,8 +14,7 @@
 
 "as.partition" <- function(x, ...){
   storage.mode(x) <- "integer"
-  class(x) <- "partition"
-  return(x)
+  return(structure(x, class = "partition"))
 }
 
 "summary.partition" <- function(object, ...){
@@ -37,8 +36,7 @@
     shortened <- FALSE
   }
   out <- list(shortened=shortened, n=n, out=jj)
-  class(out) <- "summary.partition"
-  return(out)
+  return(structure(out, class = "summary.partition"))
 }
 
 print.summary.partition <- function(x, ...){
@@ -670,8 +668,8 @@ function(n, give=FALSE){
 
 `vec_to_eq` <- function(vec){
     out <- split(seq_along(vec),vec)
-    class(out) <- c(class(out),"equivalence")
-    return(out)
+    return(structure(out, class = c(class(out),"equivalence")))
+    
   }
 
 `multinomial` <- function(v){
