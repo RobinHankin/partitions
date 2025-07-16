@@ -1,10 +1,9 @@
 exportPattern("^[^\\.]")
 useDynLib(partitions, .registration=TRUE)
-import("gmp")
-importFrom("polynom",polynomial)
-import("Rdpack")
-importFrom("Rdpack",reprompt)
 
+importFrom("gmp", as.bigz)
+importFrom("polynom",polynomial)
+importFrom("Rdpack",reprompt)
 
 S3method(print,partition)
 S3method(print,equivalence)
