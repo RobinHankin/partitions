@@ -1,3 +1,9 @@
+#' @importFrom gmp as.bigz
+#' @importFrom polynom polynomial
+#' @importFrom Rdpack reprompt
+
+#' @useDynLib partitions
+
 ".fac" <- function(x){  # exact factorial; NB returns (by design) a
                         # bigz; used in setparts()
   out <- as.bigz(1)
@@ -7,16 +13,19 @@
   return(out)
 }
 
+#' @export
 "as.matrix.partition" <- function(x, ...){
   x <- unclass(x)
   NextMethod("as.matrix")
 }
 
+#' @export
 "as.partition" <- function(x, ...){
   storage.mode(x) <- "integer"
   return(structure(x, class = "partition"))
 }
 
+#' @export
 "summary.partition" <- function(object, ...){
   jj <- list(...)
   if(length(jj)>0){
@@ -39,6 +48,7 @@
   return(structure(out, class = "summary.partition"))
 }
 
+#' @export
 print.summary.partition <- function(x, ...){
   if(x$shortened){
     jj <- seq_len(x$n)
@@ -50,6 +60,7 @@ print.summary.partition <- function(x, ...){
   print.partition(x)
 }
 
+#' @export
 "setparts" <- function(x){
   if(length(x)==1){
     if (x < 1){
@@ -80,6 +91,7 @@ print.summary.partition <- function(x, ...){
   as.partition(out)
 }
 
+#' @export
 "listParts" <- function(x,do.set=FALSE) {
     jj <- setparts(x)
     if(do.set){
@@ -90,6 +102,7 @@ print.summary.partition <- function(x, ...){
     return(out)
 }
 
+#' @export
 "print.equivalence" <- function(x,sep=getOption("separator"), ...){
   if(is.null(sep)){sep <- ","}
   f <- function(x){paste(c("{",paste(x,collapse=sep),"}"),collapse="")}
@@ -98,6 +111,7 @@ print.summary.partition <- function(x, ...){
   return(invisible(print(noquote(out))))
 }
 
+#' @export
 "print.partition" <- function(x, mat=getOption("matrixlike"), h=getOption("horiz"), ...){
   x <- as.matrix(unclass(x))
   if(isTRUE(h)){ x <- t(x) }
@@ -105,6 +119,7 @@ print.summary.partition <- function(x, ...){
   return(invisible(print(noquote(x))))
 }
 
+#' @export
 `restrictedsetparts` <- function(vec){
     if(any(diff(vec)>0)){
         warning("argument vec not ordered: it is being sorted into non-increasing order")
@@ -115,12 +130,14 @@ print.summary.partition <- function(x, ...){
     return(as.partition(out))
 }
 
+#' @export
 `restrictedsetparts2` <- function(vec){
     out <- apply(setparts(vec),2,function(v){c(split(seq_along(v),v),recursive=TRUE)})
     rownames(out) <- rep(names(vec),vec)
     return(as.partition(out))
 }
 
+#' @export
 "parts" <-
   function(n){
     if(length(n)>1){
@@ -141,6 +158,7 @@ print.summary.partition <- function(x, ...){
     return(as.partition(out))
   }
 
+#' @export
 "nextpart" <- function(part,check=TRUE){
   if(check){
     stopifnot(part==round(part))
@@ -155,14 +173,17 @@ print.summary.partition <- function(x, ...){
      PACKAGE="partitions")$ans
 }
 
+#' @export
 "islastpart" <- function(part){all(part==1)}
 
+#' @export
 "firstpart" <- function(n){
   as.integer(c(n,integer(n-1)))
 }
 
 ".tri" <- function(n){floor( (sqrt(1+8*n)-1)/2)}
 
+#' @export
 "diffparts" <-
 function(n){
   if(length(n)>1){
@@ -181,6 +202,7 @@ function(n){
   return(as.partition(out))
 }
 
+#' @export
 "nextdiffpart" <- function(part,check=TRUE){
   n.tri <- .tri(sum(part))
   if(check){
@@ -200,15 +222,18 @@ function(n){
      PACKAGE="partitions")$ans
 }
 
+#' @export
 "islastdiffpart" <- function(part){
   jj <- diff(rev(part))
   all( (jj==1) | (jj==2)) & (sum(jj==2)==1)
 }
 
+#' @export
 "firstdiffpart" <- function(n){
   as.integer(c(n,integer(.tri(n)-1)))
 }
 
+#' @export
 "restrictedparts" <- function(n, m, include.zero=TRUE, decreasing=TRUE){
   if(m>n){  #NB: strict
     if(!include.zero){
@@ -241,6 +266,7 @@ function(n){
   return(as.partition(out))
 }
 
+#' @export
 "nextrestrictedpart" <- function(part,check=TRUE){
   if(check){
     stopifnot(all(part==round(part)))
@@ -254,10 +280,12 @@ function(n){
        PACKAGE = "partitions")$ans)
 }
 
+#' @export
 "islastrestrictedpart" <- function(part){
   max(part)-min(part) <= 1
 }
 
+#' @export
 "firstrestrictedpart" <- function(n, m, include.zero=TRUE){
   if(include.zero){
     return(as.integer(c(n,integer(m-1))))
@@ -266,6 +294,7 @@ function(n){
   }
 }
 
+#' @export
 "blockparts" <- function(f,n=NULL,include.fewer=FALSE){
   s <- sum(f)
   if(is.null(n)){
@@ -296,6 +325,7 @@ function(n){
   return(as.partition(out))
 }
 
+#' @export
 "islastblockpart" <- function(part, f, n=NULL, include.fewer=FALSE){
   if(all(part==0)){
     if(is.null(n)){
@@ -324,6 +354,7 @@ function(n){
 
 }
 
+#' @export
 "nextblockpart" <- function(part, f, n=sum(part), include.fewer=FALSE, check=TRUE){
   if(check){
     stopifnot(all(part==round(part)))
@@ -360,6 +391,7 @@ function(n){
      PACKAGE = "partitions")$ans
 }
 
+#' @export
 "firstblockpart" <- function(f, n=NULL, include.fewer=FALSE){
   if(is.null(n)){
     return(as.integer(f*0))
@@ -379,6 +411,7 @@ function(n){
   }
 }
 
+#' @export
 "compositions" <-
 function(n, m=NULL, include.zero=TRUE){
     if(!is.null(m)){
@@ -396,6 +429,7 @@ function(n, m=NULL, include.zero=TRUE){
     return(as.partition(out))
 }
 
+#' @export
 "islastcomposition" <- function(comp, restricted, include.zero=TRUE){
   if(restricted){
     m <- length(comp)
@@ -409,6 +443,7 @@ function(n, m=NULL, include.zero=TRUE){
   }
 }
 
+#' @export
 "nextcomposition" <- function(comp, restricted, include.zero=TRUE, check=TRUE){
   if(check){
     stopifnot(!islastcomposition(comp, restricted=restricted, include.zero=include.zero))
@@ -437,6 +472,7 @@ function(n, m=NULL, include.zero=TRUE){
   }
 }
 
+#' @export
 "firstcomposition" <-
 function(n, m=NULL, include.zero=TRUE){
     if(!is.null(m)){
@@ -449,6 +485,7 @@ function(n, m=NULL, include.zero=TRUE){
     return(as.integer(c(n,rep(0,n-1))))
 }
 
+#' @export
 "P" <-
 function(n, give=FALSE){
   stopifnot(length(n)==1)
@@ -465,6 +502,7 @@ function(n, give=FALSE){
   }
 }
 
+#' @export
 "R" <- function(m,n, include.zero=FALSE){
   stopifnot(length(m)==1)
   stopifnot(length(n)==1)
@@ -483,6 +521,7 @@ function(n, give=FALSE){
   return(jj$ans)
 }
 
+#' @export
 "Q" <- function(n, give=FALSE){
   stopifnot(length(n)==1)
   n <- n+1
@@ -498,6 +537,7 @@ function(n, give=FALSE){
   }
 }
 
+#' @export
 "S" <- function(f,n=NULL,include.fewer=FALSE){
   if(length(n)>1){
     stop("In function S(), n [the second argument] must be an integer (or NULL).  Check for the first and second arguments being transposed")
@@ -514,6 +554,7 @@ function(n, give=FALSE){
     }
 }
 
+#' @export
 "conjugate" <- function(x, sorted = TRUE){
   if (!length(x))
     return(integer(0))
@@ -538,6 +579,7 @@ function(n, give=FALSE){
   return(drop(out))
 }
 
+#' @export
 "durfee_sorted" <- function(x){
   x <- as.matrix(x)
     .C("c_durfee",
@@ -548,6 +590,7 @@ function(n, give=FALSE){
        PACKAGE="partitions")$ans
 }
 
+#' @export
 "durfee" <- function(x, sorted = TRUE){
   x <- as.matrix(x)
   if (sorted){
@@ -557,6 +600,7 @@ function(n, give=FALSE){
   }
 }
 
+#' @export
 "perms" <- function(n){
   stopifnot(length(n) ==1)
   stopifnot(n == round(n))
@@ -572,6 +616,7 @@ function(n, give=FALSE){
   return(as.partition(out))
 }
 
+#' @export
 "tobin" <- function(n,len,check=TRUE){
   if(check){
     stopifnot(n == round(n))
@@ -587,10 +632,12 @@ function(n, give=FALSE){
      PACKAGE="partitions")$ans
 }
 
+#' @export
 "todec" <- function(bin){
   sum(bin * 2^(rev(seq_along(bin)-1)))
 }
 
+#' @export
 "comptobin" <- function(comp, check=TRUE){
   if(check){
     stopifnot(all(comp==round(comp)))
@@ -604,6 +651,7 @@ function(n, give=FALSE){
      PACKAGE = "partitions")$ans[-s]
 }
 
+#' @export
 "bintocomp" <- function(bin, use.C=TRUE, check=TRUE){
   if(use.C){
     .C("c_bintocomp",
@@ -616,6 +664,7 @@ function(n, give=FALSE){
   }
 }
 
+#' @export
 "plainperms" <- function(n){
   fn <- factorial(n)
   kk <- integer(n*fn)
@@ -631,6 +680,7 @@ function(n, give=FALSE){
   return(as.partition(out))
 }
 
+#' @export
 `mset` <-  function(v){
   v <- sort(v)
   stopifnot(all(v==round(v)))
@@ -648,6 +698,7 @@ function(n, give=FALSE){
   return(as.partition(out))
 }
 
+#' @export
 `multiset` <- function(v,n=length(v)){
   v <- sort(v)
   if(n==length(v)){return(mset(v))} # unnecessary, function works if this line is commented out
@@ -658,6 +709,7 @@ function(n, give=FALSE){
   as.partition(do.call("cbind",m))
 }
 
+#' @export
 `vec_to_set` <- function(vec){
     jj <- sort(unique(vec))
     M <- outer(jj,vec,`==`)
@@ -666,12 +718,14 @@ function(n, give=FALSE){
     return(do.call(sets::set,lapply(out,sets::as.set)))
 }
 
+#' @export
 `vec_to_eq` <- function(vec){
     out <- split(seq_along(vec),vec)
     return(structure(out, class = c(class(out),"equivalence")))
     
   }
 
+#' @export
 `multinomial` <- function(v){
     jj <- rep(seq_along(v),v)
     out <- as.partition(as.matrix(apply(multiset(jj),2,order)))
@@ -679,8 +733,10 @@ function(n, give=FALSE){
     return(out)
 }
 
+#' @export
 `allbinom` <- function(n,k){as.partition(multinomial(c(k,n-k))[seq_len(k),,drop=FALSE])}
 
+#' @export
 `genrif` <- function(v){
 
   f <- function(x){
@@ -695,8 +751,10 @@ function(n, give=FALSE){
   as.partition(apply(multiset(rep(seq_along(v),times=v)),2,f))
 }
 
+#' @export
 `riffle` <- function(p,q=p){genrif(c(p,q))}
 
+#' @export
 `condense` <- function(x, minval=1, col){
   if(missing(col)){col <- ifelse(any(x>9),",","")}
   noquote(apply(x,2,function(x){paste("(",paste(x[x>=minval],collapse=col),")",sep="")}))

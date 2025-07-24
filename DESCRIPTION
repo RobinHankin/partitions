@@ -1,7 +1,7 @@
 Package: partitions
 Type: Package
 Title: Additive Partitions of Integers
-Version: 1.10-9
+Version: 1.11-1
 Depends: R (>= 3.6.0)
 Authors@R: c(
     person(given=c("Robin", "K. S."), family="Hankin", role = c("aut","cre"), email="hankin.robin@gmail.com", comment = c(ORCID = "0000-0001-5982-0415")),
@@ -14,8 +14,10 @@ Description: Additive partitions of integers.  Enumerates the
   integer; the three corresponding partition functions are also given.
   Set partitions and now compositions and riffle shuffles are
   included.
-Suggests: testthat,covr
+Suggests: testthat, covr
 License: GPL
 URL: https://github.com/RobinHankin/partitions
 BugReports: https://github.com/RobinHankin/partitions/issues
 RdMacros: Rdpack
+RoxygenNote: 7.3.2
+Encoding: UTF-8
