@@ -26,7 +26,7 @@ to be the same as
 
 # Installation
 
-You can install the released version of wedge from
+You can install the released version of the package from
 [CRAN](https://CRAN.R-project.org) with:
 
 ``` r
