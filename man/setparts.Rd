@@ -13,7 +13,7 @@
 setparts(x)
 restrictedsetparts(vec)
 restrictedsetparts2(vec)
-listParts(x,do.set=FALSE)
+listParts(x, do.set=FALSE)
 vec_to_set(vec)
 vec_to_eq(vec)
 }
@@ -166,23 +166,23 @@ which might be faster under some circumstances.
 \examples{
 setparts(4)                # all partitions of a set of 4 elements
 
-setparts(c(3,3,2))         # all partitions of a set of 8 elements
+setparts(c(3, 3, 2))         # all partitions of a set of 8 elements
                            # into sets of sizes 3,3,2.
 
 
-listParts(c(2,2,1))        # all 15 ways of defining subsets of
+listParts(c(2, 2, 1))        # all 15 ways of defining subsets of
                            # {1,2,3,4,5} with sizes 2,2,1
 
-jj <- restrictedparts(5,3)
+jj <- restrictedparts(5, 3)
 setparts(jj)               # partitions of a set of 5 elements into
                            # at most 3 sets
 
 listParts(jj)              # The induced equivalence classes
 
-restrictedsetparts(c(a=2,b=2,c=1))  # alternative to listParts()
+restrictedsetparts(c(a=2, b=2, c=1))  # alternative to listParts()
 
 
-jj <- restrictedparts(6,3,TRUE)
+jj <- restrictedparts(6, 3, TRUE)
 setparts(jj)               # partitions of a set of 6 elements into
 ncol(setparts(jj))         # _exactly_ 3 sets; cf StirlingS2[6,3]==90
 

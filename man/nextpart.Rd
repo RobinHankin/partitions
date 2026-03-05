@@ -37,7 +37,7 @@ islastcomposition(comp, restricted, include.zero=TRUE)
  firstcomposition(n,    m=NULL    , include.zero=TRUE)
 }
 \arguments{
-  \item{part,comp}{A partition or composition}
+  \item{part, comp}{A partition or composition}
     \item{check}{Boolean, with default \code{TRUE} meaning to carry out
     various safety checks; the \code{next()} functions use \code{C}
     calls which might crash the session with some inputs}
@@ -89,16 +89,16 @@ given in the \code{tests/aab.R} file.
 # (but with a smaller letter bag)
 scrabble <- c(a=9 , b=2 , c=2 , d=4 , e=12 , f=2 , g=3)
 
-f <- function(a){prod(choose(scrabble,a))/choose(sum(scrabble),7)}
+f <- function(a){prod(choose(scrabble,a)) / choose(sum(scrabble),7)}
 bestsofar <- 0
-a <- firstblockpart(scrabble,7)
+a <- firstblockpart(scrabble, 7)
 while(!islastpart(a)){
   jj <- f(a)
-  if(jj>bestsofar){
+  if(jj > bestsofar){
     bestsofar <- jj
     bestpart <- a
   }
-  a <- nextblockpart(a,scrabble) 
+  a <- nextblockpart(a, scrabble) 
 }
 
 

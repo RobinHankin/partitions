@@ -19,8 +19,8 @@ condense(x, minval=1, col)
 \examples{
 
 condense(parts(9))
-condense(compositions(9,3),0)
-condense(diffparts(17),col="+")
+condense(compositions(9, 3), 0)
+condense(diffparts(17), col="+")
 
 }
 \keyword{math}

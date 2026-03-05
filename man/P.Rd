@@ -61,12 +61,12 @@ S(f, n = NULL, include.fewer = FALSE)
   methods test for overflow, so use with care!
 }
 \examples{
-P(10,give=TRUE)
-Q(10,give=TRUE)
-R(10,20,include.zero=FALSE)
-R(10,20,include.zero=TRUE)
+P(10, give=TRUE)
+Q(10, give=TRUE)
+R(10, 20, include.zero=FALSE)
+R(10, 20, include.zero=TRUE)
 
-S(1:4,5)
+S(1:4, 5)
 
 }
 \keyword{math}

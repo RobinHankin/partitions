@@ -34,7 +34,7 @@ first and last few partitions (columns)
 \examples{
 summary(parts(7))
 
-summary(parts(11),3)
+summary(parts(11), 3)
 
 }
 \keyword{math}
