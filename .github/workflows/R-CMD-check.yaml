@@ -35,7 +35,7 @@ jobs:
 
       - name: Install LaTeX dependencies
         run: |
-          tlmgr install doublestruck
+          tlmgr install doublestroke
 
       - uses: r-lib/actions/check-r-package@v2
         with:
