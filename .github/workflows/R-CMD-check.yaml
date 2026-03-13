@@ -35,7 +35,7 @@ jobs:
       - uses: actions/cache@v4
         with:
           path: ~/.TinyTeX
-	  key: ${{ runner.os }}-tinytex
+          key: ${{ runner.os }}-tinytex
 
       - uses: r-lib/actions/setup-tinytex@v2
 
