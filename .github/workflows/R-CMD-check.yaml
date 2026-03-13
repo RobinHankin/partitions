@@ -1,10 +1,11 @@
 # Workflow derived from https://github.com/r-lib/actions/tree/v2/examples
+# for debugging help, https://github.com/r-lib/actions#where-to-find-help
 
 on:
   push:
-    branches: [master]
+    branches: [ master]
   pull_request:
-    branches: [master]
+    branches: [ master]
   workflow_dispatch:
 
 name: R-CMD-check-partitions
@@ -31,18 +32,24 @@ jobs:
           extra-packages: any::rcmdcheck
           needs: check
 
+      - uses: actions/cache@v4
+        with:
+          path: ~/.TinyTeX
+	  key: ${{ runner.os }}-tinytex
+
       - uses: r-lib/actions/setup-tinytex@v2
 
       - name: Install LaTeX dependencies
         run: |
-          tlmgr install doublestroke
+          tinytex::parse_install(text = "latexmgr: bbm.sty")
+          tinytex::tlmgr_install(c("bbm", "bbm-macros", "amsfonts", "doublestroke", "wasysym", "wrapfig", "wasy"))
+        shell: Rscript {0}
 
       - uses: r-lib/actions/check-r-package@v2
         with:
           upload-snapshots: true
-          build_args: 'c("--compact-vignettes=both")'
-        env:
-          TINYTeX_AUTO_INSTALL: true
+          args: 'c("--no-manual", "--compact-vignettes=both")'
+          error-on: '"warning"'
 
       - uses: actions/upload-artifact@v4
         if: failure()
