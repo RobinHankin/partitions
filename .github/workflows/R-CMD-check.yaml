@@ -1,11 +1,10 @@
 # Workflow derived from https://github.com/r-lib/actions/tree/v2/examples
-# for debugging help, https://github.com/r-lib/actions#where-to-find-help
 
 on:
   push:
-    branches: [ master]
+    branches: [master]
   pull_request:
-    branches: [ master]
+    branches: [master]
   workflow_dispatch:
 
 name: R-CMD-check-partitions
@@ -34,10 +33,14 @@ jobs:
 
       - uses: r-lib/actions/setup-tinytex@v2
 
+      - name: Install LaTeX dependencies
+        run: |
+          tlmgr install doublestruck
+
       - uses: r-lib/actions/check-r-package@v2
         with:
           upload-snapshots: true
-          build_args: 'c("--compact-vignettes=both")'
+          build_args: '["--compact-vignettes=both"]'
         env:
           TINYTeX_AUTO_INSTALL: true
 
