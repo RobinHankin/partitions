@@ -3,9 +3,9 @@
 
 on:
   push:
-    branches: [ master]
+    branches: [master]
   pull_request:
-    branches: [ master]
+    branches: [master]
   workflow_dispatch:
 
 name: R-CMD-check-partitions
@@ -29,10 +29,14 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: any::rcmdcheck
+          # Added tinytex to extra-packages so the R functions are available
+          extra-packages: |
+            any::rcmdcheck
+            any::tinytex
           needs: check
 
-      - uses: actions/cache@v4
+      - name: Cache TinyTeX
+        uses: actions/cache@v4
         with:
           path: ~/.TinyTeX
           key: ${{ runner.os }}-tinytex
@@ -41,15 +45,17 @@ jobs:
 
       - name: Install LaTeX dependencies
         run: |
-          tinytex::parse_install(text = "latexmgr: bbm.sty")
           tinytex::tlmgr_install(c("bbm", "bbm-macros", "amsfonts", "doublestroke", "wasysym", "wrapfig", "wasy"))
         shell: Rscript {0}
 
       - uses: r-lib/actions/check-r-package@v2
         with:
           upload-snapshots: true
-          args: 'c("--no-manual", "--compact-vignettes=both")'
+          build_args: 'c("--compact-vignettes=both")'
+          args: 'c("--no-manual")'
           error-on: '"warning"'
+        env:
+          TINYTeX_AUTO_INSTALL: true
 
       - uses: actions/upload-artifact@v4
         if: failure()
