@@ -153,7 +153,7 @@ expect_equal(
   setparts(as.matrix(c(2,1,1))),
   structure(
     c(1L, 2L, 3L, 1L, 1L, 1L, 2L, 3L, 1L, 2L, 1L, 3L, 2L, 1L, 3L, 1L, 2L, 1L,
-      1L, 3L, 2L, 3L, 1L, 1L), .Dim = c(4L, 6L), class = "partition"
+      1L, 3L, 2L, 3L, 1L, 1L), dim = c(4L, 6L), class = "partition"
     )
 )
 
