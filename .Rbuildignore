@@ -2,7 +2,6 @@
 ^\.Rproj\.user$
 ^README\.Rmd$
 ^\.travis\.yml$
-^appveyor\.yml$
 inst/.RData
 inst/partitions_stickermaker.R
 inst/restrictedpartitionsgeneratingfunction.Rmd
