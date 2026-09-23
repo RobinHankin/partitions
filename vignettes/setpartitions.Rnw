@@ -140,7 +140,7 @@ size.  The new functionality presented here is given by
 \code{setparts()}, an \proglang{R} \citep{rcore2007} wrapper for
 \proglang{C++} code, currently part of the \pkg{partitions}
 package~\citep{hankin2006,hankin2007}, version 1.7-3, available under
-the GPL from CRAN, \url{http://www.r-project.org/}.
+the GPL from CRAN, \url{https://www.r-project.org/}.
 
 Function \code{setparts()} takes a single argument \code{a}, coerced
 to integer mode.  The default case is that of \code{a} being a vector
