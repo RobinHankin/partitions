@@ -3,30 +3,26 @@
 #include <stdlib.h> // for NULL
 #include <R_ext/Rdynload.h>
 
-/* FIXME:
-   Check these declarations against the C/Fortran source code.
-*/
-
 /* .C calls */
-extern void c_allblockparts(void *, void *, void *, void *, void *);
-extern void c_alldiffparts(void *, void *, void *, void *);
-extern void c_allparts(void *, void *, void *);
-extern void c_allperms(void *, void *, void *, void *);
-extern void c_allrestrictedparts(void *, void *, void *, void *, void *);
-extern void c_bintocomp(void *, void *, void *);
-extern void c_comptobin(void *, void *, void *);
-extern void c_conjugate(void *, void *, void *, void *, void *, void *);
-extern void c_durfee(void *, void *, void *, void *);
-extern void c_nextblockpart(void *, void *, void *);
-extern void c_nextdiffpart(void *, void *);
-extern void c_nextpart(void *);
-extern void c_nextrestrictedpart(void *, void *);
-extern void c_numbdiffparts(void *, void *);
-extern void c_numbparts(void *, void *);
-extern void c_plainperms(void *, void *, void *);
-extern void c_tobin(void *, void *, void *);
-extern void c_wrap(void *, void *, void *);
-extern void numbrestrictedparts_R(void *, void *, void *);
+extern void c_allblockparts(int *, const int *, const int *, const int *, const int *);
+extern void c_alldiffparts(const int *, const int *, const int *, int *);
+extern void c_allparts(const int *, const int *, int *);
+extern void c_allperms(const int *, const int *, const int *, int *);
+extern void c_allrestrictedparts(const int *, const int *, const int *, const int *, int *);
+extern void c_bintocomp(const int *, const int *, int *);
+extern void c_comptobin(int *, const int *, int *);
+extern void c_conjugate(int *, const int *, const int *, const int *, const int *, int *);
+extern void c_durfee(const int *, const int *, const int *, int *);
+extern int c_nextblockpart(int *, const int *, const int *);
+extern void c_nextdiffpart(int *, const int *);
+extern void c_nextpart(int *);
+extern int c_nextrestrictedpart(int *, const int *);
+extern void c_numbdiffparts(const int *, double *);
+extern void c_numbparts(const int *, double *);
+extern void c_plainperms(int *, const int *, const int *);
+extern void c_tobin(const int *, int *, const int *);
+extern void c_wrap(int *, int *, int *);
+extern void numbrestrictedparts_R(int *, const int *, int *);
 
 static const R_CMethodDef CEntries[] = {
     {"c_allblockparts",       (DL_FUNC) &c_allblockparts,       5},
